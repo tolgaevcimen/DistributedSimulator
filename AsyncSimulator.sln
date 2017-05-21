@@ -1,0 +1,85 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncSimulator", "AsyncSimulator\AsyncSimulator.csproj", "{440FA7C3-094A-4913-8CF5-14B440C0B86E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Environment", "ASyncSimulator1\Environment.csproj", "{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualInterface", "VisualInterface\VisualInterface.csproj", "{110892BB-9F9B-4BC1-8F30-1B0B51590DF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloodingNode", "FloodingNode\FloodingNode.csproj", "{001847DC-FBFF-4114-B6C9-00C388FD5857}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloodSTNode", "FloodSTNode\FloodSTNode.csproj", "{3B0A53F7-5EBC-4269-A38E-40FB077578E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateBfsNode", "UpdateBfsNode\UpdateBfsNode.csproj", "{61C46D30-5C07-4297-9D70-BF17A8200EF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeighDfsNode", "NeighDfsNode\NeighDfsNode.csproj", "{A9B62A8B-F497-42A0-8F43-0A414B813AD3}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 8
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tolgaevcimen.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ASyncSimulator1\\Environment.csproj
+		SccProjectName1 = ASyncSimulator1
+		SccLocalPath1 = ASyncSimulator1
+		SccProjectUniqueName2 = AsyncSimulator\\AsyncSimulator.csproj
+		SccProjectName2 = AsyncSimulator
+		SccLocalPath2 = AsyncSimulator
+		SccProjectUniqueName3 = FloodingNode\\FloodingNode.csproj
+		SccProjectName3 = FloodingNode
+		SccLocalPath3 = FloodingNode
+		SccProjectUniqueName4 = VisualInterface\\VisualInterface.csproj
+		SccProjectName4 = VisualInterface
+		SccLocalPath4 = VisualInterface
+		SccProjectUniqueName5 = FloodSTNode\\FloodSTNode.csproj
+		SccProjectName5 = FloodSTNode
+		SccLocalPath5 = FloodSTNode
+		SccProjectUniqueName6 = UpdateBfsNode\\UpdateBfsNode.csproj
+		SccProjectName6 = UpdateBfsNode
+		SccLocalPath6 = UpdateBfsNode
+		SccProjectUniqueName7 = NeighDfsNode\\NeighDfsNode.csproj
+		SccProjectName7 = NeighDfsNode
+		SccLocalPath7 = NeighDfsNode
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{440FA7C3-094A-4913-8CF5-14B440C0B86E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{440FA7C3-094A-4913-8CF5-14B440C0B86E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{440FA7C3-094A-4913-8CF5-14B440C0B86E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{440FA7C3-094A-4913-8CF5-14B440C0B86E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{110892BB-9F9B-4BC1-8F30-1B0B51590DF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{110892BB-9F9B-4BC1-8F30-1B0B51590DF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{110892BB-9F9B-4BC1-8F30-1B0B51590DF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{110892BB-9F9B-4BC1-8F30-1B0B51590DF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{001847DC-FBFF-4114-B6C9-00C388FD5857}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{001847DC-FBFF-4114-B6C9-00C388FD5857}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{001847DC-FBFF-4114-B6C9-00C388FD5857}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{001847DC-FBFF-4114-B6C9-00C388FD5857}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B0A53F7-5EBC-4269-A38E-40FB077578E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B0A53F7-5EBC-4269-A38E-40FB077578E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B0A53F7-5EBC-4269-A38E-40FB077578E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B0A53F7-5EBC-4269-A38E-40FB077578E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61C46D30-5C07-4297-9D70-BF17A8200EF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61C46D30-5C07-4297-9D70-BF17A8200EF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61C46D30-5C07-4297-9D70-BF17A8200EF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61C46D30-5C07-4297-9D70-BF17A8200EF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9B62A8B-F497-42A0-8F43-0A414B813AD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9B62A8B-F497-42A0-8F43-0A414B813AD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9B62A8B-F497-42A0-8F43-0A414B813AD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9B62A8B-F497-42A0-8F43-0A414B813AD3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
