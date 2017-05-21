@@ -13,8 +13,8 @@ namespace VisualInterface
 {
     public class VisualEdge
     {
-        public Point End1 { get; set; }
-        public Point End2 { get; set; }
+        public PointF End1 { get; set; }
+        public PointF End2 { get; set; }
 
         public Color EdgeColor { get; set; }
         public Color SelectedEdgeColor { get; set; }
@@ -27,7 +27,7 @@ namespace VisualInterface
 
         private PaintEventArgs PaintArgs { get; set; }
 
-        public VisualEdge ( PaintEventArgs e, Point end1, Point end2, _Node node1, bool ghost = false, int thickness = 7 )
+        public VisualEdge ( PaintEventArgs e, PointF end1, PointF end2, _Node node1, bool ghost = false, int thickness = 7 )
         {
             EdgeColor = Color.Pink;
             SelectedEdgeColor = Color.LightBlue;
@@ -42,24 +42,24 @@ namespace VisualInterface
             PaintArgs = e;
 
             if ( !ghost )
-                ControlPaint.DrawReversibleLine(End1, End2, EdgeColor);
+                ControlPaint.DrawReversibleLine(Point.Round(End1), Point.Round(End2), EdgeColor);
         }
 
         public void Refresh ( PaintEventArgs e, Point end2 )
         {
-            ControlPaint.DrawReversibleLine(End1, End2, EdgeColor);
+            ControlPaint.DrawReversibleLine(Point.Round(End1), Point.Round(End2), EdgeColor);
 
             End2 = end2;
 
-            ControlPaint.DrawReversibleLine(End1, End2, EdgeColor);
+            ControlPaint.DrawReversibleLine(Point.Round(End1), Point.Round(End2), EdgeColor);
         }
 
         public void Vanish ( PaintEventArgs e )
         {
-            ControlPaint.DrawReversibleLine(End1, End2, EdgeColor);
+            ControlPaint.DrawReversibleLine(Point.Round(End1), Point.Round(End2), EdgeColor);
         }
 
-        public void Solidify ( Point end1, Point end2, _Node node2, bool firstTime = false )
+        public void Solidify ( PointF end1, PointF end2, _Node node2, bool firstTime = false )
         {
             Node2 = node2;
 
@@ -80,8 +80,14 @@ namespace VisualInterface
             Node2.Neighbours.Add(Node1);
 
             /// redraw the nodes
-            Node1.Visualizer.Draw();
-            Node2.Visualizer.Draw();
+            Node1.Visualizer.Draw(Node1.Selected());
+            Node2.Visualizer.Draw(Node2.Selected());
+
+            if (Program.Presenter.cb_selfStab.Checked)
+            {
+                Node1.UserDefined_SingleInitiatorProcedure(Node1);
+                Node2.UserDefined_SingleInitiatorProcedure(Node2);
+            }
         }
 
         public void Colorify ( PaintEventArgs e, bool reverted = false )

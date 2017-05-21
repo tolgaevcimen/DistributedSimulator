@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using AsyncSimulator;
 using UpdateBfsNode;
+using VisualInterface.GraphGenerator;
 
 namespace VisualInterface
 {
@@ -36,8 +37,11 @@ namespace VisualInterface
             AllEdges = new List<VisualEdge>();
 
             cb_choose_alg.Items.AddRange(Algorithms.ToArray());
-            cb_choose_alg.SelectedIndex = 1;
-            SelectedAlgorithm = "FloodST";
+            cb_choose_alg.SelectedIndex = 4;
+            SelectedAlgorithm = "ChiuDS_allWait";
+
+            cb_graph_type.Items.AddRange(Enum.GetNames(typeof(GraphType)));
+            cb_graph_type.SelectedIndex = 1;
         }
 
         #region mouse events for Creating Nodes and Edges
@@ -81,9 +85,8 @@ namespace VisualInterface
             {
                 if ( !AllNodes.Any(n => n.Visualizer.Intersects(e.Location)) )
                 {
-                    var node = NodeFactory.Create(SelectedAlgorithm, AllNodes.Count);
-
-                    node.Visualizer = new NodeVisualizer(arg, x, y, AllNodes.Count, this);
+                    var node = NodeFactory.Create(SelectedAlgorithm, AllNodes.Count, new NodeVisualizer(arg, x, y, AllNodes.Count, this));
+                    node.Visualizer.Draw(node.Selected());
                     AllNodes.Add(node);
 
                     cb_choose_alg.Enabled = false;
@@ -130,36 +133,12 @@ namespace VisualInterface
         /// <param name="e"></param>
         private void btn_random_nodes_Click ( object sender, EventArgs e )
         {
-            var arg = new PaintEventArgs(drawing_panel.CreateGraphics(), new Rectangle());
+            var nodeCount = 0;
+            if ( !int.TryParse(tbNodeCount.Text, out nodeCount) ) return;
 
-            var randomizer = new Random();
-            int norn = 0;
-            if ( !int.TryParse(number_of_random_nodes.Text, out norn) ) return;
+            var graphGenerator = GraphFactory.GetGraphGenerator((GraphType)Enum.Parse(typeof(GraphType), (string)cb_graph_type.SelectedItem));
 
-            for ( int i = 0; i < norn; i++ )
-            {
-                var p = new Point(randomizer.Next(40, drawing_panel.Width - 40), randomizer.Next(40, drawing_panel.Height - 40));
-
-                if ( !AllNodes.Any(n => n.Visualizer.Intersects(p)) )
-                {
-                    var node = NodeFactory.Create(SelectedAlgorithm, AllNodes.Count);
-                    node.Visualizer = new NodeVisualizer(arg, p.X, p.Y, AllNodes.Count, this);
-                    
-                    AllNodes.Add(node);
-                }
-            };
-
-            foreach ( var node1 in AllNodes )
-            {
-                foreach ( var node2 in AllNodes.Where(n => n != node1) )
-                {
-                    if ( randomizer.Next() % 100 > 10 ) continue;
-
-                    var edge = new VisualEdge(arg, node1.Visualizer.Location, node2.Visualizer.Location, node1, ghost: true);
-                    edge.Solidify(node1.Visualizer.Location, node2.Visualizer.Location, node2, true);
-                    AllEdges.Add(edge);
-                }
-            }
+            graphGenerator.Generate(nodeCount, this, drawing_panel, AllNodes, AllEdges, SelectedAlgorithm);
         }
 
         #endregion
@@ -212,7 +191,7 @@ namespace VisualInterface
         /// <summary>
         /// Holds the list of algorithms. When new ones are added here, please add them to the factory implementation too.
         /// </summary>
-        private List<string> Algorithms = new List<string> { "Flooding", "FloodST", "UpdateBFS", "NeighDFS" };
+        private List<string> Algorithms = new List<string> { "Flooding", "FloodST", "UpdateBFS", "NeighDFS", "ChiuDS_allWait", "ChiuDS_allIn", "ChiuDS_rand" };
 
         /// <summary>
         /// Holds the selected algorithms name.
@@ -243,7 +222,7 @@ namespace VisualInterface
             var firstNode = AllNodes.FirstOrDefault(fn => fn.Id == AllNodes.Min(n => n.Id));
             if ( firstNode == null ) return;
 
-            var initiator = NodeFactory.Create(SelectedAlgorithm, -1);
+            var initiator = NodeFactory.Create(SelectedAlgorithm, -1, null);
             initiator.UserDefined_SingleInitiatorProcedure(firstNode);
         }
     }

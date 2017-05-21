@@ -47,7 +47,12 @@ namespace AsyncSimulator
             /// initiate the thread. Magic occurs here as this call create a thread based running.
             Task.Run(() => Receive());
         }
-        
+
+        public virtual bool Selected()
+        {
+            return false;
+        }
+
         /// <summary>
         /// This method will be implemented in sub classes for algorithm details.
         /// </summary>

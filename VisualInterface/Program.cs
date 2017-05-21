@@ -8,6 +8,9 @@ namespace VisualInterface
 {
     static class Program
     {
+        public static Random Randomizer = new Random();
+        public static Presenter Presenter;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -16,7 +19,7 @@ namespace VisualInterface
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Presenter());
+            Application.Run(Presenter = new Presenter());
         }
     }
 }

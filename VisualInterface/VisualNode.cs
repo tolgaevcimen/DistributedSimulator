@@ -6,7 +6,7 @@ using AsyncSimulator;
 
 namespace VisualInterface
 {
-    public class NodeVisualizer : IVisualizer 
+    public class NodeVisualizer : IVisualizer
     {
         private int Id { get; set; }
         private Font DefaultFontForId { get; set; }
@@ -15,11 +15,11 @@ namespace VisualInterface
 
         private Brush NodeColor { get; set; }
         private Brush CoveredNodeColor { get; set; }
-        
-        public Point Location { get; set; }
+
+        public PointF Location { get; set; }
         public Presenter ParentForm { get; set; }
 
-        public NodeVisualizer ( PaintEventArgs e, int x, int y, int id, Presenter parentForm, int diameter = 40 )
+        public NodeVisualizer(PaintEventArgs e, float x, float y, int id, Presenter parentForm, int diameter = 40)
         {
             Id = id;
 
@@ -28,7 +28,7 @@ namespace VisualInterface
 
             Diameter = diameter;
 
-            Location = new Point(x, y);
+            Location = new PointF(x, y);
 
             DefaultFontForId = new Font(FontFamily.GenericSansSerif, 20, FontStyle.Bold);
 
@@ -38,15 +38,15 @@ namespace VisualInterface
             Draw();
         }
 
-        public bool OnIt ( Point p )
+        public bool OnIt(PointF p)
         {
             var dist = GetDistance(Location, p);
             var radius = (double)Diameter / 2;
-            
-            return dist < radius ;
-        }
 
-        public bool Intersects ( Point p )
+            return dist < radius;
+        }
+        
+        public bool Intersects(PointF p)
         {
             var dist = GetDistance(Location, p);
 
@@ -57,10 +57,10 @@ namespace VisualInterface
         /// Changes nodes color. Default is Red, if changeColor parameter is set to true, then it will be blue.
         /// </summary>
         /// <param name="changeColor"></param>
-        public void Draw ( bool changeColor = false )
+        public void Draw(bool changeColor = false)
         {
             bool drawn = false;
-            while(!drawn)
+            while (!drawn)
                 try
                 {
                     PaintArgs.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -74,12 +74,12 @@ namespace VisualInterface
                 catch { }
         }
 
-        public void VisualizeMessage ( AsyncSimulator.Message m )
+        public void VisualizeMessage(AsyncSimulator.Message m)
         {
-            foreach ( var edge in ParentForm.AllEdges )
+            foreach (var edge in ParentForm.AllEdges)
             {
-                if ( ( edge.Node1.Id == m.Source.Id && edge.Node2.Id == m.Destination.Id ) ||
-                    ( edge.Node2.Id == m.Source.Id && edge.Node1.Id == m.Destination.Id ) )
+                if ((edge.Node1.Id == m.Source.Id && edge.Node2.Id == m.Destination.Id) ||
+                    (edge.Node2.Id == m.Source.Id && edge.Node1.Id == m.Destination.Id))
                 {
                     edge.Colorify(PaintArgs);
 
@@ -90,12 +90,12 @@ namespace VisualInterface
             }
         }
 
-        public void RevertEdgeBetween ( _Node n1, _Node n2 )
+        public void RevertEdgeBetween(_Node n1, _Node n2)
         {
-            foreach ( var edge in ParentForm.AllEdges )
+            foreach (var edge in ParentForm.AllEdges)
             {
-                if ( ( edge.Node1.Id == n1.Id && edge.Node2.Id == n2.Id ) ||
-                    ( edge.Node2.Id == n1.Id && edge.Node1.Id == n2.Id ) )
+                if ((edge.Node1.Id == n1.Id && edge.Node2.Id == n2.Id) ||
+                    (edge.Node2.Id == n1.Id && edge.Node1.Id == n2.Id))
                 {
                     edge.Colorify(PaintArgs, true);
 
@@ -107,17 +107,17 @@ namespace VisualInterface
             }
         }
 
-        public void Log ( string l, params object[] args )
+        public void Log(string l, params object[] args)
         {
-            ParentForm.Invoke(new MethodInvoker(delegate() { ParentForm.tb_console.AppendText(string.Format(l, args) + Environment.NewLine); }));
+            ParentForm.Invoke(new MethodInvoker(delegate () { ParentForm.tb_console.AppendText(string.Format(l, args) + Environment.NewLine); }));
         }
 
-        private static double GetDistance ( PointF point1, PointF point2 )
+        private static double GetDistance(PointF point1, PointF point2)
         {
             //pythagorean theorem c^2 = a^2 + b^2
             //thus c = square root(a^2 + b^2)
-            double a = (double)( point2.X - point1.X );
-            double b = (double)( point2.Y - point1.Y );
+            double a = (double)(point2.X - point1.X);
+            double b = (double)(point2.Y - point1.Y);
 
             return Math.Sqrt(a * a + b * b);
         }

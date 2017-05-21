@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VisualInterface</RootNamespace>
     <AssemblyName>VisualInterface</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <SccProjectName>SAK</SccProjectName>
@@ -51,6 +51,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GraphGenerator\CompleteGraphGenerator.cs" />
+    <Compile Include="GraphGenerator\BipartiteGraphGenerator.cs" />
+    <Compile Include="GraphGenerator\StarGraphGenerator.cs" />
+    <Compile Include="GraphGenerator\GraphGeneratorFactory.cs" />
+    <Compile Include="GraphGenerator\GraphType.cs" />
+    <Compile Include="GraphGenerator\IGraphGenerator.cs" />
+    <Compile Include="GraphGenerator\CircleGraphGenerator.cs" />
+    <Compile Include="GraphGenerator\LineGraphGenerator.cs" />
+    <Compile Include="GraphGenerator\RandomGraphGenerator.cs" />
     <Compile Include="NodeFactory.cs" />
     <Compile Include="Presenter.cs">
       <SubType>Form</SubType>
@@ -93,6 +102,10 @@
     <ProjectReference Include="..\AsyncSimulator\AsyncSimulator.csproj">
       <Project>{440fa7c3-094a-4913-8cf5-14b440c0b86e}</Project>
       <Name>AsyncSimulator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChiuNode\ChiuNode.csproj">
+      <Project>{6b034cef-a5dd-4025-aef8-49093e72c4ec}</Project>
+      <Name>ChiuNode</Name>
     </ProjectReference>
     <ProjectReference Include="..\FloodingNode\FloodingNode.csproj">
       <Project>{001847dc-fbff-4114-b6c9-00c388fd5857}</Project>

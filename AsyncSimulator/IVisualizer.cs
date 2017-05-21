@@ -7,21 +7,21 @@ namespace AsyncSimulator
         /// <summary>
         /// Location of this node.
         /// </summary>
-        Point Location { get; set; }
+        PointF Location { get; set; }
 
         /// <summary>
         /// Checks whether the given point is on this node.
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        bool OnIt(Point p);
+        bool OnIt(PointF p);
 
         /// <summary>
         /// Checks whether the given point is dangerously close to this node.
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        bool Intersects(Point p);
+        bool Intersects(PointF p);
 
         /// <summary>
         /// Method for drawing the node.

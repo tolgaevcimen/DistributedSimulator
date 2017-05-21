@@ -31,13 +31,15 @@
             this.drawing_panel = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tbNodeCount = new System.Windows.Forms.TextBox();
             this.tb_console = new System.Windows.Forms.TextBox();
             this.btn_refresh = new System.Windows.Forms.Button();
             this.cb_choose_alg = new System.Windows.Forms.ComboBox();
             this.btn_run_update_bfs = new System.Windows.Forms.Button();
             this.btn_clear = new System.Windows.Forms.Button();
             this.btn_random_nodes = new System.Windows.Forms.Button();
-            this.number_of_random_nodes = new System.Windows.Forms.TextBox();
+            this.cb_graph_type = new System.Windows.Forms.ComboBox();
+            this.cb_selfStab = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -79,19 +81,22 @@
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 77.68595F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.31405F));
+            this.tableLayoutPanel2.Controls.Add(this.tbNodeCount, 1, 3);
             this.tableLayoutPanel2.Controls.Add(this.tb_console, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.btn_refresh, 0, 6);
             this.tableLayoutPanel2.Controls.Add(this.cb_choose_alg, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.btn_run_update_bfs, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.btn_clear, 0, 5);
             this.tableLayoutPanel2.Controls.Add(this.btn_random_nodes, 0, 4);
-            this.tableLayoutPanel2.Controls.Add(this.number_of_random_nodes, 1, 4);
+            this.tableLayoutPanel2.Controls.Add(this.cb_graph_type, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.cb_selfStab, 0, 7);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(558, 4);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 7;
+            this.tableLayoutPanel2.RowCount = 8;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
@@ -100,6 +105,16 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(292, 557);
             this.tableLayoutPanel2.TabIndex = 1;
+            // 
+            // tbNodeCount
+            // 
+            this.tbNodeCount.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbNodeCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.tbNodeCount.Location = new System.Drawing.Point(226, 339);
+            this.tbNodeCount.Margin = new System.Windows.Forms.Padding(0, 7, 4, 11);
+            this.tbNodeCount.Name = "tbNodeCount";
+            this.tbNodeCount.Size = new System.Drawing.Size(62, 31);
+            this.tbNodeCount.TabIndex = 12;
             // 
             // tb_console
             // 
@@ -111,7 +126,7 @@
             this.tb_console.Multiline = true;
             this.tb_console.Name = "tb_console";
             this.tb_console.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tb_console.Size = new System.Drawing.Size(284, 279);
+            this.tb_console.Size = new System.Drawing.Size(284, 234);
             this.tb_console.TabIndex = 3;
             // 
             // btn_refresh
@@ -120,7 +135,7 @@
             this.btn_refresh.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn_refresh.Enabled = false;
             this.btn_refresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btn_refresh.Location = new System.Drawing.Point(3, 515);
+            this.btn_refresh.Location = new System.Drawing.Point(3, 470);
             this.btn_refresh.Name = "btn_refresh";
             this.btn_refresh.Size = new System.Drawing.Size(286, 39);
             this.btn_refresh.TabIndex = 6;
@@ -134,7 +149,7 @@
             this.cb_choose_alg.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cb_choose_alg.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.cb_choose_alg.FormattingEnabled = true;
-            this.cb_choose_alg.Location = new System.Drawing.Point(3, 290);
+            this.cb_choose_alg.Location = new System.Drawing.Point(3, 245);
             this.cb_choose_alg.Name = "cb_choose_alg";
             this.cb_choose_alg.Size = new System.Drawing.Size(286, 39);
             this.cb_choose_alg.TabIndex = 10;
@@ -145,7 +160,7 @@
             this.tableLayoutPanel2.SetColumnSpan(this.btn_run_update_bfs, 2);
             this.btn_run_update_bfs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn_run_update_bfs.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btn_run_update_bfs.Location = new System.Drawing.Point(3, 335);
+            this.btn_run_update_bfs.Location = new System.Drawing.Point(3, 290);
             this.btn_run_update_bfs.Name = "btn_run_update_bfs";
             this.btn_run_update_bfs.Size = new System.Drawing.Size(286, 39);
             this.btn_run_update_bfs.TabIndex = 9;
@@ -158,7 +173,7 @@
             this.tableLayoutPanel2.SetColumnSpan(this.btn_clear, 2);
             this.btn_clear.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn_clear.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btn_clear.Location = new System.Drawing.Point(4, 471);
+            this.btn_clear.Location = new System.Drawing.Point(4, 426);
             this.btn_clear.Margin = new System.Windows.Forms.Padding(4);
             this.btn_clear.Name = "btn_clear";
             this.btn_clear.Size = new System.Drawing.Size(284, 37);
@@ -169,26 +184,38 @@
             // 
             // btn_random_nodes
             // 
+            this.tableLayoutPanel2.SetColumnSpan(this.btn_random_nodes, 2);
             this.btn_random_nodes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn_random_nodes.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btn_random_nodes.Location = new System.Drawing.Point(4, 426);
+            this.btn_random_nodes.Location = new System.Drawing.Point(4, 381);
             this.btn_random_nodes.Margin = new System.Windows.Forms.Padding(4);
             this.btn_random_nodes.Name = "btn_random_nodes";
-            this.btn_random_nodes.Size = new System.Drawing.Size(218, 37);
+            this.btn_random_nodes.Size = new System.Drawing.Size(284, 37);
             this.btn_random_nodes.TabIndex = 4;
-            this.btn_random_nodes.Text = "Generate Random Nodes";
+            this.btn_random_nodes.Text = "Generate Nodes";
             this.btn_random_nodes.UseVisualStyleBackColor = true;
             this.btn_random_nodes.Click += new System.EventHandler(this.btn_random_nodes_Click);
             // 
-            // number_of_random_nodes
+            // cb_graph_type
             // 
-            this.number_of_random_nodes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.number_of_random_nodes.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.number_of_random_nodes.Location = new System.Drawing.Point(226, 429);
-            this.number_of_random_nodes.Margin = new System.Windows.Forms.Padding(0, 7, 4, 11);
-            this.number_of_random_nodes.Name = "number_of_random_nodes";
-            this.number_of_random_nodes.Size = new System.Drawing.Size(62, 31);
-            this.number_of_random_nodes.TabIndex = 5;
+            this.cb_graph_type.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cb_graph_type.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.cb_graph_type.FormattingEnabled = true;
+            this.cb_graph_type.Location = new System.Drawing.Point(3, 335);
+            this.cb_graph_type.Name = "cb_graph_type";
+            this.cb_graph_type.Size = new System.Drawing.Size(220, 39);
+            this.cb_graph_type.TabIndex = 11;
+            // 
+            // cb_selfStab
+            // 
+            this.cb_selfStab.AutoSize = true;
+            this.cb_selfStab.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cb_selfStab.Location = new System.Drawing.Point(3, 515);
+            this.cb_selfStab.Name = "cb_selfStab";
+            this.cb_selfStab.Size = new System.Drawing.Size(220, 39);
+            this.cb_selfStab.TabIndex = 13;
+            this.cb_selfStab.Text = "Self Stab Mode";
+            this.cb_selfStab.UseVisualStyleBackColor = true;
             // 
             // Presenter
             // 
@@ -216,10 +243,12 @@
         private System.Windows.Forms.Button btn_clear;
         public System.Windows.Forms.TextBox tb_console;
         private System.Windows.Forms.Button btn_random_nodes;
-        private System.Windows.Forms.TextBox number_of_random_nodes;
         private System.Windows.Forms.Button btn_refresh;
         private System.Windows.Forms.Button btn_run_update_bfs;
         private System.Windows.Forms.ComboBox cb_choose_alg;
+        private System.Windows.Forms.TextBox tbNodeCount;
+        private System.Windows.Forms.ComboBox cb_graph_type;
+        public System.Windows.Forms.CheckBox cb_selfStab;
     }
 }
 

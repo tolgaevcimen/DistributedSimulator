@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncSimulator", "AsyncSimulator\AsyncSimulator.csproj", "{440FA7C3-094A-4913-8CF5-14B440C0B86E}"
 EndProject
@@ -17,34 +17,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateBfsNode", "UpdateBfsN
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeighDfsNode", "NeighDfsNode\NeighDfsNode.csproj", "{A9B62A8B-F497-42A0-8F43-0A414B813AD3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChiuNode", "ChiuNode\ChiuNode.csproj", "{6B034CEF-A5DD-4025-AEF8-49093E72C4EC}"
+EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tolgaevcimen.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = ASyncSimulator1\\Environment.csproj
-		SccProjectName1 = ASyncSimulator1
-		SccLocalPath1 = ASyncSimulator1
-		SccProjectUniqueName2 = AsyncSimulator\\AsyncSimulator.csproj
-		SccProjectName2 = AsyncSimulator
-		SccLocalPath2 = AsyncSimulator
-		SccProjectUniqueName3 = FloodingNode\\FloodingNode.csproj
-		SccProjectName3 = FloodingNode
-		SccLocalPath3 = FloodingNode
-		SccProjectUniqueName4 = VisualInterface\\VisualInterface.csproj
-		SccProjectName4 = VisualInterface
-		SccLocalPath4 = VisualInterface
-		SccProjectUniqueName5 = FloodSTNode\\FloodSTNode.csproj
-		SccProjectName5 = FloodSTNode
-		SccLocalPath5 = FloodSTNode
-		SccProjectUniqueName6 = UpdateBfsNode\\UpdateBfsNode.csproj
-		SccProjectName6 = UpdateBfsNode
-		SccLocalPath6 = UpdateBfsNode
-		SccProjectUniqueName7 = NeighDfsNode\\NeighDfsNode.csproj
-		SccProjectName7 = NeighDfsNode
-		SccLocalPath7 = NeighDfsNode
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -78,6 +53,10 @@ Global
 		{A9B62A8B-F497-42A0-8F43-0A414B813AD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9B62A8B-F497-42A0-8F43-0A414B813AD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9B62A8B-F497-42A0-8F43-0A414B813AD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B034CEF-A5DD-4025-AEF8-49093E72C4EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B034CEF-A5DD-4025-AEF8-49093E72C4EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B034CEF-A5DD-4025-AEF8-49093E72C4EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B034CEF-A5DD-4025-AEF8-49093E72C4EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

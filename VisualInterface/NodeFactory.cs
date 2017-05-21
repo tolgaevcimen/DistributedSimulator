@@ -4,6 +4,7 @@ using FloodSTNode;
 using System;
 using UpdateBfsNode;
 using NeighDfsNode;
+using ChiuDominatingSet;
 
 namespace VisualInterface
 {
@@ -12,37 +13,60 @@ namespace VisualInterface
     /// </summary>
     public class NodeFactory
     {
-        public static _Node Create ( string algorithmType, int id )
+        public static _Node Create(string algorithmType, int id, IVisualizer nodeVisualizer)
         {
             _Node node = null;
-            switch ( algorithmType )
+            switch (algorithmType)
             {
                 case "Flooding":
-                {
-                    node = new _FloodingNode(id);
+                    {
+                        node = new _FloodingNode(id);
 
-                    break;
-                }
+                        break;
+                    }
                 case "FloodST":
-                {
-                    node = new _FloodSTNode(id);
+                    {
+                        node = new _FloodSTNode(id);
 
-                    break;
-                }
+                        break;
+                    }
                 case "UpdateBFS":
-                {
-                    node = new _UpdateBfsNode(id);
+                    {
+                        node = new _UpdateBfsNode(id);
 
-                    break;
-                }
+                        break;
+                    }
                 case "NeighDFS":
-                {
-                    node = new _NeighDfsNode(id);
+                    {
+                        node = new _NeighDfsNode(id);
 
-                    break;
-                }
+                        break;
+                    }
+                case "ChiuDS_rand":
+                    {
+                        node = new ChiuNode(id, ChiuNode.InitialState.Random, Program.Randomizer);
+                        
+                        break;
+                    }
+                case "ChiuDS_allIn":
+                    {
+                        node = new ChiuNode(id, ChiuNode.InitialState.AllIn);
+
+                        break;
+                    }
+                case "ChiuDS_allWait":
+                    {
+                        node = new ChiuNode(id, ChiuNode.InitialState.AllWait);
+
+                        break;
+                    }
                 default: throw new Exception("Unknown algorithm");
             }
+
+            node.Visualizer = nodeVisualizer;
+
+            if (Program.Presenter.cb_selfStab.Checked)
+                node.UserDefined_SingleInitiatorProcedure(node);
 
             return node;
         }
