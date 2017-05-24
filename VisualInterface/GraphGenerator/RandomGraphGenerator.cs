@@ -35,6 +35,8 @@ namespace VisualInterface.GraphGenerator
                 {
                     if (randomizer.Next() % 100 > 10) continue;
 
+                    if (node1.Neighbours.Contains(node2)) continue;
+
                     var edge = new VisualEdge(arg, node1.Visualizer.Location, node2.Visualizer.Location, node1, ghost: true);
                     edge.Solidify(node1.Visualizer.Location, node2.Visualizer.Location, node2, true);
                     AllEdges.Add(edge);

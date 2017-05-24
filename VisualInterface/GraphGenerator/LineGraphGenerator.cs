@@ -34,24 +34,11 @@ namespace VisualInterface.GraphGenerator
 
             for (int i = 0; i < nodeCount; i++)
             {
-                if (i != 0)
-                {
-                    var node1 = AllNodes[i];
-                    var node2 = AllNodes[i - 1];
-
-                    //AllNodes[i].AddNeighbor(AllNodes[i - 1]);
-
-                    var edge = new VisualEdge(arg, node1.Visualizer.Location, node2.Visualizer.Location, node1, ghost: true);
-                    edge.Solidify(node1.Visualizer.Location, node2.Visualizer.Location, node2, true);
-                    AllEdges.Add(edge);
-                }
                 if (i != nodeCount - 1)
                 {
                     var node1 = AllNodes[i];
                     var node2 = AllNodes[i + 1];
-
-                    //AllNodes[i].AddNeighbor(AllNodes[i + 1]);
-
+                    
                     var edge = new VisualEdge(arg, node1.Visualizer.Location, node2.Visualizer.Location, node1, ghost: true);
                     edge.Solidify(node1.Visualizer.Location, node2.Visualizer.Location, node2, true);
                     AllEdges.Add(edge);

@@ -42,7 +42,6 @@ namespace ChiuDominatingSet
 
         public ChiuNode(int id, InitialState initialState = InitialState.AllWait, Random randomizer = null) : base(id)
         {
-            Id = id;
             State = GetState(initialState, randomizer);
             Lock = new object();
             FirstTime = true;

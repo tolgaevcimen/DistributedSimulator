@@ -14,11 +14,11 @@ namespace VisualInterface.GraphGenerator
             var randomizer = new Random();
             var arg = new PaintEventArgs(drawing_panel.CreateGraphics(), new Rectangle());
 
+            var horizontalInterval = (drawing_panel.Width - 80) / 3;
+            var verticalInterval = (drawing_panel.Height - 80) / ((nodeCount / 2) - (nodeCount % 2 == 0 ? 1 : 0));
+
             for (int i = 0; i < nodeCount; i++)
             {
-                var horizontalInterval = (drawing_panel.Width - 80) / 3;
-                var verticalInterval = (drawing_panel.Height - 80) / ((nodeCount / 2) - (nodeCount % 2 == 0 ? 1 : 0));
-
                 var x = i < nodeCount / 2 ?
                     40 + horizontalInterval :
                     40 + (horizontalInterval * 2);

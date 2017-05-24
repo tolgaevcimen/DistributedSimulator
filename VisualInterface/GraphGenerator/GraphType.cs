@@ -7,6 +7,8 @@
         Circle,
         Star,
         Bipartite,
+        BinaryTree,
+        //TripletTree,
         Complete
     }
 }

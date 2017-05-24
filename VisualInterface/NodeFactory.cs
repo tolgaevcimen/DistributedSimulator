@@ -5,6 +5,7 @@ using System;
 using UpdateBfsNode;
 using NeighDfsNode;
 using ChiuDominatingSet;
+using GoddardMDSNode;
 
 namespace VisualInterface
 {
@@ -57,6 +58,12 @@ namespace VisualInterface
                 case "ChiuDS_allWait":
                     {
                         node = new ChiuNode(id, ChiuNode.InitialState.AllWait);
+
+                        break;
+                    }
+                case "GoddardMDS":
+                    {
+                        node = new GoddardNode(id);
 
                         break;
                     }

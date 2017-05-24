@@ -7,21 +7,29 @@ using AsyncSimulator;
 
 namespace VisualInterface.GraphGenerator
 {
-    class CircleGraphGenerator : IGraphGenerator
+    class BinaryTreeGraphGenerator : IGraphGenerator
     {
         public void Generate(int nodeCount, Presenter parentForm, Panel drawing_panel, List<_Node> AllNodes, List<VisualEdge> AllEdges, string SelectedAlgorithm)
         {
-            var randomizer = new Random();
             var arg = new PaintEventArgs(drawing_panel.CreateGraphics(), new Rectangle());
 
-            var radius = (Math.Min(drawing_panel.Height, drawing_panel.Width) - 80) / 2;
-            var origin = new Point(drawing_panel.Width / 2, drawing_panel.Height / 2);
+            var queue = new Queue<int>();
+
+            var totalHeight = Math.Floor(Math.Log(nodeCount, 2)) + 1;
+
+            var verticalInterval = (int)((drawing_panel.Height - 80) / (totalHeight - 1));
 
             for (int i = 0; i < nodeCount; i++)
             {
-                var angle = 360 / (float)nodeCount * i;
-                                
-                var p = PointOnCircle(radius, angle, origin);
+                var currentDepth = (int)Math.Floor(Math.Log(i + 1, 2));
+
+                var horizontalInterval = (int)((drawing_panel.Width) / (Math.Pow(2, currentDepth) + 1));
+
+                var currentIndex = (int)(i - (Math.Pow(2, currentDepth) - 1) + 1);
+
+                Console.WriteLine("i: {0}, depth: {1}, currentIndex: {2}", i, currentDepth, currentIndex);
+
+                var p = new Point((currentIndex) * horizontalInterval, (currentDepth) * verticalInterval + 40);
 
                 if (!AllNodes.Any(n => n.Visualizer.Intersects(p)))
                 {
@@ -31,30 +39,31 @@ namespace VisualInterface.GraphGenerator
                 }
                 else
                 {
-                    i--;
+                    throw new Exception("Reached to screen limits");
                 }
             };
 
+            for (int i = 1; i < nodeCount; i++)
+            {
+                queue.Enqueue(i);
+            }
+
             for (int i = 0; i < nodeCount; i++)
             {
-                if (i != nodeCount - 1)
-                {
-                    var node1 = AllNodes[i];
-                    var node2 = AllNodes[i + 1];
-                    
-                    var edge = new VisualEdge(arg, node1.Visualizer.Location, node2.Visualizer.Location, node1, ghost: true);
-                    edge.Solidify(node1.Visualizer.Location, node2.Visualizer.Location, node2, true);
-                    AllEdges.Add(edge);
-                }
-                else
-                {
-                    var node1 = AllNodes[i];
-                    var node2 = AllNodes[0];
+                var parent = AllNodes[i];
 
-                    var edge = new VisualEdge(arg, node1.Visualizer.Location, node2.Visualizer.Location, node1, ghost: true);
-                    edge.Solidify(node1.Visualizer.Location, node2.Visualizer.Location, node2, true);
+                for (int j = 0; j < 2; j++)
+                {
+                    if (!queue.Any()) break;
+
+                    var firstChildId = queue.Dequeue();
+                    var child = AllNodes[firstChildId];
+
+                    var edge = new VisualEdge(arg, parent.Visualizer.Location, child.Visualizer.Location, parent, ghost: true);
+                    edge.Solidify(parent.Visualizer.Location, child.Visualizer.Location, child, true);
                     AllEdges.Add(edge);
                 }
+
             }
         }
 

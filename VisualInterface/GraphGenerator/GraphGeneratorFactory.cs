@@ -16,6 +16,10 @@
                     return new StarGraphGenerator();
                 case GraphType.Bipartite:
                     return new BipartiteGraphGenerator();
+                case GraphType.BinaryTree:
+                    return new BinaryTreeGraphGenerator();
+                //case GraphType.TripletTree:
+                //    return new TripletTreeGraphGenerator();
                 case GraphType.Complete:
                     return new CompleteGraphGenerator();
             }

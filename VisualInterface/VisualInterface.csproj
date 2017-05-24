@@ -51,8 +51,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GraphGenerator\TripletTreeGraphGenerator.cs" />
     <Compile Include="GraphGenerator\CompleteGraphGenerator.cs" />
     <Compile Include="GraphGenerator\BipartiteGraphGenerator.cs" />
+    <Compile Include="GraphGenerator\BinaryTreeGraphGenerator.cs" />
     <Compile Include="GraphGenerator\StarGraphGenerator.cs" />
     <Compile Include="GraphGenerator\GraphGeneratorFactory.cs" />
     <Compile Include="GraphGenerator\GraphType.cs" />
@@ -114,6 +116,10 @@
     <ProjectReference Include="..\FloodSTNode\FloodSTNode.csproj">
       <Project>{3b0a53f7-5ebc-4269-a38e-40fb077578e6}</Project>
       <Name>FloodSTNode</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GoddardMDSNode\GoddardMDSNode.csproj">
+      <Project>{7033cf9e-d993-4f95-8749-1c8da60a7e97}</Project>
+      <Name>GoddardMDSNode</Name>
     </ProjectReference>
     <ProjectReference Include="..\NeighDfsNode\NeighDfsNode.csproj">
       <Project>{a9b62a8b-f497-42a0-8f43-0a414b813ad3}</Project>

@@ -37,8 +37,8 @@ namespace VisualInterface
             AllEdges = new List<VisualEdge>();
 
             cb_choose_alg.Items.AddRange(Algorithms.ToArray());
-            cb_choose_alg.SelectedIndex = 4;
-            SelectedAlgorithm = "ChiuDS_allWait";
+            cb_choose_alg.SelectedIndex = 7;
+            SelectedAlgorithm = "GoddardMDS";
 
             cb_graph_type.Items.AddRange(Enum.GetNames(typeof(GraphType)));
             cb_graph_type.SelectedIndex = 1;
@@ -191,7 +191,7 @@ namespace VisualInterface
         /// <summary>
         /// Holds the list of algorithms. When new ones are added here, please add them to the factory implementation too.
         /// </summary>
-        private List<string> Algorithms = new List<string> { "Flooding", "FloodST", "UpdateBFS", "NeighDFS", "ChiuDS_allWait", "ChiuDS_allIn", "ChiuDS_rand" };
+        private List<string> Algorithms = new List<string> { "Flooding", "FloodST", "UpdateBFS", "NeighDFS", "ChiuDS_allWait", "ChiuDS_allIn", "ChiuDS_rand", "GoddardMDS" };
 
         /// <summary>
         /// Holds the selected algorithms name.
@@ -223,7 +223,7 @@ namespace VisualInterface
             if ( firstNode == null ) return;
 
             var initiator = NodeFactory.Create(SelectedAlgorithm, -1, null);
-            initiator.UserDefined_SingleInitiatorProcedure(firstNode);
+            firstNode.UserDefined_SingleInitiatorProcedure(firstNode);
         }
     }
 }

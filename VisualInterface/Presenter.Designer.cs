@@ -209,6 +209,8 @@
             // cb_selfStab
             // 
             this.cb_selfStab.AutoSize = true;
+            this.cb_selfStab.Checked = true;
+            this.cb_selfStab.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cb_selfStab.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cb_selfStab.Location = new System.Drawing.Point(3, 515);
             this.cb_selfStab.Name = "cb_selfStab";

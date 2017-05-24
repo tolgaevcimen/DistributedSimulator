@@ -20,7 +20,7 @@ namespace FloodingNode
         {
             var now = DateTime.Now;
 
-            Console.WriteLine("node{0} received:( {1} ) from sender node{2} - {3}", this.Id, receivedMessage, receivedMessage.Source.Id, now.Minute + ":" + now.Second);
+            Visualizer.Log("node{0} received:( {1} ) from sender node{2} - {3}", this.Id, receivedMessage, receivedMessage.Source.Id, now.Minute + ":" + now.Second);
             Thread.Sleep(1000);
             foreach ( var neighbour in Neighbours )
             {
@@ -35,7 +35,7 @@ namespace FloodingNode
             }
 
             Visualizer.VisualizeMessage(receivedMessage);
-            Console.WriteLine("receiver {0} done", this.Id);
+            Visualizer.Log("receiver {0} done", this.Id);
         }
 
         public override void UserDefined_SingleInitiatorProcedure ( _Node root )
