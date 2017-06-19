@@ -79,7 +79,6 @@ namespace NeighDfsNode
             else if ( Id == 0 )
             {
                 Visualizer.Log("token is back at root", Id, receivedMessage.Source.Id);
-                Stop();
             }
 
             /// if all nodes are searched, and this node is NOT root, return token to parent
@@ -99,8 +98,6 @@ namespace NeighDfsNode
                 };
 
                 this.Underlying_Send(token);
-
-                Stop();
             }
         }
 
@@ -117,15 +114,6 @@ namespace NeighDfsNode
                 Data = new List<int>(),
                 MessageType = MessageTypes.Token
             });
-        }
-
-        /// <summary>
-        /// Since this algorithm is a single initiator method, this method is NOT implemented intentionally.
-        /// </summary>
-        /// <param name="allNodes"></param>
-        public override void UserDefined_ConcurrentInitiatorProcedure ( List<_Node> allNodes )
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -48,10 +48,5 @@ namespace FloodingNode
                 MessageType = 0
             });
         }
-
-        public override void UserDefined_ConcurrentInitiatorProcedure ( List<_Node> allNodes )
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -25,9 +25,14 @@ namespace VisualInterface
         public _Node Node1 { get; set; }
         public _Node Node2 { get; set; }
 
+        public GraphicsPath Path { get; set; }
+        public Pen SolidPen { get; set; }
+
+        public Pen LastUsedPen { get; set; }
+
         private PaintEventArgs PaintArgs { get; set; }
 
-        public VisualEdge ( PaintEventArgs e, PointF end1, PointF end2, _Node node1, bool ghost = false, int thickness = 7 )
+        public VisualEdge(PaintEventArgs e, PointF end1, PointF end2, _Node node1, bool ghost = false, int thickness = 7)
         {
             EdgeColor = Color.Pink;
             SelectedEdgeColor = Color.LightBlue;
@@ -35,17 +40,20 @@ namespace VisualInterface
 
             Thickness = thickness;
 
+            SolidPen = new Pen(EdgeColor, Thickness);
+            LastUsedPen = SolidPen;
+
             End1 = end1;
             End2 = end2;
 
             Node1 = node1;
             PaintArgs = e;
 
-            if ( !ghost )
+            if (!ghost)
                 ControlPaint.DrawReversibleLine(Point.Round(End1), Point.Round(End2), EdgeColor);
         }
 
-        public void Refresh ( PaintEventArgs e, Point end2 )
+        public void Refresh(PaintEventArgs e, Point end2)
         {
             ControlPaint.DrawReversibleLine(Point.Round(End1), Point.Round(End2), EdgeColor);
 
@@ -54,26 +62,21 @@ namespace VisualInterface
             ControlPaint.DrawReversibleLine(Point.Round(End1), Point.Round(End2), EdgeColor);
         }
 
-        public void Vanish ( PaintEventArgs e )
+        public void Vanish(PaintEventArgs e)
         {
             ControlPaint.DrawReversibleLine(Point.Round(End1), Point.Round(End2), EdgeColor);
         }
 
-        public void Solidify ( PointF end1, PointF end2, _Node node2, bool firstTime = false )
+        public void Solidify(PointF end1, PointF end2, _Node node2, bool firstTime)
         {
             Node2 = node2;
 
-            bool drawn = false;
-            while ( !drawn )
-                try
-                {
-                    /// solidify the edge
-                    PaintArgs.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                    PaintArgs.Graphics.DrawLine(new Pen(EdgeColor, Thickness), Node1.Visualizer.Location, Node2.Visualizer.Location);
+            LastUsedPen = SolidPen;
+            Draw(SolidPen);
 
-                    drawn = true;
-                }
-                catch { }
+            Path = new GraphicsPath();
+
+            Path.AddLine(Node1.Visualizer.Location, Node2.Visualizer.Location);
 
             /// set neighbourhood
             Node1.Neighbours.Add(Node2);
@@ -90,24 +93,59 @@ namespace VisualInterface
             }
         }
 
-        public void Colorify ( PaintEventArgs e, bool reverted = false )
+        public void Colorify(PaintEventArgs e, bool reverted = false)
         {
+            if (!reverted)
+                LastUsedPen = new Pen(SelectedEdgeColor, Thickness);
+            else
+                LastUsedPen = new Pen(RevertedEdgeColor, Thickness);
+
+            Draw(null);
+        }
+
+        public void Delete()
+        {
+            Draw(new Pen(Color.White, Thickness + 1));
+
+            /// set neighbourhood
+            Node1.Neighbours.Remove(Node2);
+            Node2.Neighbours.Remove(Node1);
+
+            /// redraw the nodes
+            Node1.Visualizer.Draw(Node1.Selected());
+            Node2.Visualizer.Draw(Node2.Selected());
+
+            /// redraw the edges
+            Program.Presenter.AllEdges.Remove(this);
+            Program.Presenter.AllEdges.ForEach(e => e.Draw(null));
+            Program.Presenter.AllNodes.ForEach(e => e.Visualizer.Draw(e.Selected()));
+
+            if (Program.Presenter.cb_selfStab.Checked)
+            {
+                Node1.UserDefined_SingleInitiatorProcedure(Node1);
+                Node2.UserDefined_SingleInitiatorProcedure(Node2);
+            }
+        }
+
+        public void Draw(Pen pen)
+        {
+            if (pen == null)
+                pen = LastUsedPen;
+
             bool drawn = false;
-            while ( !drawn )
+            while (!drawn)
                 try
                 {
-                    e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                    if ( !reverted )
-                        e.Graphics.DrawLine(new Pen(SelectedEdgeColor, Thickness), Node1.Visualizer.Location, Node2.Visualizer.Location);
-                    else
-                        e.Graphics.DrawLine(new Pen(RevertedEdgeColor, Thickness), Node1.Visualizer.Location, Node2.Visualizer.Location);
+                    /// solidify the edge
+                    PaintArgs.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                    PaintArgs.Graphics.DrawLine(pen, Node1.Visualizer.Location, Node2.Visualizer.Location);
 
                     drawn = true;
                 }
                 catch { }
         }
 
-        public void Restore ()
+        public void Restore()
         {
             /// solidify the edge
             PaintArgs.Graphics.SmoothingMode = SmoothingMode.AntiAlias;

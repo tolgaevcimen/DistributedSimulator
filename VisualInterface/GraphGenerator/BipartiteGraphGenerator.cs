@@ -9,7 +9,8 @@ namespace VisualInterface.GraphGenerator
 {
     class BipartiteGraphGenerator : IGraphGenerator
     {
-        public void Generate(int nodeCount, Presenter parentForm, Panel drawing_panel, List<_Node> AllNodes, List<VisualEdge> AllEdges, string SelectedAlgorithm)
+        public void Generate(int nodeCount, Presenter parentForm, Panel drawing_panel, 
+            List<_Node> AllNodes, List<VisualEdge> AllEdges, string SelectedAlgorithm)
         {
             var randomizer = new Random();
             var arg = new PaintEventArgs(drawing_panel.CreateGraphics(), new Rectangle());

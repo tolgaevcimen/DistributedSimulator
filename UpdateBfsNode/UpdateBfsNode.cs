@@ -137,15 +137,6 @@ namespace UpdateBfsNode
                 MessageType = MessageTypes.Layer
             });
         }
-        
-        /// <summary>
-        /// Since this algorithm is a single initiator method, this method is NOT implemented intentionally.
-        /// </summary>
-        /// <param name="allNodes"></param>
-        public override void UserDefined_ConcurrentInitiatorProcedure ( List<_Node> allNodes )
-        {
-            throw new NotImplementedException();
-        } 
 
         #endregion
     }

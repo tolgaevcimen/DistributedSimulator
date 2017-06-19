@@ -46,7 +46,9 @@
   <ItemGroup>
     <Compile Include="IVisualizer.cs" />
     <Compile Include="Message.cs" />
+    <Compile Include="MessageQueue.cs" />
     <Compile Include="MessageTypes.cs" />
+    <Compile Include="MessagePassingNode.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

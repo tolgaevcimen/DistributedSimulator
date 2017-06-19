@@ -29,6 +29,8 @@ namespace AsyncSimulator
         /// <param name="changeColor">if set to true, the color of the node will change from default color to selected color.</param>
         void Draw(bool changeColor = false);
 
+        void Delete();
+
         /// <summary>
         /// Method for showing a selected edge. Changes an edges color lying between two nodes that the message is sourced from and destined to.
         /// </summary>

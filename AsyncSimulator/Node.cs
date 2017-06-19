@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,32 +21,37 @@ namespace AsyncSimulator
         /// <summary>
         /// A thread safe queue for received messages.
         /// </summary>
-        protected ConcurrentQueue<Message> ReceiveQueue { get; set; }
-
-        /// <summary>
-        /// Flag for running state of the underlying thread.
-        /// </summary>
-        protected bool Running { get; set; }
-
+        protected MessageQueue<Message> ReceiveQueue { get; set; }
+        
         /// <summary>
         /// This is the hooker of the strategy pattern.
         /// </summary>
         public IVisualizer Visualizer { get; set; }
 
+        public object ReceiveLock { get; set; }
+
         /// <summary>
         /// As soon a node is created, the thread starts running.
         /// </summary>
         /// <param name="id"></param>
-        public _Node ( int id )
+        public _Node(int id)
         {
             Id = id;
 
             /// initialize lists
             Neighbours = new List<_Node>();
-            ReceiveQueue = new ConcurrentQueue<Message>();
+            ReceiveQueue = new MessageQueue<Message>();
+            ReceiveQueue.Changed += ReceiveQueue_Changed;
 
-            /// initiate the thread. Magic occurs here as this call create a thread based running.
-            Task.Run(() => Receive());
+            ReceiveLock = new object();
+        }
+
+        private void ReceiveQueue_Changed(object sender, EventArgs e)
+        {
+            lock (ReceiveLock)
+            {
+                UserDefined_ReceiveMessageProcedure(ReceiveQueue.Dequeue());
+            }
         }
 
         public virtual bool Selected()
@@ -57,7 +63,7 @@ namespace AsyncSimulator
         /// This method will be implemented in sub classes for algorithm details.
         /// </summary>
         /// <param name="m"></param>
-        protected abstract void UserDefined_ReceiveMessageProcedure ( Message m );
+        protected abstract void UserDefined_ReceiveMessageProcedure(Message m);
 
         #region initiator
 
@@ -65,13 +71,7 @@ namespace AsyncSimulator
         /// This method will be implemented for single initiation strategies.
         /// </summary>
         /// <param name="root"></param>
-        public abstract void UserDefined_SingleInitiatorProcedure ( _Node root );
-
-        /// <summary>
-        /// This method will be implemented for concurrent initiation strategies.
-        /// </summary>
-        /// <param name="allNodes"></param>
-        public abstract void UserDefined_ConcurrentInitiatorProcedure ( List<_Node> allNodes );
+        public abstract void UserDefined_SingleInitiatorProcedure(_Node root);
 
         #endregion
 
@@ -81,52 +81,16 @@ namespace AsyncSimulator
         /// This method puts the given message to destinations ReceiveQueue
         /// </summary>
         /// <param name="m"></param>
-        public void Underlying_Send ( Message m )
+        public void Underlying_Send(Message m)
         {
             m.Destination.ReceiveQueue.Enqueue(m);
         }
 
         #endregion
-
-        #region Receiver
-
-        /// <summary>
-        /// The implementation of the mechanism running in thread.
-        /// </summary>
-        void Receive ()
-        {
-            while ( true )
-            {
-                if ( Running )
-                {
-                    Message incomingMessage;
-                    while ( !ReceiveQueue.TryDequeue(out incomingMessage) ) { Thread.Sleep(50); }
-                    
-                    UserDefined_ReceiveMessageProcedure(incomingMessage);
-                }
-                else
-                {
-                    Thread.Sleep(50);
-                }
-            }
-        }
         
-        #endregion
-
-        /// <summary>
-        /// Starts the node
-        /// </summary>
-        public void Start()
+        public virtual bool IsValid()
         {
-            Running = true;
-        }
-
-        /// <summary>
-        /// Stops the node
-        /// </summary>
-        public void Stop()
-        {
-            Running = false;
-        }
+            return false;
+        }        
     }
 }

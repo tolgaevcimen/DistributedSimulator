@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using AsyncSimulator;
 using UpdateBfsNode;
 using VisualInterface.GraphGenerator;
+using System.Threading.Tasks;
 
 namespace VisualInterface
 {
@@ -15,26 +16,56 @@ namespace VisualInterface
         /// <summary>
         /// Holds list of all currently drawn edges.
         /// </summary>
-        public List<VisualEdge> AllEdges { get; set; }
+        public List<VisualEdge> AllEdges
+        {
+            get
+            {
+                lock (AllEdgesLock)
+                    return _AllEdges;
+            }
+        }
 
         /// <summary>
         /// Holds list of all currently drawn nodes.
         /// </summary>
-        private List<_Node> AllNodes { get; set; }
+        public List<_Node> AllNodes
+        {
+            get
+            {
+                lock (AllNodesLock)
+                    return _AllNodes;
+            }
+        }
+
+
+        /// <summary>
+        /// Holds list of all currently drawn edges.
+        /// </summary>
+        List<VisualEdge> _AllEdges { get; set; }
+
+        /// <summary>
+        /// Holds list of all currently drawn nodes.
+        /// </summary>
+        List<_Node> _AllNodes { get; set; }
 
         /// <summary>
         /// Holds the edge that just has been started to be drawn.
         /// </summary>
         private VisualEdge CurrentEdge { get; set; }
 
+        public object AllNodesLock { get; set; }
+        public object AllEdgesLock { get; set; }
+
         /// <summary>
         /// Initiates the presenter form.
         /// </summary>
-        public Presenter ()
+        public Presenter()
         {
             InitializeComponent();
-            AllNodes = new List<_Node>();
-            AllEdges = new List<VisualEdge>();
+            _AllNodes = new List<_Node>();
+            _AllEdges = new List<VisualEdge>();
+            AllEdgesLock = new object();
+            AllNodesLock = new object();
 
             cb_choose_alg.Items.AddRange(Algorithms.ToArray());
             cb_choose_alg.SelectedIndex = 7;
@@ -56,14 +87,16 @@ namespace VisualInterface
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void drawing_panel_MouseDown ( object sender, MouseEventArgs e )
+        private void drawing_panel_MouseDown(object sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Right) return;
+
             MouseStartPos = drawing_panel.PointToScreen(e.Location);
             var arg = new PaintEventArgs(drawing_panel.CreateGraphics(), new Rectangle());
 
             var startingNode = AllNodes.FirstOrDefault(n => n.Visualizer.OnIt(e.Location));
 
-            if ( startingNode != null )
+            if (startingNode != null)
                 CurrentEdge = new VisualEdge(arg, MouseStartPos, MouseStartPos, startingNode);
         }
 
@@ -72,7 +105,20 @@ namespace VisualInterface
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void drawing_panel_MouseUp ( object sender, MouseEventArgs e )
+        private void drawing_panel_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                HandleNodeRemoval(e);
+                HandleEdgeRemoval(e);
+            }
+            else if (e.Button == MouseButtons.Left)
+            {
+                HandleNodeOrEdgeCreation(e);
+            }
+        }
+
+        void HandleNodeOrEdgeCreation(MouseEventArgs e)
         {
             var arg = new PaintEventArgs(drawing_panel.CreateGraphics(), new Rectangle());
 
@@ -81,9 +127,9 @@ namespace VisualInterface
 
             var pos2 = drawing_panel.PointToScreen(e.Location);
 
-            if ( MouseStartPos == pos2 )
+            if (MouseStartPos == pos2)
             {
-                if ( !AllNodes.Any(n => n.Visualizer.Intersects(e.Location)) )
+                if (!AllNodes.Any(n => n.Visualizer.Intersects(e.Location)))
                 {
                     var node = NodeFactory.Create(SelectedAlgorithm, AllNodes.Count, new NodeVisualizer(arg, x, y, AllNodes.Count, this));
                     node.Visualizer.Draw(node.Selected());
@@ -92,13 +138,13 @@ namespace VisualInterface
                     cb_choose_alg.Enabled = false;
                 }
             }
-            else if ( CurrentEdge != null )
+            else if (CurrentEdge != null)
             {
                 var endingNode = AllNodes.FirstOrDefault(n => n.Visualizer.OnIt(e.Location) && n != CurrentEdge.Node1);
 
-                if ( endingNode != null )
+                if (endingNode != null)
                 {
-                    CurrentEdge.Solidify(drawing_panel.PointToClient(MouseStartPos), drawing_panel.PointToClient(pos2), endingNode);
+                    CurrentEdge.Solidify(drawing_panel.PointToClient(MouseStartPos), drawing_panel.PointToClient(pos2), endingNode, true);
                     AllEdges.Add(CurrentEdge);
                 }
                 else
@@ -110,14 +156,69 @@ namespace VisualInterface
             CurrentEdge = null;
         }
 
+        void HandleNodeRemoval(MouseEventArgs e)
+        {
+            var clickedNode = AllNodes.FirstOrDefault(node => node.Visualizer.OnIt(e.Location));
+            if (clickedNode != null)
+            {
+                var edgesToBeRemoved = new List<VisualEdge>();
+                var nodesToBePoked = new List<_Node>();
+
+                foreach (var edge in AllEdges)
+                {
+                    if (edge.Node1 == clickedNode)
+                    {
+                        edgesToBeRemoved.Add(edge);
+                        nodesToBePoked.Add(edge.Node2);
+                    }
+                    else if (edge.Node2 == clickedNode)
+                    {
+                        edgesToBeRemoved.Add(edge);
+                        nodesToBePoked.Add(edge.Node1);
+                    }
+                }
+
+                foreach (var edge in edgesToBeRemoved)
+                {
+                    edge.Delete();
+                }
+
+                clickedNode.Visualizer.Delete();
+                AllEdges.ForEach(edge => edge.Draw(null));
+
+                if (cb_selfStab.Checked)
+                {
+                    foreach (var node in nodesToBePoked)
+                    {
+                        Task.Run(() =>
+                        {
+                            node.UserDefined_SingleInitiatorProcedure(node);
+                        });
+                    }
+                }
+
+                AllNodes.Remove(clickedNode);
+                AllNodes.ForEach(node => node.Visualizer.Draw(node.Selected()));
+            }
+        }
+
+        void HandleEdgeRemoval(MouseEventArgs e)
+        {
+            var clickedEdge = AllEdges.FirstOrDefault(edge => edge.Path.IsOutlineVisible(e.Location, edge.SolidPen));
+            if (clickedEdge != null)
+            {
+                clickedEdge.Delete();
+            }
+        }
+
         /// <summary>
         /// Gives the feel of creating an edge interactively.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void drawing_panel_MouseMove ( object sender, MouseEventArgs e )
+        private void drawing_panel_MouseMove(object sender, MouseEventArgs e)
         {
-            if ( CurrentEdge != null )
+            if (CurrentEdge != null)
             {
                 var arg = new PaintEventArgs(drawing_panel.CreateGraphics(), new Rectangle());
 
@@ -131,10 +232,10 @@ namespace VisualInterface
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btn_random_nodes_Click ( object sender, EventArgs e )
+        private void btn_random_nodes_Click(object sender, EventArgs e)
         {
             var nodeCount = 0;
-            if ( !int.TryParse(tbNodeCount.Text, out nodeCount) ) return;
+            if (!int.TryParse(tbNodeCount.Text, out nodeCount)) return;
 
             var graphGenerator = GraphFactory.GetGraphGenerator((GraphType)Enum.Parse(typeof(GraphType), (string)cb_graph_type.SelectedItem));
 
@@ -142,7 +243,7 @@ namespace VisualInterface
         }
 
         #endregion
-        
+
         #region mouse events for clearing the canvas
 
         /// <summary>
@@ -150,19 +251,18 @@ namespace VisualInterface
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btn_clear_Click ( object sender, EventArgs e )
+        private void btn_clear_Click(object sender, EventArgs e)
         {
             var arg = new PaintEventArgs(drawing_panel.CreateGraphics(), new Rectangle());
             arg.Graphics.Clear(Color.White);
-
-            AllNodes.ForEach(n => n.Stop());
+            
             AllNodes.Clear();
             AllEdges.Clear();
 
             tb_console.Clear();
 
             cb_choose_alg.Enabled = true;
-            if ( cb_choose_alg.SelectedIndex == -1 ) cb_choose_alg.SelectedIndex = 1;
+            if (cb_choose_alg.SelectedIndex == -1) cb_choose_alg.SelectedIndex = 1;
         }
 
         /// <summary>
@@ -170,17 +270,17 @@ namespace VisualInterface
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btn_refresh_Click ( object sender, EventArgs e )
+        private void btn_proof_Click(object sender, EventArgs e)
         {
-            foreach ( var edge in AllEdges )
+            var invalidNodes = AllNodes.Where(n => !n.IsValid());
+
+            if (!invalidNodes.Any())
             {
-                edge.Restore();
+                MessageBox.Show("Each node is valid");
             }
-            foreach ( var node in AllNodes )
+            else
             {
-                if ( typeof(_UpdateBfsNode) == node.GetType() )
-                    ( (_UpdateBfsNode)node ).Parent = null;
-                node.Visualizer.Draw();
+                MessageBox.Show(string.Format("Some nodes are invalid: {0}", string.Join(",", invalidNodes.Select(n => n.Id.ToString()))));
             }
         }
 
@@ -203,7 +303,7 @@ namespace VisualInterface
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void cb_choose_alg_SelectedIndexChanged ( object sender, EventArgs e )
+        private void cb_choose_alg_SelectedIndexChanged(object sender, EventArgs e)
         {
             SelectedAlgorithm = cb_choose_alg.SelectedItem.ToString();
         }
@@ -215,15 +315,19 @@ namespace VisualInterface
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btn_run_Click ( object sender, EventArgs e )
+        private void btn_run_Click(object sender, EventArgs e)
         {
-            AllNodes.ForEach(n => n.Start());
-
             var firstNode = AllNodes.FirstOrDefault(fn => fn.Id == AllNodes.Min(n => n.Id));
-            if ( firstNode == null ) return;
+            if (firstNode == null) return;
 
             var initiator = NodeFactory.Create(SelectedAlgorithm, -1, null);
             firstNode.UserDefined_SingleInitiatorProcedure(firstNode);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            AllEdges.FirstOrDefault().Delete();
+        }
+
     }
 }

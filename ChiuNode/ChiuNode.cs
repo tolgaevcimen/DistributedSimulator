@@ -1,8 +1,6 @@
 ﻿using AsyncSimulator;
 using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Timers;
 using System.Threading;
 
 namespace ChiuDominatingSet
@@ -49,43 +47,40 @@ namespace ChiuDominatingSet
 
         public void RunRules()
         {
-            lock (Lock)
+            Thread.Sleep(500);
+
+            if (State == ChiuState.WAIT && InNeighborCount == 0 && NoBetterNeighbor)
             {
-                Thread.Sleep(500);
+                SetState(ChiuState.IN);
+            }
+            else if (State == ChiuState.IN && InNeighborCount == 1 && NoDependentNeighbor)
+            {
+                SetState(ChiuState.OUT1);
+            }
+            else if (State == ChiuState.IN && InNeighborCount > 1 && NoDependentNeighbor)
+            {
+                SetState(ChiuState.OUT2);
+            }
+            else if (State == ChiuState.WAIT && InNeighborCount == 1)
+            {
+                SetState(ChiuState.OUT1);
+            }
+            else if ((State == ChiuState.OUT1 || State == ChiuState.WAIT) && InNeighborCount > 1)
+            {
+                SetState(ChiuState.OUT2);
+            }
+            else if ((State == ChiuState.OUT1 || State == ChiuState.OUT2) && InNeighborCount == 0)
+            {
+                SetState(ChiuState.WAIT);
+            }
+            else
+            {
+                Visualizer.Log("I'm {0}. My state is {1}, and does not change.", Id, State);
 
-                if (State == ChiuState.WAIT && InNeighborCount == 0 && NoBetterNeighbor)
+                if (FirstTime)
                 {
-                    SetState(ChiuState.IN);
-                }
-                else if (State == ChiuState.IN && InNeighborCount == 1 && NoDependentNeighbor)
-                {
-                    SetState(ChiuState.OUT1);
-                }
-                else if (State == ChiuState.IN && InNeighborCount > 1 && NoDependentNeighbor)
-                {
-                    SetState(ChiuState.OUT2);
-                }
-                else if (State == ChiuState.WAIT && InNeighborCount == 1)
-                {
-                    SetState(ChiuState.OUT1);
-                }
-                else if ((State == ChiuState.OUT1 || State == ChiuState.WAIT) && InNeighborCount > 1)
-                {
-                    SetState(ChiuState.OUT2);
-                }
-                else if ((State == ChiuState.OUT1 || State == ChiuState.OUT2) && InNeighborCount == 0)
-                {
-                    SetState(ChiuState.WAIT);
-                }
-                else
-                {
-                    Visualizer.Log("I'm {0}. My state is {1}, and does not change.", Id, State);
-
-                    if (FirstTime)
-                    {
-                        FirstTime = false;
-                        PokeNeighbors();
-                    }
+                    FirstTime = false;
+                    PokeNeighbors();
                 }
             }
         }
@@ -129,12 +124,6 @@ namespace ChiuDominatingSet
         {
             FirstTime = true;
             RunRules();
-            Start();
-        }
-        
-        public override void UserDefined_ConcurrentInitiatorProcedure(List<_Node> allNodes)
-        {
-            throw new NotImplementedException();
         }
 
         public override bool Selected()
@@ -169,6 +158,38 @@ namespace ChiuDominatingSet
                         return state;
                     }
                 default: return ChiuState.WAIT;
+            }
+        }
+
+        public override bool IsValid()
+        {
+            if (State == ChiuState.WAIT && InNeighborCount == 0 && NoBetterNeighbor)
+            {
+                return false;
+            }
+            else if (State == ChiuState.IN && InNeighborCount == 1 && NoDependentNeighbor)
+            {
+                return false;
+            }
+            else if (State == ChiuState.IN && InNeighborCount > 1 && NoDependentNeighbor)
+            {
+                return false;
+            }
+            else if (State == ChiuState.WAIT && InNeighborCount == 1)
+            {
+                return false;
+            }
+            else if ((State == ChiuState.OUT1 || State == ChiuState.WAIT) && InNeighborCount > 1)
+            {
+                return false;
+            }
+            else if ((State == ChiuState.OUT1 || State == ChiuState.OUT2) && InNeighborCount == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
     }

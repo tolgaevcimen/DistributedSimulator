@@ -45,7 +45,7 @@ namespace VisualInterface
 
             return dist < radius;
         }
-        
+
         public bool Intersects(PointF p)
         {
             var dist = GetDistance(Location, p);
@@ -68,6 +68,20 @@ namespace VisualInterface
 
                     var offSet = Id < 10 ? 8 : 0;
                     PaintArgs.Graphics.DrawString(Id.ToString(), DefaultFontForId, Brushes.White, Location.X - Diameter / 2 + offSet, Location.Y - Diameter / 2 + 4);
+
+                    drawn = true;
+                }
+                catch { }
+        }
+
+        public void Delete()
+        {
+            bool drawn = false;
+            while (!drawn)
+                try
+                {
+                    PaintArgs.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                    PaintArgs.Graphics.FillEllipse(Brushes.White, (Location.X - Diameter / 2) - 1, (Location.Y - Diameter / 2) - 1, Diameter + 2, Diameter + 2);
 
                     drawn = true;
                 }

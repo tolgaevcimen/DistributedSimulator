@@ -28,7 +28,6 @@ namespace FloodSTNode
             if ( Parent != null )
             {
                 Visualizer.Log("---I'm {0}, I already have a parent: {1}", Id, Parent.Id);
-                this.Stop();
                 return;
             }
             Parent = receivedMessage.Source;
@@ -46,8 +45,7 @@ namespace FloodSTNode
             }
 
             Visualizer.VisualizeMessage(receivedMessage);
-
-            Running = false;
+            
             Visualizer.Log("receiver {0} done", this.Id);
         }
 
@@ -60,11 +58,6 @@ namespace FloodSTNode
                 Destination = root,
                 MessageType = 0
             });
-        }
-
-        public override void UserDefined_ConcurrentInitiatorProcedure ( List<_Node> allNodes )
-        {
-            throw new NotImplementedException();
         }
     }
 }

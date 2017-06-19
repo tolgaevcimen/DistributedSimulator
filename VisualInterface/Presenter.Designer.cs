@@ -33,13 +33,14 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tbNodeCount = new System.Windows.Forms.TextBox();
             this.tb_console = new System.Windows.Forms.TextBox();
-            this.btn_refresh = new System.Windows.Forms.Button();
+            this.btn_proof = new System.Windows.Forms.Button();
             this.cb_choose_alg = new System.Windows.Forms.ComboBox();
             this.btn_run_update_bfs = new System.Windows.Forms.Button();
             this.btn_clear = new System.Windows.Forms.Button();
             this.btn_random_nodes = new System.Windows.Forms.Button();
             this.cb_graph_type = new System.Windows.Forms.ComboBox();
             this.cb_selfStab = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -83,13 +84,14 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.31405F));
             this.tableLayoutPanel2.Controls.Add(this.tbNodeCount, 1, 3);
             this.tableLayoutPanel2.Controls.Add(this.tb_console, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btn_refresh, 0, 6);
+            this.tableLayoutPanel2.Controls.Add(this.btn_proof, 0, 6);
             this.tableLayoutPanel2.Controls.Add(this.cb_choose_alg, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.btn_run_update_bfs, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.btn_clear, 0, 5);
             this.tableLayoutPanel2.Controls.Add(this.btn_random_nodes, 0, 4);
             this.tableLayoutPanel2.Controls.Add(this.cb_graph_type, 0, 3);
             this.tableLayoutPanel2.Controls.Add(this.cb_selfStab, 0, 7);
+            this.tableLayoutPanel2.Controls.Add(this.button1, 1, 7);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(558, 4);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
@@ -129,19 +131,18 @@
             this.tb_console.Size = new System.Drawing.Size(284, 234);
             this.tb_console.TabIndex = 3;
             // 
-            // btn_refresh
+            // btn_proof
             // 
-            this.tableLayoutPanel2.SetColumnSpan(this.btn_refresh, 2);
-            this.btn_refresh.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btn_refresh.Enabled = false;
-            this.btn_refresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btn_refresh.Location = new System.Drawing.Point(3, 470);
-            this.btn_refresh.Name = "btn_refresh";
-            this.btn_refresh.Size = new System.Drawing.Size(286, 39);
-            this.btn_refresh.TabIndex = 6;
-            this.btn_refresh.Text = "Refresh Nodes";
-            this.btn_refresh.UseVisualStyleBackColor = true;
-            this.btn_refresh.Click += new System.EventHandler(this.btn_refresh_Click);
+            this.tableLayoutPanel2.SetColumnSpan(this.btn_proof, 2);
+            this.btn_proof.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btn_proof.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btn_proof.Location = new System.Drawing.Point(3, 470);
+            this.btn_proof.Name = "btn_proof";
+            this.btn_proof.Size = new System.Drawing.Size(286, 39);
+            this.btn_proof.TabIndex = 6;
+            this.btn_proof.Text = "Check Correctness";
+            this.btn_proof.UseVisualStyleBackColor = true;
+            this.btn_proof.Click += new System.EventHandler(this.btn_proof_Click);
             // 
             // cb_choose_alg
             // 
@@ -219,6 +220,16 @@
             this.cb_selfStab.Text = "Self Stab Mode";
             this.cb_selfStab.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(229, 515);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(60, 23);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Presenter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -245,12 +256,13 @@
         private System.Windows.Forms.Button btn_clear;
         public System.Windows.Forms.TextBox tb_console;
         private System.Windows.Forms.Button btn_random_nodes;
-        private System.Windows.Forms.Button btn_refresh;
+        private System.Windows.Forms.Button btn_proof;
         private System.Windows.Forms.Button btn_run_update_bfs;
         private System.Windows.Forms.ComboBox cb_choose_alg;
         private System.Windows.Forms.TextBox tbNodeCount;
         private System.Windows.Forms.ComboBox cb_graph_type;
         public System.Windows.Forms.CheckBox cb_selfStab;
+        private System.Windows.Forms.Button button1;
     }
 }
 
