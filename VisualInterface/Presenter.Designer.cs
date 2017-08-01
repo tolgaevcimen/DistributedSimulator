@@ -57,9 +57,6 @@
             this.drawing_panel.Name = "drawing_panel";
             this.drawing_panel.Size = new System.Drawing.Size(546, 549);
             this.drawing_panel.TabIndex = 0;
-            this.drawing_panel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.drawing_panel_MouseDown);
-            this.drawing_panel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.drawing_panel_MouseMove);
-            this.drawing_panel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.drawing_panel_MouseUp);
             // 
             // tableLayoutPanel1
             // 
@@ -219,6 +216,7 @@
             this.cb_selfStab.TabIndex = 13;
             this.cb_selfStab.Text = "Self Stab Mode";
             this.cb_selfStab.UseVisualStyleBackColor = true;
+            this.cb_selfStab.CheckedChanged += new System.EventHandler(this.cb_selfStab_CheckedChanged);
             // 
             // button1
             // 

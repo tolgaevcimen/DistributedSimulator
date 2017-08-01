@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DrawingPanelHelper.cs" />
     <Compile Include="GraphGenerator\TripletTreeGraphGenerator.cs" />
     <Compile Include="GraphGenerator\CompleteGraphGenerator.cs" />
     <Compile Include="GraphGenerator\BipartiteGraphGenerator.cs" />

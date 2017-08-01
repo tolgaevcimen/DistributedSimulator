@@ -36,8 +36,7 @@ namespace VisualInterface
                     return _AllNodes;
             }
         }
-
-
+        
         /// <summary>
         /// Holds list of all currently drawn edges.
         /// </summary>
@@ -48,13 +47,10 @@ namespace VisualInterface
         /// </summary>
         List<_Node> _AllNodes { get; set; }
 
-        /// <summary>
-        /// Holds the edge that just has been started to be drawn.
-        /// </summary>
-        private VisualEdge CurrentEdge { get; set; }
-
         public object AllNodesLock { get; set; }
         public object AllEdgesLock { get; set; }
+
+        public DrawingPanelHelper DrawingPanelHelper { get; set; }
 
         /// <summary>
         /// Initiates the presenter form.
@@ -73,160 +69,13 @@ namespace VisualInterface
 
             cb_graph_type.Items.AddRange(Enum.GetNames(typeof(GraphType)));
             cb_graph_type.SelectedIndex = 1;
+
+            DrawingPanelHelper = new DrawingPanelHelper(this, drawing_panel, SelectedAlgorithm);
         }
 
         #region mouse events for Creating Nodes and Edges
-
-        /// <summary>
-        /// Previous location that mouse was clicked.
-        /// </summary>
-        private Point MouseStartPos { get; set; }
-
-        /// <summary>
-        /// Mouse down event. Tries to decide whether the mouse was clicked on a node or not, and behaves accordingly.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void drawing_panel_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right) return;
-
-            MouseStartPos = drawing_panel.PointToScreen(e.Location);
-            var arg = new PaintEventArgs(drawing_panel.CreateGraphics(), new Rectangle());
-
-            var startingNode = AllNodes.FirstOrDefault(n => n.Visualizer.OnIt(e.Location));
-
-            if (startingNode != null)
-                CurrentEdge = new VisualEdge(arg, MouseStartPos, MouseStartPos, startingNode);
-        }
-
-        /// <summary>
-        /// Mouse up event. Checks if a node should be drawn or an edge (or nothing).
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void drawing_panel_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                HandleNodeRemoval(e);
-                HandleEdgeRemoval(e);
-            }
-            else if (e.Button == MouseButtons.Left)
-            {
-                HandleNodeOrEdgeCreation(e);
-            }
-        }
-
-        void HandleNodeOrEdgeCreation(MouseEventArgs e)
-        {
-            var arg = new PaintEventArgs(drawing_panel.CreateGraphics(), new Rectangle());
-
-            int x = e.X;
-            int y = e.Y;
-
-            var pos2 = drawing_panel.PointToScreen(e.Location);
-
-            if (MouseStartPos == pos2)
-            {
-                if (!AllNodes.Any(n => n.Visualizer.Intersects(e.Location)))
-                {
-                    var node = NodeFactory.Create(SelectedAlgorithm, AllNodes.Count, new NodeVisualizer(arg, x, y, AllNodes.Count, this));
-                    node.Visualizer.Draw(node.Selected());
-                    AllNodes.Add(node);
-
-                    cb_choose_alg.Enabled = false;
-                }
-            }
-            else if (CurrentEdge != null)
-            {
-                var endingNode = AllNodes.FirstOrDefault(n => n.Visualizer.OnIt(e.Location) && n != CurrentEdge.Node1);
-
-                if (endingNode != null)
-                {
-                    CurrentEdge.Solidify(drawing_panel.PointToClient(MouseStartPos), drawing_panel.PointToClient(pos2), endingNode, true);
-                    AllEdges.Add(CurrentEdge);
-                }
-                else
-                {
-                    CurrentEdge.Vanish(arg);
-                }
-            }
-
-            CurrentEdge = null;
-        }
-
-        void HandleNodeRemoval(MouseEventArgs e)
-        {
-            var clickedNode = AllNodes.FirstOrDefault(node => node.Visualizer.OnIt(e.Location));
-            if (clickedNode != null)
-            {
-                var edgesToBeRemoved = new List<VisualEdge>();
-                var nodesToBePoked = new List<_Node>();
-
-                foreach (var edge in AllEdges)
-                {
-                    if (edge.Node1 == clickedNode)
-                    {
-                        edgesToBeRemoved.Add(edge);
-                        nodesToBePoked.Add(edge.Node2);
-                    }
-                    else if (edge.Node2 == clickedNode)
-                    {
-                        edgesToBeRemoved.Add(edge);
-                        nodesToBePoked.Add(edge.Node1);
-                    }
-                }
-
-                foreach (var edge in edgesToBeRemoved)
-                {
-                    edge.Delete();
-                }
-
-                clickedNode.Visualizer.Delete();
-                AllEdges.ForEach(edge => edge.Draw(null));
-
-                if (cb_selfStab.Checked)
-                {
-                    foreach (var node in nodesToBePoked)
-                    {
-                        Task.Run(() =>
-                        {
-                            node.UserDefined_SingleInitiatorProcedure(node);
-                        });
-                    }
-                }
-
-                AllNodes.Remove(clickedNode);
-                AllNodes.ForEach(node => node.Visualizer.Draw(node.Selected()));
-            }
-        }
-
-        void HandleEdgeRemoval(MouseEventArgs e)
-        {
-            var clickedEdge = AllEdges.FirstOrDefault(edge => edge.Path.IsOutlineVisible(e.Location, edge.SolidPen));
-            if (clickedEdge != null)
-            {
-                clickedEdge.Delete();
-            }
-        }
-
-        /// <summary>
-        /// Gives the feel of creating an edge interactively.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void drawing_panel_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (CurrentEdge != null)
-            {
-                var arg = new PaintEventArgs(drawing_panel.CreateGraphics(), new Rectangle());
-
-                var newPos = drawing_panel.PointToScreen(e.Location);
-                CurrentEdge.Refresh(arg, newPos);
-            }
-        }
-
+        
+        
         /// <summary>
         /// Creates randomly positioned nodes and ties them to each other in a given percentage.
         /// </summary>
@@ -328,6 +177,15 @@ namespace VisualInterface
         {
             AllEdges.FirstOrDefault().Delete();
         }
+        
+        private void cb_selfStab_CheckedChanged(object sender, EventArgs e)
+        {
+            DrawingPanelHelper.SelfStabModeEnabled = cb_selfStab.Checked;
+        }
 
+        public void DisableAlgorthmChange()
+        {
+            cb_choose_alg.Enabled = false;
+        }
     }
 }
