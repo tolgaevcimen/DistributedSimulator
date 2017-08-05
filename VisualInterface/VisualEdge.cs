@@ -103,27 +103,26 @@ namespace VisualInterface
             Draw(null);
         }
 
-        public void Delete()
+        public void Delete(bool onlyEdgeDeleted)
         {
             Draw(new Pen(Color.White, Thickness + 1));
 
-            /// set neighbourhood
+            // set neighbourhood
             Node1.Neighbours.Remove(Node2);
             Node2.Neighbours.Remove(Node1);
 
-            /// redraw the nodes
+            // redraw the nodes
             Node1.Visualizer.Draw(Node1.Selected());
             Node2.Visualizer.Draw(Node2.Selected());
 
-            /// redraw the edges
-            Program.Presenter.AllEdges.Remove(this);
-            Program.Presenter.AllEdges.ForEach(e => e.Draw(null));
-            Program.Presenter.AllNodes.ForEach(e => e.Visualizer.Draw(e.Selected()));
+            Program.Presenter.EdgeHolder.RemoveEdge(this);
+            Program.Presenter.EdgeHolder.RedrawAllEdges();
+            Program.Presenter.NodeHolder.RedrawAllNodes();
 
-            if (Program.Presenter.cb_selfStab.Checked)
+            if (Program.Presenter.cb_selfStab.Checked && onlyEdgeDeleted)
             {
-                Node1.UserDefined_SingleInitiatorProcedure(Node1);
-                Node2.UserDefined_SingleInitiatorProcedure(Node2);
+                Task.Run(() => Node1.UserDefined_SingleInitiatorProcedure(Node1));
+                Task.Run(() => Node2.UserDefined_SingleInitiatorProcedure(Node2));
             }
         }
 

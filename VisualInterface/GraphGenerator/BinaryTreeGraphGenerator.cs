@@ -9,7 +9,7 @@ namespace VisualInterface.GraphGenerator
 {
     class BinaryTreeGraphGenerator : IGraphGenerator
     {
-        public void Generate(int nodeCount, Presenter parentForm, Panel drawing_panel, List<_Node> AllNodes, List<VisualEdge> AllEdges, string SelectedAlgorithm)
+        public void Generate(int nodeCount, Presenter parentForm, Panel drawing_panel, NodeHolder nodeHolder, EdgeHolder edgeHolder, string SelectedAlgorithm)
         {
             var arg = new PaintEventArgs(drawing_panel.CreateGraphics(), new Rectangle());
 
@@ -31,11 +31,11 @@ namespace VisualInterface.GraphGenerator
 
                 var p = new Point((currentIndex) * horizontalInterval, (currentDepth) * verticalInterval + 40);
 
-                if (!AllNodes.Any(n => n.Visualizer.Intersects(p)))
+                if (!nodeHolder.AnyIntersecting(p))
                 {
-                    var node = NodeFactory.Create(SelectedAlgorithm, AllNodes.Count, new NodeVisualizer(arg, p.X, p.Y, AllNodes.Count, parentForm));
+                    var node = NodeFactory.Create(SelectedAlgorithm, nodeHolder.NodeCount, new NodeVisualizer(arg, p.X, p.Y, nodeHolder.NodeCount, parentForm));
 
-                    AllNodes.Add(node);
+                    nodeHolder.AddNode(node);
                 }
                 else
                 {
@@ -50,18 +50,18 @@ namespace VisualInterface.GraphGenerator
 
             for (int i = 0; i < nodeCount; i++)
             {
-                var parent = AllNodes[i];
+                var parent = nodeHolder.GetNodeAt(i);
 
                 for (int j = 0; j < 2; j++)
                 {
                     if (!queue.Any()) break;
 
                     var firstChildId = queue.Dequeue();
-                    var child = AllNodes[firstChildId];
+                    var child = nodeHolder.GetNodeAt(firstChildId);
 
                     var edge = new VisualEdge(arg, parent.Visualizer.Location, child.Visualizer.Location, parent, ghost: true);
                     edge.Solidify(parent.Visualizer.Location, child.Visualizer.Location, child, true);
-                    AllEdges.Add(edge);
+                    edgeHolder.AddEgde(edge);
                 }
 
             }

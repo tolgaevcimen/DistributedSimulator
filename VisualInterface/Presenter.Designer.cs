@@ -40,7 +40,6 @@
             this.btn_random_nodes = new System.Windows.Forms.Button();
             this.cb_graph_type = new System.Windows.Forms.ComboBox();
             this.cb_selfStab = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -88,7 +87,6 @@
             this.tableLayoutPanel2.Controls.Add(this.btn_random_nodes, 0, 4);
             this.tableLayoutPanel2.Controls.Add(this.cb_graph_type, 0, 3);
             this.tableLayoutPanel2.Controls.Add(this.cb_selfStab, 0, 7);
-            this.tableLayoutPanel2.Controls.Add(this.button1, 1, 7);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(558, 4);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
@@ -216,17 +214,6 @@
             this.cb_selfStab.TabIndex = 13;
             this.cb_selfStab.Text = "Self Stab Mode";
             this.cb_selfStab.UseVisualStyleBackColor = true;
-            this.cb_selfStab.CheckedChanged += new System.EventHandler(this.cb_selfStab_CheckedChanged);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(229, 515);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(60, 23);
-            this.button1.TabIndex = 14;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Presenter
             // 
@@ -260,7 +247,6 @@
         private System.Windows.Forms.TextBox tbNodeCount;
         private System.Windows.Forms.ComboBox cb_graph_type;
         public System.Windows.Forms.CheckBox cb_selfStab;
-        private System.Windows.Forms.Button button1;
     }
 }
 

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 
 namespace AsyncSimulator
@@ -7,15 +9,21 @@ namespace AsyncSimulator
     public class MessageQueue<T>
     {
         private readonly ConcurrentQueue<T> queue = new ConcurrentQueue<T>();
-        public event EventHandler Changed;
-        protected virtual void OnChanged()
+        public event EventHandler MessageAdded;
+        protected virtual void OnMessageAdded()
         {
-            Changed?.Invoke(this, EventArgs.Empty);
+            MessageAdded?.Invoke(this, EventArgs.Empty);
         }
         public virtual void Enqueue(T item)
         {
+            if (queue.Any(m => m.ToString() == item.ToString()))
+            {
+                Trace.WriteLine(String.Format("item({0}) already exists", item));
+                return;
+            }
+
             queue.Enqueue(item);
-            OnChanged();
+            OnMessageAdded();
         }
         public int Count { get { return queue.Count; } }
 
@@ -24,8 +32,11 @@ namespace AsyncSimulator
             T item;
             if (queue.IsEmpty) return default(T);
 
-            while (!queue.TryDequeue(out item)) { Thread.Sleep(50); }
-            OnChanged();
+            while (!queue.TryDequeue(out item))
+            {
+                Console.WriteLine("couldn't dequeue, will wait 50 ms");
+                Thread.Sleep(50);
+            }
             return item;
         }
     }

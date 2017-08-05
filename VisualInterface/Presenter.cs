@@ -11,44 +11,10 @@ using System.Threading.Tasks;
 
 namespace VisualInterface
 {
-    public partial class Presenter : Form
+    internal partial class Presenter : Form
     {
-        /// <summary>
-        /// Holds list of all currently drawn edges.
-        /// </summary>
-        public List<VisualEdge> AllEdges
-        {
-            get
-            {
-                lock (AllEdgesLock)
-                    return _AllEdges;
-            }
-        }
-
-        /// <summary>
-        /// Holds list of all currently drawn nodes.
-        /// </summary>
-        public List<_Node> AllNodes
-        {
-            get
-            {
-                lock (AllNodesLock)
-                    return _AllNodes;
-            }
-        }
-        
-        /// <summary>
-        /// Holds list of all currently drawn edges.
-        /// </summary>
-        List<VisualEdge> _AllEdges { get; set; }
-
-        /// <summary>
-        /// Holds list of all currently drawn nodes.
-        /// </summary>
-        List<_Node> _AllNodes { get; set; }
-
-        public object AllNodesLock { get; set; }
-        public object AllEdgesLock { get; set; }
+        public EdgeHolder EdgeHolder { get; set; }
+        public NodeHolder NodeHolder { get; set; }
 
         public DrawingPanelHelper DrawingPanelHelper { get; set; }
 
@@ -58,10 +24,6 @@ namespace VisualInterface
         public Presenter()
         {
             InitializeComponent();
-            _AllNodes = new List<_Node>();
-            _AllEdges = new List<VisualEdge>();
-            AllEdgesLock = new object();
-            AllNodesLock = new object();
 
             cb_choose_alg.Items.AddRange(Algorithms.ToArray());
             cb_choose_alg.SelectedIndex = 7;
@@ -71,6 +33,8 @@ namespace VisualInterface
             cb_graph_type.SelectedIndex = 1;
 
             DrawingPanelHelper = new DrawingPanelHelper(this, drawing_panel, SelectedAlgorithm);
+            EdgeHolder = new EdgeHolder(DrawingPanelHelper);
+            NodeHolder = new NodeHolder(DrawingPanelHelper);
         }
 
         #region mouse events for Creating Nodes and Edges
@@ -83,12 +47,11 @@ namespace VisualInterface
         /// <param name="e"></param>
         private void btn_random_nodes_Click(object sender, EventArgs e)
         {
-            var nodeCount = 0;
-            if (!int.TryParse(tbNodeCount.Text, out nodeCount)) return;
+            if (!int.TryParse(tbNodeCount.Text, out int nodeCount)) return;
 
             var graphGenerator = GraphFactory.GetGraphGenerator((GraphType)Enum.Parse(typeof(GraphType), (string)cb_graph_type.SelectedItem));
 
-            graphGenerator.Generate(nodeCount, this, drawing_panel, AllNodes, AllEdges, SelectedAlgorithm);
+            graphGenerator.Generate(nodeCount, this, drawing_panel, NodeHolder, EdgeHolder, SelectedAlgorithm);
         }
 
         #endregion
@@ -102,11 +65,10 @@ namespace VisualInterface
         /// <param name="e"></param>
         private void btn_clear_Click(object sender, EventArgs e)
         {
-            var arg = new PaintEventArgs(drawing_panel.CreateGraphics(), new Rectangle());
-            arg.Graphics.Clear(Color.White);
-            
-            AllNodes.Clear();
-            AllEdges.Clear();
+            DrawingPanelHelper.ClearPanel();
+
+            NodeHolder.EmptyAllNodes();
+            EdgeHolder.EmptyAllEdges();
 
             tb_console.Clear();
 
@@ -121,7 +83,7 @@ namespace VisualInterface
         /// <param name="e"></param>
         private void btn_proof_Click(object sender, EventArgs e)
         {
-            var invalidNodes = AllNodes.Where(n => !n.IsValid());
+            var invalidNodes = NodeHolder.GetCopyList().Where(n => !n.IsValid());
 
             if (!invalidNodes.Any())
             {
@@ -166,23 +128,13 @@ namespace VisualInterface
         /// <param name="e"></param>
         private void btn_run_Click(object sender, EventArgs e)
         {
-            var firstNode = AllNodes.FirstOrDefault(fn => fn.Id == AllNodes.Min(n => n.Id));
+            var firstNode = NodeHolder.GetMinimumNode();
             if (firstNode == null) return;
 
             var initiator = NodeFactory.Create(SelectedAlgorithm, -1, null);
             firstNode.UserDefined_SingleInitiatorProcedure(firstNode);
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            AllEdges.FirstOrDefault().Delete();
-        }
         
-        private void cb_selfStab_CheckedChanged(object sender, EventArgs e)
-        {
-            DrawingPanelHelper.SelfStabModeEnabled = cb_selfStab.Checked;
-        }
-
         public void DisableAlgorthmChange()
         {
             cb_choose_alg.Enabled = false;

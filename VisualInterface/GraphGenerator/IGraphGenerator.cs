@@ -4,8 +4,8 @@ using System.Windows.Forms;
 
 namespace VisualInterface.GraphGenerator
 {
-    public interface IGraphGenerator
+    internal interface IGraphGenerator
     {
-        void Generate(int nodeCount, Presenter parentForm, Panel drawing_panel, List<_Node> AllNodes, List<VisualEdge> AllEdges, string SelectedAlgorithm);
+        void Generate(int nodeCount, Presenter parentForm, Panel drawing_panel, NodeHolder nodeHolder, EdgeHolder edgeHolder, string SelectedAlgorithm);
     }
 }

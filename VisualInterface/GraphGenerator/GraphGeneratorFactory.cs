@@ -1,6 +1,6 @@
 ﻿namespace VisualInterface.GraphGenerator
 {
-    public class GraphFactory
+    internal class GraphFactory
     {
         public static IGraphGenerator GetGraphGenerator(GraphType graphType)
         {

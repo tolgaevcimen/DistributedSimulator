@@ -9,7 +9,7 @@ namespace VisualInterface.GraphGenerator
 {
     class CompleteGraphGenerator : IGraphGenerator
     {
-        public void Generate(int nodeCount, Presenter parentForm, Panel drawing_panel, List<_Node> AllNodes, List<VisualEdge> AllEdges, string SelectedAlgorithm)
+        public void Generate(int nodeCount, Presenter parentForm, Panel drawing_panel, NodeHolder nodeHolder, EdgeHolder edgeHolder, string SelectedAlgorithm)
         {
             var randomizer = new Random();
             var arg = new PaintEventArgs(drawing_panel.CreateGraphics(), new Rectangle());
@@ -23,11 +23,11 @@ namespace VisualInterface.GraphGenerator
 
                 var p = PointOnCircle(radius, angle, origin);
 
-                if (!AllNodes.Any(n => n.Visualizer.Intersects(p)))
+                if (!nodeHolder.AnyIntersecting(p))
                 {
-                    var node = NodeFactory.Create(SelectedAlgorithm, AllNodes.Count, new NodeVisualizer(arg, p.X, p.Y, AllNodes.Count, parentForm));
-                    
-                    AllNodes.Add(node);
+                    var node = NodeFactory.Create(SelectedAlgorithm, nodeHolder.NodeCount, new NodeVisualizer(arg, p.X, p.Y, nodeHolder.NodeCount, parentForm));
+
+                    nodeHolder.AddNode(node);
                 }
                 else
                 {
@@ -41,12 +41,12 @@ namespace VisualInterface.GraphGenerator
                 {
                     if (i == j) continue;
 
-                    var node1 = AllNodes[i];
-                    var node2 = AllNodes[j];
+                    var node1 = nodeHolder.GetNodeAt(i);
+                    var node2 = nodeHolder.GetNodeAt(j);
 
                     var edge = new VisualEdge(arg, node1.Visualizer.Location, node2.Visualizer.Location, node1, ghost: true);
                     edge.Solidify(node1.Visualizer.Location, node2.Visualizer.Location, node2, true);
-                    AllEdges.Add(edge);
+                    edgeHolder.AddEgde(edge);
                 }
             }
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,6 +31,8 @@ namespace AsyncSimulator
 
         public object ReceiveLock { get; set; }
 
+        public bool Running { get; set; }
+
         /// <summary>
         /// As soon a node is created, the thread starts running.
         /// </summary>
@@ -41,17 +44,25 @@ namespace AsyncSimulator
             /// initialize lists
             Neighbours = new List<_Node>();
             ReceiveQueue = new MessageQueue<Message>();
-            ReceiveQueue.Changed += ReceiveQueue_Changed;
+            ReceiveQueue.MessageAdded += ReceiveQueue_NewMessage;
 
             ReceiveLock = new object();
         }
 
-        private void ReceiveQueue_Changed(object sender, EventArgs e)
+        private void ReceiveQueue_NewMessage(object sender, EventArgs e)
         {
+            if (ReceiveQueue.Count == 0) return;
+
+            var m = ReceiveQueue.Dequeue();
+
+            Trace.WriteLine(String.Format("Acquiring lock - {0}", m));
             lock (ReceiveLock)
             {
-                UserDefined_ReceiveMessageProcedure(ReceiveQueue.Dequeue());
+                Trace.WriteLine(String.Format("Acquiried lock - {0}", m));
+                UserDefined_ReceiveMessageProcedure(m);
+                Trace.WriteLine(String.Format("Releasing lock - {0}", m));
             }
+            Trace.WriteLine(String.Format("Released lock - {0}", m));
         }
 
         public virtual bool Selected()

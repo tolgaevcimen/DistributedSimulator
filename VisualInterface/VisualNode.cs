@@ -6,7 +6,7 @@ using AsyncSimulator;
 
 namespace VisualInterface
 {
-    public class NodeVisualizer : IVisualizer
+    internal class NodeVisualizer : IVisualizer
     {
         private int Id { get; set; }
         private Font DefaultFontForId { get; set; }
@@ -90,7 +90,7 @@ namespace VisualInterface
 
         public void VisualizeMessage(AsyncSimulator.Message m)
         {
-            foreach (var edge in ParentForm.AllEdges)
+            foreach (var edge in ParentForm.EdgeHolder.GetCopyList())
             {
                 if ((edge.Node1.Id == m.Source.Id && edge.Node2.Id == m.Destination.Id) ||
                     (edge.Node2.Id == m.Source.Id && edge.Node1.Id == m.Destination.Id))
@@ -106,7 +106,7 @@ namespace VisualInterface
 
         public void RevertEdgeBetween(_Node n1, _Node n2)
         {
-            foreach (var edge in ParentForm.AllEdges)
+            foreach (var edge in ParentForm.EdgeHolder.GetCopyList())
             {
                 if ((edge.Node1.Id == n1.Id && edge.Node2.Id == n2.Id) ||
                     (edge.Node2.Id == n1.Id && edge.Node1.Id == n2.Id))
