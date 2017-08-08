@@ -60,8 +60,8 @@ namespace VisualInterface
         void DrawingPanel_Resize(object sender, EventArgs e)
         {
             //AllEdges.ForEach(ed => ed.Restore());
-            Program.Presenter.EdgeHolder.RedrawAllEdges();
-            Program.Presenter.NodeHolder.RedrawAllNodes();
+            PresenterForm.EdgeHolder.RedrawAllEdges();
+            PresenterForm.NodeHolder.RedrawAllNodes();
         }
 
         /// <summary>
@@ -118,22 +118,22 @@ namespace VisualInterface
 
             if (MouseStartPos == currentMousePosition)
             {
-                if (!Program.Presenter.NodeHolder.AnyIntersecting(e.Location))
+                if (!PresenterForm.NodeHolder.AnyIntersecting(e.Location))
                 {
-                    var node = NodeFactory.Create(SelectedAlgorithm, Program.Presenter.NodeHolder.NodeCount, GetNewNodeVisualizer(e, pea));
+                    var node = NodeFactory.Create(SelectedAlgorithm, PresenterForm.NodeHolder.NodeCount, GetNewNodeVisualizer(e, pea));
                     node.Visualizer.Draw(node.Selected());
-                    Program.Presenter.NodeHolder.AddNode(node);
+                    PresenterForm.NodeHolder.AddNode(node);
 
                     PresenterForm.DisableAlgorthmChange();
                 }
             }
             else if (EdgeBeingDrawn != null)
             {
-                var endingNode = Program.Presenter.NodeHolder.GetNodeAt(e.Location);
+                var endingNode = PresenterForm.NodeHolder.GetNodeAt(e.Location);
                 if (endingNode != null && endingNode != EdgeBeingDrawn.Node1)
                 {
                     EdgeBeingDrawn.Solidify(DrawingPanel.PointToClient(MouseStartPos), DrawingPanel.PointToClient(currentMousePosition), endingNode, true);
-                    Program.Presenter.EdgeHolder.AddEgde(EdgeBeingDrawn);
+                    PresenterForm.EdgeHolder.AddEgde(EdgeBeingDrawn);
                 }
                 else
                 {
@@ -149,26 +149,17 @@ namespace VisualInterface
             var clickedNode = GetNodeAt(e);
             if (clickedNode == null) return;
 
-            var edgesToBeRemoved = Program.Presenter.EdgeHolder.GetRelatedEdges(clickedNode, out List<_Node> nodesToBePoked);
+            var edgesToBeRemoved = PresenterForm.EdgeHolder.GetRelatedEdges(clickedNode, out List<_Node> nodesToBePoked);
 
             // delete each edge one by one
             edgesToBeRemoved.ForEach(edge => edge.Delete(false));
 
             clickedNode.Visualizer.Delete();
-            Program.Presenter.EdgeHolder.RedrawAllEdges();
+            PresenterForm.EdgeHolder.RedrawAllEdges();
 
             if (SelfStabModeEnabled)
             {
-                /// this part should be changed
-                var distinctNodes = new List<_Node>();
                 foreach (var node in nodesToBePoked)
-                {
-                    if (distinctNodes.Any(n => node.Neighbours.Any(nn => n.Id == nn.Id))) continue;
-                    
-                    distinctNodes.Add(node);
-                }
-
-                foreach (var node in distinctNodes)
                 {
                     Task.Run(() =>
                     {
@@ -177,13 +168,13 @@ namespace VisualInterface
                 }
             }
 
-            Program.Presenter.NodeHolder.RemoveNode(clickedNode);
-            Program.Presenter.NodeHolder.RedrawAllNodes();
+            PresenterForm.NodeHolder.RemoveNode(clickedNode);
+            PresenterForm.NodeHolder.RedrawAllNodes();
         }
 
         void HandleEdgeRemoval(MouseEventArgs e)
         {
-            var clickedEdge = Program.Presenter.EdgeHolder.FindEdge(e.Location);
+            var clickedEdge = PresenterForm.EdgeHolder.FindEdge(e.Location);
             if (clickedEdge != null)
             {
                 clickedEdge.Delete(true);
@@ -192,7 +183,7 @@ namespace VisualInterface
 
         NodeVisualizer GetNewNodeVisualizer(MouseEventArgs e, PaintEventArgs pea)
         {
-            return new NodeVisualizer(pea, e.X, e.Y, Program.Presenter.NodeHolder.NodeCount, PresenterForm);
+            return new NodeVisualizer(pea, e.X, e.Y, PresenterForm.NodeHolder.NodeCount, PresenterForm);
         }
 
         PaintEventArgs GetNewPaintEventArgs()
@@ -207,7 +198,7 @@ namespace VisualInterface
 
         _Node GetNodeAt(MouseEventArgs e)
         {
-            return Program.Presenter.NodeHolder.GetNodeAt(e.Location);
+            return PresenterForm.NodeHolder.GetNodeAt(e.Location);
         }
     }
 }
