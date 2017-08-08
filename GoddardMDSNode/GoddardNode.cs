@@ -76,21 +76,19 @@ namespace GoddardMDSNode
 
         void PokeNeighbors()
         {
-            foreach (var neighbor in Neighbours.AsParallel())
+            foreach (var neighbor in Neighbours)
             {
-                Underlying_Send(new Message
+                Task.Run(() =>
                 {
-                    Source = this,
-                    Destination = neighbor
+                    Underlying_Send(new Message
+                    {
+                        Source = this,
+                        Destination = neighbor
+                    });
                 });
             }
 
-
-            Underlying_Send(new Message
-            {
-                Source = this,
-                Destination = this
-            });
+            Task.Run(() => RunRules());
         }
 
         public override bool Selected()
