@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace VisualInterface
 {
     static class Program
     {
-        public static Random Randomizer = new Random();
         public static Presenter Presenter;
 
         /// <summary>
