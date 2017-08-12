@@ -14,6 +14,7 @@ namespace VisualInterface
     /// </summary>
     public class NodeFactory
     {
+        public static Random Randomizer = new Random();
         public static _Node Create(string algorithmType, int id, IVisualizer nodeVisualizer)
         {
             _Node node = null;
@@ -45,7 +46,7 @@ namespace VisualInterface
                     }
                 case "ChiuDS_rand":
                     {
-                        node = new ChiuNode(id, ChiuNode.InitialState.Random, Program.Randomizer);
+                        node = new ChiuNode(id, ChiuNode.InitialState.Random, Randomizer);
                         
                         break;
                     }
