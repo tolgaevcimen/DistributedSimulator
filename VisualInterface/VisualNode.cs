@@ -92,13 +92,13 @@ namespace VisualInterface
         {
             foreach (var edge in ParentForm.EdgeHolder.GetCopyList())
             {
-                if ((edge.Node1.Id == m.Source.Id && edge.Node2.Id == m.Destination.Id) ||
-                    (edge.Node2.Id == m.Source.Id && edge.Node1.Id == m.Destination.Id))
+                if ((edge.GetNode1().Id == m.Source.Id && edge.GetNode2().Id == m.Destination.Id) ||
+                    (edge.GetNode2().Id == m.Source.Id && edge.GetNode1().Id == m.Destination.Id))
                 {
-                    edge.Colorify(PaintArgs);
+                    edge.Colorify(false);
 
-                    edge.Node1.Visualizer.Draw(true);
-                    edge.Node2.Visualizer.Draw(true);
+                    edge.GetNode1().Visualizer.Draw(true);
+                    edge.GetNode2().Visualizer.Draw(true);
                     break;
                 }
             }
@@ -108,13 +108,13 @@ namespace VisualInterface
         {
             foreach (var edge in ParentForm.EdgeHolder.GetCopyList())
             {
-                if ((edge.Node1.Id == n1.Id && edge.Node2.Id == n2.Id) ||
-                    (edge.Node2.Id == n1.Id && edge.Node1.Id == n2.Id))
+                if ((edge.GetNode1().Id == n1.Id && edge.GetNode2().Id == n2.Id) ||
+                    (edge.GetNode2().Id == n1.Id && edge.GetNode1().Id == n2.Id))
                 {
-                    edge.Colorify(PaintArgs, true);
+                    edge.Colorify(true);
 
-                    edge.Node1.Visualizer.Draw(true);
-                    edge.Node2.Visualizer.Draw(true);
+                    edge.GetNode1().Visualizer.Draw(true);
+                    edge.GetNode2().Visualizer.Draw(true);
 
                     break;
                 }

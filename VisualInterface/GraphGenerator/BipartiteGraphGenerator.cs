@@ -47,10 +47,8 @@ namespace VisualInterface.GraphGenerator
                 {
                     var node1 = nodeHolder.GetNodeAt(i);
                     var node2 = nodeHolder.GetNodeAt(j);
-
-                    var edge = new VisualEdge(arg, node1.Visualizer.Location, node2.Visualizer.Location, node1, ghost: true);
-                    edge.Solidify(node1.Visualizer.Location, node2.Visualizer.Location, node2, true);
-                    edgeHolder.AddEgde(edge);
+                    
+                    edgeHolder.AddEgde(new VisualEdge(arg, node1, node2));
                 }
             }
         }

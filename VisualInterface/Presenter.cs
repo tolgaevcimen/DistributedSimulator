@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AsyncSimulator;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -29,8 +30,8 @@ namespace VisualInterface
             cb_graph_type.SelectedIndex = 1;
 
             DrawingPanelHelper = new DrawingPanelHelper(this, drawing_panel, SelectedAlgorithm);
-            EdgeHolder = new EdgeHolder(DrawingPanelHelper);
-            NodeHolder = new NodeHolder(DrawingPanelHelper);
+            EdgeHolder = new EdgeHolder();
+            NodeHolder = new NodeHolder();
         }
 
         #region mouse events for Creating Nodes and Edges

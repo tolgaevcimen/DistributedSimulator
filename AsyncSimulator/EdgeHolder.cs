@@ -1,26 +1,22 @@
-﻿using AsyncSimulator;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace VisualInterface
+namespace AsyncSimulator
 {
-    internal class EdgeHolder
+    public class EdgeHolder
     {
-        DrawingPanelHelper DrawingPanelHelper { get; set; }
-       
         /// <summary>
         /// Holds list of all currently drawn edges.
         /// </summary>
-        List<VisualEdge> AllEdges { get; set; }
+        List<IEdge> AllEdges { get; set; }
 
         object AllEdgesLock { get; set; }
 
-        public EdgeHolder(DrawingPanelHelper drawingPanelHelper)
+        public EdgeHolder()
         {
-            DrawingPanelHelper = drawingPanelHelper;
-            AllEdges = new List<VisualEdge>();
+            AllEdges = new List<IEdge>();
             AllEdgesLock = new object();
         }
 
@@ -29,7 +25,7 @@ namespace VisualInterface
             AllEdges.Clear();
         }
 
-        public void RemoveEdge(VisualEdge edge)
+        public void RemoveEdge(IEdge edge)
         {
             lock (AllEdgesLock)
             {
@@ -41,13 +37,13 @@ namespace VisualInterface
         {
             lock (AllEdgesLock)
             {
-                AllEdges.ForEach(e => e.Draw(null));
+                AllEdges.ForEach(e => e.Draw());
             }
         }
 
-        public List<VisualEdge> GetRelatedEdges(_Node node, out List<_Node> relatedNodes)
+        public List<IEdge> GetRelatedEdges(_Node node, out List<_Node> relatedNodes)
         {
-            var edgesToBeRemoved = new List<VisualEdge>();
+            var edgesToBeRemoved = new List<IEdge>();
             relatedNodes = new List<_Node>();
 
             lock (AllEdgesLock)
@@ -55,15 +51,15 @@ namespace VisualInterface
                 // go through all edges, find the nodes and edges adjacent
                 foreach (var edge in AllEdges)
                 {
-                    if (edge.Node1 == node)
+                    if (edge.GetNode1() == node)
                     {
                         edgesToBeRemoved.Add(edge);
-                        relatedNodes.Add(edge.Node2);
+                        relatedNodes.Add(edge.GetNode2());
                     }
-                    else if (edge.Node2 == node)
+                    else if (edge.GetNode2() == node)
                     {
                         edgesToBeRemoved.Add(edge);
-                        relatedNodes.Add(edge.Node1);
+                        relatedNodes.Add(edge.GetNode1());
                     }
                 } 
             }
@@ -71,7 +67,7 @@ namespace VisualInterface
             return edgesToBeRemoved;
         }
 
-        public void AddEgde(VisualEdge edge)
+        public void AddEgde(IEdge edge)
         {
             lock (AllEdgesLock)
             {
@@ -79,20 +75,20 @@ namespace VisualInterface
             }
         }
 
-        public VisualEdge FindEdge(Point location)
+        public IEdge FindEdge(Point location)
         {
             lock (AllEdgesLock)
             {
-                return AllEdges.FirstOrDefault(edge => edge.Path.IsOutlineVisible(location, edge.SolidPen));
+                return AllEdges.FirstOrDefault(edge => edge.OnPoint(location));
             }
         }
 
         [Obsolete]
-        public List<VisualEdge> GetCopyList()
+        public List<IEdge> GetCopyList()
         {
             lock (AllEdgesLock)
             {
-                return new List<VisualEdge>(AllEdges);
+                return new List<IEdge>(AllEdges);
             }
         }
     }
