@@ -9,31 +9,24 @@ namespace VisualInterface
     internal class NodeVisualizer : IVisualizer
     {
         private int Id { get; set; }
-        private Font DefaultFontForId { get; set; }
         private PaintEventArgs PaintArgs { get; set; }
-        private int Diameter { get; set; }
 
-        private Brush NodeColor { get; set; }
-        private Brush CoveredNodeColor { get; set; }
+        private int Diameter = 40;
+        private Brush NodeColor = Brushes.Red;
+        private Brush CoveredNodeColor = Brushes.Blue;
+        private Font DefaultFontForId = new Font(FontFamily.GenericSansSerif, 20, FontStyle.Bold);
 
         public PointF Location { get; set; }
         public Presenter ParentForm { get; set; }
 
         public bool Deleted { get; set; }
 
-        public NodeVisualizer(PaintEventArgs e, float x, float y, int id, Presenter parentForm, int diameter = 40)
+        public NodeVisualizer(PaintEventArgs e, float x, float y, int id, Presenter parentForm)
         {
             Id = id;
-
-            NodeColor = Brushes.Red;
-            CoveredNodeColor = Brushes.Blue;
-
-            Diameter = diameter;
-
+            
             Location = new PointF(x, y);
-
-            DefaultFontForId = new Font(FontFamily.GenericSansSerif, 20, FontStyle.Bold);
-
+            
             PaintArgs = e;
             ParentForm = parentForm;
 
@@ -108,24 +101,7 @@ namespace VisualInterface
                 }
             }
         }
-
-        public void RevertEdgeBetween(_Node n1, _Node n2)
-        {
-            foreach (var edge in ParentForm.EdgeHolder.GetCopyList())
-            {
-                if ((edge.GetNode1().Id == n1.Id && edge.GetNode2().Id == n2.Id) ||
-                    (edge.GetNode2().Id == n1.Id && edge.GetNode1().Id == n2.Id))
-                {
-                    edge.Colorify(true);
-
-                    edge.GetNode1().Visualizer.Draw(true);
-                    edge.GetNode2().Visualizer.Draw(true);
-
-                    break;
-                }
-            }
-        }
-
+        
         public void Log(string l, params object[] args)
         {
             ParentForm.Invoke(new MethodInvoker(delegate () { ParentForm.tb_console.AppendText(string.Format(l, args) + Environment.NewLine); }));
@@ -139,6 +115,20 @@ namespace VisualInterface
             double b = (double)(point2.Y - point1.Y);
 
             return Math.Sqrt(a * a + b * b);
+        }
+        
+        public IEdge GetEdgeTo(_Node n2)
+        {
+            foreach (var edge in ParentForm.EdgeHolder.GetCopyList())
+            {
+                if ((edge.GetNode1().Id == Id && edge.GetNode2().Id == n2.Id) ||
+                    (edge.GetNode2().Id == Id && edge.GetNode1().Id == n2.Id))
+                {
+                    return edge;
+                }
+            }
+
+            return null;
         }
     }
 }

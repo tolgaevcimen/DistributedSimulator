@@ -97,6 +97,6 @@ namespace AsyncSimulator
         public virtual bool IsValid()
         {
             return false;
-        }        
+        }
     }
 }
