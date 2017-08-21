@@ -19,6 +19,8 @@ namespace VisualInterface
         public PointF Location { get; set; }
         public Presenter ParentForm { get; set; }
 
+        public bool Deleted { get; set; }
+
         public NodeVisualizer(PaintEventArgs e, float x, float y, int id, Presenter parentForm, int diameter = 40)
         {
             Id = id;
@@ -59,6 +61,8 @@ namespace VisualInterface
         /// <param name="changeColor"></param>
         public void Draw(bool changeColor = false)
         {
+            if (Deleted) return;
+
             bool drawn = false;
             while (!drawn)
                 try
@@ -76,6 +80,7 @@ namespace VisualInterface
 
         public void Delete()
         {
+            Deleted = true;
             bool drawn = false;
             while (!drawn)
                 try

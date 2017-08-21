@@ -28,8 +28,6 @@ namespace AsyncSimulator
 
         public object ReceiveLock { get; set; }
 
-        public bool Running { get; set; }
-
         /// <summary>
         /// As soon a node is created, the thread starts running.
         /// </summary>
