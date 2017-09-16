@@ -127,6 +127,10 @@
       <Project>{a9b62a8b-f497-42a0-8f43-0a414b813ad3}</Project>
       <Name>NeighDfsNode</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TurauNode\TurauNode.csproj">
+      <Project>{A841B497-1268-48F1-A8A7-87FE4629A659}</Project>
+      <Name>TurauNode</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UpdateBfsNode\UpdateBfsNode.csproj">
       <Project>{61c46d30-5c07-4297-9d70-bf17a8200ef5}</Project>
       <Name>UpdateBfsNode</Name>

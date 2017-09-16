@@ -23,8 +23,8 @@ namespace VisualInterface
             InitializeComponent();
 
             cb_choose_alg.Items.AddRange(Algorithms.ToArray());
-            cb_choose_alg.SelectedIndex = 7;
-            SelectedAlgorithm = "GoddardMDS";
+            cb_choose_alg.SelectedIndex = 8;
+            SelectedAlgorithm = "TurauMDS";
 
             cb_graph_type.Items.AddRange(Enum.GetNames(typeof(GraphType)));
             cb_graph_type.SelectedIndex = 1;
@@ -99,7 +99,7 @@ namespace VisualInterface
         /// <summary>
         /// Holds the list of algorithms. When new ones are added here, please add them to the factory implementation too.
         /// </summary>
-        private List<string> Algorithms = new List<string> { "Flooding", "FloodST", "UpdateBFS", "NeighDFS", "ChiuDS_allWait", "ChiuDS_allIn", "ChiuDS_rand", "GoddardMDS" };
+        private List<string> Algorithms = new List<string> { "Flooding", "FloodST", "UpdateBFS", "NeighDFS", "ChiuDS_allWait", "ChiuDS_allIn", "ChiuDS_rand", "GoddardMDS", "TurauMDS" };
 
         /// <summary>
         /// Holds the selected algorithms name.
