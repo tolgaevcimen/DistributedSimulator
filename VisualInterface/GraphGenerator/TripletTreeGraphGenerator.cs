@@ -65,10 +65,8 @@ namespace VisualInterface.GraphGenerator
 
                     var firstChildId = queue.Dequeue();
                     var child = nodeHolder.GetNodeAt(firstChildId);
-
-                    var edge = new VisualEdge(arg, parent.Visualizer.Location, child.Visualizer.Location, parent, ghost: true);
-                    edge.Solidify(parent.Visualizer.Location, child.Visualizer.Location, child, true);
-                    edgeHolder.AddEgde(edge);
+                    
+                    edgeHolder.AddEgde(new VisualEdge(arg, parent, child));
                 }
 
             }

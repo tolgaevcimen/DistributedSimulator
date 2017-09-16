@@ -55,7 +55,10 @@ namespace UpdateBfsNode
                         {
                             if ( Parent != null )
                             {
-                                Visualizer.RevertEdgeBetween(this, Parent);
+                                var edge = Visualizer.GetEdgeTo(Parent);
+                                edge.Colorify(true);
+                                edge.GetNode1().Visualizer.Draw(true);
+                                edge.GetNode2().Visualizer.Draw(true);
                                 Visualizer.VisualizeMessage(receivedMessage);
                                 Visualizer.Log("n{0} is changing its parent from n{1} to n{2}", Id, Parent.Id, receivedMessage.Source.Id);
                             }

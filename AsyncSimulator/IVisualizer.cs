@@ -36,13 +36,13 @@ namespace AsyncSimulator
         /// </summary>
         /// <param name="m"></param>
         void VisualizeMessage(Message m);
-
+        
         /// <summary>
-        /// Method for reverting a selected edge. Changes an edges color to unselected color lying between two nodes that the message is sourced from and destined to.
+        /// Method for selecting the edge between current node and given node. Returns null if inexistant.
         /// </summary>
-        /// <param name="n1"></param>
         /// <param name="n2"></param>
-        void RevertEdgeBetween(_Node n1, _Node n2);
+        /// <returns></returns>
+        IEdge GetEdgeTo(_Node n2);
 
         /// <summary>
         /// Method for showing a text message.

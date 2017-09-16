@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DrawingPanelHelper.cs" />
-    <Compile Include="EdgeHolder.cs" />
+    <Compile Include="GhostEdge.cs" />
     <Compile Include="GraphGenerator\TripletTreeGraphGenerator.cs" />
     <Compile Include="GraphGenerator\CompleteGraphGenerator.cs" />
     <Compile Include="GraphGenerator\BipartiteGraphGenerator.cs" />
@@ -65,7 +65,6 @@
     <Compile Include="GraphGenerator\LineGraphGenerator.cs" />
     <Compile Include="GraphGenerator\RandomGraphGenerator.cs" />
     <Compile Include="NodeFactory.cs" />
-    <Compile Include="NodeHolder.cs" />
     <Compile Include="Presenter.cs">
       <SubType>Form</SubType>
     </Compile>

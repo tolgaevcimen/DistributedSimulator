@@ -23,7 +23,7 @@ namespace VisualInterface
         /// <summary>
         /// Holds the edge that just has been started to be drawn.
         /// </summary>
-        VisualEdge EdgeBeingDrawn { get; set; }
+        GhostEdge EdgeBeingDrawn { get; set; }
 
         public bool SelfStabModeEnabled
         {
@@ -75,7 +75,7 @@ namespace VisualInterface
             var startingNode = GetNodeAt(e);
 
             if (startingNode != null)
-                EdgeBeingDrawn = new VisualEdge(GetNewPaintEventArgs(), MouseStartPos, MouseStartPos, startingNode);
+                EdgeBeingDrawn = new GhostEdge(GetNewPaintEventArgs(), MouseStartPos, MouseStartPos, startingNode);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace VisualInterface
             if (EdgeBeingDrawn == null) return;
 
             var newPos = GetCurrentMousePosition(e);
-            EdgeBeingDrawn.Refresh(GetNewPaintEventArgs(), newPos);
+            EdgeBeingDrawn.Redirect(GetNewPaintEventArgs(), newPos);
         }
 
         /// <summary>
@@ -130,8 +130,7 @@ namespace VisualInterface
                 var endingNode = PresenterForm.NodeHolder.GetNodeAt(e.Location);
                 if (endingNode != null && endingNode != EdgeBeingDrawn.Node1)
                 {
-                    EdgeBeingDrawn.Solidify(DrawingPanel.PointToClient(MouseStartPos), DrawingPanel.PointToClient(currentMousePosition), endingNode, true);
-                    PresenterForm.EdgeHolder.AddEgde(EdgeBeingDrawn);
+                    PresenterForm.EdgeHolder.AddEgde(EdgeBeingDrawn.Solidify(endingNode));
                 }
                 else
                 {
