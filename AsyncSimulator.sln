@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncSimulator", "AsyncSimulator\AsyncSimulator.csproj", "{440FA7C3-094A-4913-8CF5-14B440C0B86E}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChiuNode", "ChiuNode\ChiuNode.csproj", "{6B034CEF-A5DD-4025-AEF8-49093E72C4EC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoddardMDSNode", "GoddardMDSNode\GoddardMDSNode.csproj", "{7033CF9E-D993-4F95-8749-1C8DA60A7E97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurauNode", "TurauNode\TurauNode.csproj", "{A841B497-1268-48F1-A8A7-87FE4629A659}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{7033CF9E-D993-4F95-8749-1C8DA60A7E97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7033CF9E-D993-4F95-8749-1C8DA60A7E97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7033CF9E-D993-4F95-8749-1C8DA60A7E97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A841B497-1268-48F1-A8A7-87FE4629A659}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A841B497-1268-48F1-A8A7-87FE4629A659}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A841B497-1268-48F1-A8A7-87FE4629A659}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A841B497-1268-48F1-A8A7-87FE4629A659}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

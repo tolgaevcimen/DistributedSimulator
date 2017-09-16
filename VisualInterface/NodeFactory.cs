@@ -6,6 +6,7 @@ using UpdateBfsNode;
 using NeighDfsNode;
 using ChiuDominatingSet;
 using GoddardMDSNode;
+using TurauDominatingSet;
 
 namespace VisualInterface
 {
@@ -65,6 +66,12 @@ namespace VisualInterface
                 case "GoddardMDS":
                     {
                         node = new GoddardNode(id);
+
+                        break;
+                    }
+                case "TurauMDS":
+                    {
+                        node = new TurauNode(id);
 
                         break;
                     }
