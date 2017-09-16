@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AsyncSimulator
 {
@@ -30,8 +27,6 @@ namespace AsyncSimulator
         public IVisualizer Visualizer { get; set; }
 
         public object ReceiveLock { get; set; }
-
-        public bool Running { get; set; }
 
         /// <summary>
         /// As soon a node is created, the thread starts running.
@@ -102,6 +97,6 @@ namespace AsyncSimulator
         public virtual bool IsValid()
         {
             return false;
-        }        
+        }
     }
 }

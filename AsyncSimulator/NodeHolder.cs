@@ -1,15 +1,12 @@
-﻿using AsyncSimulator;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace VisualInterface
+namespace AsyncSimulator
 {
-    internal class NodeHolder
+    public class NodeHolder
     {
-        DrawingPanelHelper DrawingPanelHelper { get; set; }
-        
         /// <summary>
         /// Holds list of all currently drawn nodes.
         /// </summary>
@@ -19,9 +16,8 @@ namespace VisualInterface
 
         public int NodeCount { get; private set; }
 
-        public NodeHolder(DrawingPanelHelper drawingPanelHelper)
+        public NodeHolder()
         {
-            DrawingPanelHelper = drawingPanelHelper;
             AllNodes = new List<_Node>();
             AllNodesLock = new object();
         }
