@@ -1,27 +1,29 @@
-﻿namespace VisualInterface.GraphGenerator
+﻿using System.Windows.Forms;
+
+namespace VisualInterface.GraphGenerator
 {
     internal class GraphFactory
     {
-        public static IGraphGenerator GetGraphGenerator(GraphType graphType)
+        public static IGraphGenerator GetGraphGenerator(GraphType graphType, Presenter parentForm, Panel drawing_panel)
         {
             switch (graphType)
             {
                 case GraphType.Random:
-                    return new RandomGraphGenerator();
+                    return new RandomGraphGenerator(parentForm, drawing_panel);
                 case GraphType.Line:
-                    return new LineGraphGenerator();
+                    return new LineGraphGenerator(parentForm, drawing_panel);
                 case GraphType.Circle:
-                    return new CircleGraphGenerator();
+                    return new CircleGraphGenerator(parentForm, drawing_panel);
                 case GraphType.Star:
-                    return new StarGraphGenerator();
+                    return new StarGraphGenerator(parentForm, drawing_panel);
                 case GraphType.Bipartite:
-                    return new BipartiteGraphGenerator();
+                    return new BipartiteGraphGenerator(parentForm, drawing_panel);
                 case GraphType.BinaryTree:
-                    return new BinaryTreeGraphGenerator();
+                    return new BinaryTreeGraphGenerator(parentForm, drawing_panel);
                 //case GraphType.TripletTree:
-                //    return new TripletTreeGraphGenerator();
+                //    return new TripletTreeGraphGenerator(parentForm, drawing_panel);
                 case GraphType.Complete:
-                    return new CompleteGraphGenerator();
+                    return new CompleteGraphGenerator(parentForm, drawing_panel);
             }
 
             return null;

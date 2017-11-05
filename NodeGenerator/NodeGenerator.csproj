@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F3A2B616-AEF6-4647-B7AA-7A5B25209E10}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NodeGenerator</RootNamespace>
+    <AssemblyName>NodeGenerator</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="NodeFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AsyncSimulator\AsyncSimulator.csproj">
+      <Project>{440fa7c3-094a-4913-8cf5-14b440c0b86e}</Project>
+      <Name>AsyncSimulator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChiuNode\ChiuNode.csproj">
+      <Project>{6b034cef-a5dd-4025-aef8-49093e72c4ec}</Project>
+      <Name>ChiuNode</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FloodingNode\FloodingNode.csproj">
+      <Project>{001847dc-fbff-4114-b6c9-00c388fd5857}</Project>
+      <Name>FloodingNode</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FloodSTNode\FloodSTNode.csproj">
+      <Project>{3b0a53f7-5ebc-4269-a38e-40fb077578e6}</Project>
+      <Name>FloodSTNode</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GoddardMDSNode\GoddardMDSNode.csproj">
+      <Project>{7033cf9e-d993-4f95-8749-1c8da60a7e97}</Project>
+      <Name>GoddardMDSNode</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NeighDfsNode\NeighDfsNode.csproj">
+      <Project>{a9b62a8b-f497-42a0-8f43-0a414b813ad3}</Project>
+      <Name>NeighDfsNode</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TurauNode\TurauNode.csproj">
+      <Project>{a841b497-1268-48f1-a8a7-87fe4629a659}</Project>
+      <Name>TurauNode</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UpdateBfsNode\UpdateBfsNode.csproj">
+      <Project>{61c46d30-5c07-4297-9d70-bf17a8200ef5}</Project>
+      <Name>UpdateBfsNode</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -95,6 +95,7 @@ namespace GoddardMDSNode
 
         protected override void UserDefined_ReceiveMessageProcedure(Message m)
         {
+            base.UserDefined_ReceiveMessageProcedure(null);
             RunRules();
         }
 

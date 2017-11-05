@@ -3,15 +3,11 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System;
 
 namespace VisualInterface
 {
-    public class VisualEdge : IEdge 
+    public class WinformsEdge : AbstractEdge 
     {
-        public _Node Node1 { get; set; }
-        public _Node Node2 { get; set; }
-
         Color EdgeColor { get; set; }
         Color SelectedEdgeColor { get; set; }
         Color RevertedEdgeColor { get; set; }
@@ -24,7 +20,7 @@ namespace VisualInterface
 
         PaintEventArgs PaintArgs { get; set; }
 
-        public VisualEdge(PaintEventArgs e, _Node node1, _Node node2)
+        public WinformsEdge(PaintEventArgs e, _Node node1, _Node node2) : base(node1, node2)
         {
             EdgeColor = Color.Pink;
             SelectedEdgeColor = Color.LightBlue;
@@ -33,17 +29,13 @@ namespace VisualInterface
             SolidPen = new Pen(EdgeColor, Thickness);
             LastUsedPen = SolidPen;
             
-            Node1 = node1;
-            Node2 = node2;
-
             PaintArgs = e;
 
             HandleVisualization();
-            HandleNeighbourhood();
             HandleSelfStabilization();
         }
 
-        void HandleVisualization()
+        protected override void HandleVisualization()
         {
             _Draw(SolidPen);
 
@@ -54,14 +46,7 @@ namespace VisualInterface
             Node1.Visualizer.Draw(Node1.Selected());
             Node2.Visualizer.Draw(Node2.Selected());
         }
-
-        void HandleNeighbourhood()
-        {
-            /// set neighbourhood
-            Node1.Neighbours.Add(Node2);
-            Node2.Neighbours.Add(Node1);
-        }
-
+        
         void HandleSelfStabilization()
         {
             if (Program.Presenter.cb_selfStab.Checked)
@@ -71,7 +56,7 @@ namespace VisualInterface
             }
         }
 
-        public void Colorify(bool reverted)
+        public override void Colorify(bool reverted)
         {
             if (!reverted)
                 LastUsedPen = new Pen(SelectedEdgeColor, Thickness);
@@ -81,13 +66,11 @@ namespace VisualInterface
             _Draw(null);
         }
 
-        public void Delete(bool onlyEdgeDeleted)
+        public override void Delete(bool onlyEdgeDeleted)
         {
             _Draw(new Pen(Color.White, Thickness + 1));
 
-            // set neighbourhood
-            Node1.Neighbours.Remove(Node2);
-            Node2.Neighbours.Remove(Node1);
+            base.Delete(onlyEdgeDeleted);
 
             // redraw the nodes
             Node1.Visualizer.Draw(Node1.Selected());
@@ -104,7 +87,7 @@ namespace VisualInterface
             }
         }
 
-        public void Draw()
+        public override void Draw()
         {
             _Draw(null);
         }
@@ -127,17 +110,7 @@ namespace VisualInterface
                 catch { }
         }
 
-        public _Node GetNode1()
-        {
-            return Node1;
-        }
-
-        public _Node GetNode2()
-        {
-            return Node2;
-        }
-        
-        public bool OnPoint(Point location)
+        public override bool OnPoint(Point location)
         {
             return Path.IsOutlineVisible(location, SolidPen);
         }

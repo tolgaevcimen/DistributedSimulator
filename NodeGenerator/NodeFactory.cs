@@ -8,7 +8,7 @@ using ChiuDominatingSet;
 using GoddardMDSNode;
 using TurauDominatingSet;
 
-namespace VisualInterface
+namespace NodeGenerator
 {
     /// <summary>
     /// Factory class for creating nodes.
@@ -16,7 +16,7 @@ namespace VisualInterface
     public class NodeFactory
     {
         public static Random Randomizer = new Random();
-        public static _Node Create(string algorithmType, int id, IVisualizer nodeVisualizer)
+        public static _Node Create(string algorithmType, int id, IVisualizer nodeVisualizer, bool selfStab)
         {
             _Node node = null;
             switch (algorithmType)
@@ -80,7 +80,7 @@ namespace VisualInterface
 
             node.Visualizer = nodeVisualizer;
 
-            if (Program.Presenter.cb_selfStab.Checked)
+            if (selfStab)
                 node.UserDefined_SingleInitiatorProcedure(node);
 
             return node;

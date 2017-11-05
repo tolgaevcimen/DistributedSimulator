@@ -1,4 +1,5 @@
 ﻿using AsyncSimulator;
+using NodeGenerator;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -118,7 +119,7 @@ namespace VisualInterface
             {
                 if (!PresenterForm.NodeHolder.AnyIntersecting(e.Location))
                 {
-                    var node = NodeFactory.Create(SelectedAlgorithm, PresenterForm.NodeHolder.NodeCount, GetNewNodeVisualizer(e, pea));
+                    var node = NodeFactory.Create(SelectedAlgorithm, PresenterForm.NodeHolder.NodeCount, GetNewNodeVisualizer(e, pea), PresenterForm.cb_selfStab.Checked);
                     node.Visualizer.Draw(node.Selected());
                     PresenterForm.NodeHolder.AddNode(node);
 
@@ -178,9 +179,9 @@ namespace VisualInterface
             }
         }
 
-        NodeVisualizer GetNewNodeVisualizer(MouseEventArgs e, PaintEventArgs pea)
+        WinformsNodeVisualiser GetNewNodeVisualizer(MouseEventArgs e, PaintEventArgs pea)
         {
-            return new NodeVisualizer(pea, e.X, e.Y, PresenterForm.NodeHolder.NodeCount, PresenterForm);
+            return new WinformsNodeVisualiser(pea, e.X, e.Y, PresenterForm.NodeHolder.NodeCount, PresenterForm);
         }
 
         PaintEventArgs GetNewPaintEventArgs()

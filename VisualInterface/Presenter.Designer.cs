@@ -190,7 +190,7 @@
             this.btn_random_nodes.TabIndex = 4;
             this.btn_random_nodes.Text = "Generate Nodes";
             this.btn_random_nodes.UseVisualStyleBackColor = true;
-            this.btn_random_nodes.Click += new System.EventHandler(this.btn_random_nodes_Click);
+            this.btn_random_nodes.Click += new System.EventHandler(this.btn_generate_nodes_Click);
             // 
             // cb_graph_type
             // 

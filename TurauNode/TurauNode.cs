@@ -62,8 +62,6 @@ namespace TurauDominatingSet
 
         public void RunRules()
         {
-            Thread.Sleep(50);
-
             if (State == TurauState.OUT && InNeighborCount == 0)
             {
                 SetState(TurauState.WAIT);
@@ -141,6 +139,7 @@ namespace TurauDominatingSet
 
         protected override void UserDefined_ReceiveMessageProcedure(Message m)
         {
+            base.UserDefined_ReceiveMessageProcedure(null);
             RunRules();
         }
 

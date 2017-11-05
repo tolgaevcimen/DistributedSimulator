@@ -28,6 +28,8 @@ namespace AsyncSimulator
 
         public object ReceiveLock { get; set; }
 
+        public int RunCount { get; set; }
+
         /// <summary>
         /// As soon a node is created, the thread starts running.
         /// </summary>
@@ -69,7 +71,10 @@ namespace AsyncSimulator
         /// This method will be implemented in sub classes for algorithm details.
         /// </summary>
         /// <param name="m"></param>
-        protected abstract void UserDefined_ReceiveMessageProcedure(Message m);
+        protected virtual void UserDefined_ReceiveMessageProcedure(Message m)
+        {
+            RunCount++;
+        }
 
         #region initiator
 

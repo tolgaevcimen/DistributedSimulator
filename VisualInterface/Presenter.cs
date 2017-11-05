@@ -1,4 +1,5 @@
 ﻿using AsyncSimulator;
+using NodeGenerator;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -35,20 +36,19 @@ namespace VisualInterface
         }
 
         #region mouse events for Creating Nodes and Edges
-        
-        
+                
         /// <summary>
         /// Creates randomly positioned nodes and ties them to each other in a given percentage.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btn_random_nodes_Click(object sender, EventArgs e)
+        private void btn_generate_nodes_Click(object sender, EventArgs e)
         {
             if (!int.TryParse(tbNodeCount.Text, out int nodeCount)) return;
 
-            var graphGenerator = GraphFactory.GetGraphGenerator((GraphType)Enum.Parse(typeof(GraphType), (string)cb_graph_type.SelectedItem));
+            var graphGenerator = GraphFactory.GetGraphGenerator((GraphType)Enum.Parse(typeof(GraphType), (string)cb_graph_type.SelectedItem), this, drawing_panel);
 
-            graphGenerator.Generate(nodeCount, this, drawing_panel, NodeHolder, EdgeHolder, SelectedAlgorithm);
+            graphGenerator.Generate(nodeCount, NodeHolder, EdgeHolder, SelectedAlgorithm);
         }
 
         #endregion
@@ -82,9 +82,12 @@ namespace VisualInterface
         {
             var invalidNodes = NodeHolder.GetCopyList().Where(n => !n.IsValid());
 
+            var runCountReport = String.Join("\n", NodeHolder.GetCopyList().Select(n => String.Format("node: {0}\t runCount: {1}", n.Id, n.RunCount)));
+            runCountReport += String.Format("\ntotal run count: {0}", NodeHolder.GetCopyList().Sum(n => n.RunCount));
+
             if (!invalidNodes.Any())
             {
-                MessageBox.Show("Each node is valid");
+                MessageBox.Show(String.Format("{0}\nRun count report:\n{1}", "Each node is valid", runCountReport));
             }
             else
             {
@@ -128,7 +131,7 @@ namespace VisualInterface
             var firstNode = NodeHolder.GetMinimumNode();
             if (firstNode == null) return;
 
-            var initiator = NodeFactory.Create(SelectedAlgorithm, -1, null);
+            var initiator = NodeFactory.Create(SelectedAlgorithm, -1, null, cb_selfStab.Checked);
             firstNode.UserDefined_SingleInitiatorProcedure(firstNode);
         }
         

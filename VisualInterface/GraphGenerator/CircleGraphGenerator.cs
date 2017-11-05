@@ -1,15 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using AsyncSimulator;
+using NodeGenerator;
 
 namespace VisualInterface.GraphGenerator
 {
-    class CircleGraphGenerator : IGraphGenerator
+    class CircleGraphGenerator : AbstractGraphGenerator
     {
-        public void Generate(int nodeCount, Presenter parentForm, Panel drawing_panel, NodeHolder nodeHolder, EdgeHolder edgeHolder, string SelectedAlgorithm)
+        public CircleGraphGenerator(Presenter parentForm, Panel drawing_panel) : base(parentForm, drawing_panel)
+        {
+        }
+
+        public override void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, string SelectedAlgorithm)
         {
             var randomizer = new Random();
             var arg = new PaintEventArgs(drawing_panel.CreateGraphics(), new Rectangle());
@@ -25,7 +28,7 @@ namespace VisualInterface.GraphGenerator
 
                 if (!nodeHolder.AnyIntersecting(p))
                 {
-                    var node = NodeFactory.Create(SelectedAlgorithm, nodeHolder.NodeCount, new NodeVisualizer(arg, p.X, p.Y, nodeHolder.NodeCount, parentForm));
+                    var node = NodeFactory.Create(SelectedAlgorithm, nodeHolder.NodeCount, new WinformsNodeVisualiser(arg, p.X, p.Y, nodeHolder.NodeCount, parentForm), parentForm.cb_selfStab.Checked);
 
                     nodeHolder.AddNode(node);
                 }
@@ -42,14 +45,14 @@ namespace VisualInterface.GraphGenerator
                     var node1 =  nodeHolder.GetNodeAt(i);
                     var node2 =  nodeHolder.GetNodeAt(i + 1);
 
-                    edgeHolder.AddEgde(new VisualEdge(arg, node1, node2));
+                    edgeHolder.AddEgde(new WinformsEdge(arg, node1, node2));
                 }
                 else
                 {
                     var node1 = nodeHolder.GetNodeAt(i);
                     var node2 = nodeHolder.GetNodeAt(0);
 
-                    edgeHolder.AddEgde(new VisualEdge(arg, node1, node2));
+                    edgeHolder.AddEgde(new WinformsEdge(arg, node1, node2));
                 }
             }
         }

@@ -117,13 +117,16 @@ namespace ChiuDominatingSet
 
         protected override void UserDefined_ReceiveMessageProcedure(Message m)
         {
+            base.UserDefined_ReceiveMessageProcedure(null);
             RunRules();
         }
 
         public override void UserDefined_SingleInitiatorProcedure(_Node root)
         {
-            FirstTime = true;
-            RunRules();
+            var initialNode = (ChiuNode)root;
+
+            initialNode.FirstTime = true;
+            initialNode.RunRules();
         }
 
         public override bool Selected()

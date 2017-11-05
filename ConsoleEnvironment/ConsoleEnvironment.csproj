@@ -7,14 +7,15 @@
     <ProjectGuid>{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ASyncSimulator1</RootNamespace>
-    <AssemblyName>ASyncSimulator1</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>ConsoleEnvironment</RootNamespace>
+    <AssemblyName>ConsoleEnvironment</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -38,6 +39,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,6 +47,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleEdge.cs" />
+    <Compile Include="ConsoleNodeVisualizer.cs" />
+    <Compile Include="GraphGenerator\AbstractGraphGenerator.cs" />
+    <Compile Include="GraphGenerator\BinaryTreeGraphGenerator.cs" />
+    <Compile Include="GraphGenerator\BipartiteGraphGenerator.cs" />
+    <Compile Include="GraphGenerator\CircleGraphGenerator.cs" />
+    <Compile Include="GraphGenerator\CompleteGraphGenerator.cs" />
+    <Compile Include="GraphGenerator\GraphGeneratorFactory.cs" />
+    <Compile Include="GraphGenerator\GraphType.cs" />
+    <Compile Include="GraphGenerator\IGraphGenerator.cs" />
+    <Compile Include="GraphGenerator\LineGraphGenerator.cs" />
+    <Compile Include="GraphGenerator\RandomGraphGenerator.cs" />
+    <Compile Include="GraphGenerator\StarGraphGenerator.cs" />
+    <Compile Include="GraphGenerator\TripletTreeGraphGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -59,6 +75,10 @@
     <ProjectReference Include="..\FloodingNode\FloodingNode.csproj">
       <Project>{001847dc-fbff-4114-b6c9-00c388fd5857}</Project>
       <Name>FloodingNode</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NodeGenerator\NodeGenerator.csproj">
+      <Project>{f3a2b616-aef6-4647-b7aa-7a5b25209e10}</Project>
+      <Name>NodeGenerator</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

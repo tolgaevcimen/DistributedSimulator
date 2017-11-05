@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="DrawingPanelHelper.cs" />
     <Compile Include="GhostEdge.cs" />
+    <Compile Include="GraphGenerator\AbstractGraphGenerator.cs" />
     <Compile Include="GraphGenerator\TripletTreeGraphGenerator.cs" />
     <Compile Include="GraphGenerator\CompleteGraphGenerator.cs" />
     <Compile Include="GraphGenerator\BipartiteGraphGenerator.cs" />
@@ -64,7 +65,6 @@
     <Compile Include="GraphGenerator\CircleGraphGenerator.cs" />
     <Compile Include="GraphGenerator\LineGraphGenerator.cs" />
     <Compile Include="GraphGenerator\RandomGraphGenerator.cs" />
-    <Compile Include="NodeFactory.cs" />
     <Compile Include="Presenter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,8 +73,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VisualEdge.cs" />
-    <Compile Include="VisualNode.cs" />
+    <Compile Include="WinformsEdge.cs" />
+    <Compile Include="WinformsNodeVisualiser.cs" />
     <EmbeddedResource Include="Presenter.resx">
       <DependentUpon>Presenter.cs</DependentUpon>
     </EmbeddedResource>
@@ -126,6 +126,10 @@
     <ProjectReference Include="..\NeighDfsNode\NeighDfsNode.csproj">
       <Project>{a9b62a8b-f497-42a0-8f43-0a414b813ad3}</Project>
       <Name>NeighDfsNode</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NodeGenerator\NodeGenerator.csproj">
+      <Project>{f3a2b616-aef6-4647-b7aa-7a5b25209e10}</Project>
+      <Name>NodeGenerator</Name>
     </ProjectReference>
     <ProjectReference Include="..\TurauNode\TurauNode.csproj">
       <Project>{A841B497-1268-48F1-A8A7-87FE4629A659}</Project>

@@ -4,12 +4,17 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using AsyncSimulator;
+using NodeGenerator;
 
 namespace VisualInterface.GraphGenerator
 {
-    class BinaryTreeGraphGenerator : IGraphGenerator
+    class BinaryTreeGraphGenerator : AbstractGraphGenerator
     {
-        public void Generate(int nodeCount, Presenter parentForm, Panel drawing_panel, NodeHolder nodeHolder, EdgeHolder edgeHolder, string SelectedAlgorithm)
+        public BinaryTreeGraphGenerator(Presenter parentForm, Panel drawing_panel) : base(parentForm, drawing_panel)
+        {
+        }
+
+        public override void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, string SelectedAlgorithm)
         {
             var arg = new PaintEventArgs(drawing_panel.CreateGraphics(), new Rectangle());
 
@@ -33,7 +38,7 @@ namespace VisualInterface.GraphGenerator
 
                 if (!nodeHolder.AnyIntersecting(p))
                 {
-                    var node = NodeFactory.Create(SelectedAlgorithm, nodeHolder.NodeCount, new NodeVisualizer(arg, p.X, p.Y, nodeHolder.NodeCount, parentForm));
+                    var node = NodeFactory.Create(SelectedAlgorithm, nodeHolder.NodeCount, new WinformsNodeVisualiser(arg, p.X, p.Y, nodeHolder.NodeCount, parentForm), parentForm.cb_selfStab.Checked);
 
                     nodeHolder.AddNode(node);
                 }
@@ -59,7 +64,7 @@ namespace VisualInterface.GraphGenerator
                     var firstChildId = queue.Dequeue();
                     var child = nodeHolder.GetNodeAt(firstChildId);
                     
-                    edgeHolder.AddEgde(new VisualEdge(arg, parent, child));
+                    edgeHolder.AddEgde(new WinformsEdge(arg, parent, child));
                 }
 
             }

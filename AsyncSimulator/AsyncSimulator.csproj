@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractEdge.cs" />
     <Compile Include="EdgeHolder.cs" />
     <Compile Include="IEdge.cs" />
     <Compile Include="IVisualizer.cs" />

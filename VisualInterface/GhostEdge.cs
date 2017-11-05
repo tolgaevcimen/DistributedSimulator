@@ -39,9 +39,9 @@ namespace VisualInterface
             ControlPaint.DrawReversibleLine(Point.Round(End1), Point.Round(End2), EdgeColor);
         }
 
-        public VisualEdge Solidify(_Node node2)
+        public WinformsEdge Solidify(_Node node2)
         {
-            return new VisualEdge(PaintArgs, Node1, node2);
+            return new WinformsEdge(PaintArgs, Node1, node2);
         }
     }
 }

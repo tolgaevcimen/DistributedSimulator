@@ -1,7 +1,6 @@
 ﻿using AsyncSimulator;
-using System.Windows.Forms;
 
-namespace VisualInterface.GraphGenerator
+namespace ConsoleEnvironment.GraphGenerator
 {
     internal interface IGraphGenerator
     {

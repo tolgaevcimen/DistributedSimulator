@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncSimulator", "AsyncSimulator\AsyncSimulator.csproj", "{440FA7C3-094A-4913-8CF5-14B440C0B86E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Environment", "ASyncSimulator1\Environment.csproj", "{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualInterface", "VisualInterface\VisualInterface.csproj", "{110892BB-9F9B-4BC1-8F30-1B0B51590DF4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloodingNode", "FloodingNode\FloodingNode.csproj", "{001847DC-FBFF-4114-B6C9-00C388FD5857}"
@@ -23,6 +21,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoddardMDSNode", "GoddardMD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurauNode", "TurauNode\TurauNode.csproj", "{A841B497-1268-48F1-A8A7-87FE4629A659}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodeGenerator", "NodeGenerator\NodeGenerator.csproj", "{F3A2B616-AEF6-4647-B7AA-7A5B25209E10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleEnvironment", "ConsoleEnvironment\ConsoleEnvironment.csproj", "{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,10 +35,6 @@ Global
 		{440FA7C3-094A-4913-8CF5-14B440C0B86E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{440FA7C3-094A-4913-8CF5-14B440C0B86E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{440FA7C3-094A-4913-8CF5-14B440C0B86E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{110892BB-9F9B-4BC1-8F30-1B0B51590DF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{110892BB-9F9B-4BC1-8F30-1B0B51590DF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{110892BB-9F9B-4BC1-8F30-1B0B51590DF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -69,6 +67,14 @@ Global
 		{A841B497-1268-48F1-A8A7-87FE4629A659}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A841B497-1268-48F1-A8A7-87FE4629A659}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A841B497-1268-48F1-A8A7-87FE4629A659}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3A2B616-AEF6-4647-B7AA-7A5B25209E10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3A2B616-AEF6-4647-B7AA-7A5B25209E10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3A2B616-AEF6-4647-B7AA-7A5B25209E10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3A2B616-AEF6-4647-B7AA-7A5B25209E10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
