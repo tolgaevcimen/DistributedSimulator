@@ -1,4 +1,5 @@
 ﻿using AsyncSimulator;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,8 +15,9 @@ namespace GoddardMDSNode
 
         object Lock { get; set; }
 
-        public GoddardNode(int id) : base(id)
+        public GoddardNode(int id, InitialState initialState = InitialState.AllWait, Random randomizer = null) : base(id)
         {
+            x = GetState(initialState, randomizer);
             Lock = new object();
             FirstTime = true;
         }
@@ -53,6 +55,7 @@ namespace GoddardMDSNode
             }
             else
             {
+                MoveCount--;
                 if (FirstTime)
                 {
                     Visualizer.Log("D-: I'm {0}. Forwarding message. ", Id);
@@ -125,6 +128,24 @@ namespace GoddardMDSNode
             else
             {
                 return true;
+            }
+        }
+
+        int GetState(InitialState _is, Random randomizer)
+        {
+            switch (_is)
+            {
+                case InitialState.AllWait:
+                    return 0;
+                case InitialState.AllIn:
+                    return 1;
+                case InitialState.Random:
+                    {
+                        var randIndex = randomizer.Next(0, 2);
+
+                        return randIndex;
+                    }
+                default: return 0;
             }
         }
     }

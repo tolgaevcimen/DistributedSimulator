@@ -35,5 +35,10 @@ namespace ConsoleEnvironment
         {
             throw new NotImplementedException();
         }
+
+        public override string ToString()
+        {
+            return string.Format("({0}-{1})", Node1.Id, Node2.Id);
+        }
     }
 }

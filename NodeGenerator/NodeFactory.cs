@@ -47,31 +47,55 @@ namespace NodeGenerator
                     }
                 case "ChiuDS_rand":
                     {
-                        node = new ChiuNode(id, ChiuNode.InitialState.Random, Randomizer);
+                        node = new ChiuNode(id, InitialState.Random, Randomizer);
                         
                         break;
                     }
                 case "ChiuDS_allIn":
                     {
-                        node = new ChiuNode(id, ChiuNode.InitialState.AllIn);
+                        node = new ChiuNode(id, InitialState.AllIn);
 
                         break;
                     }
                 case "ChiuDS_allWait":
                     {
-                        node = new ChiuNode(id, ChiuNode.InitialState.AllWait);
+                        node = new ChiuNode(id, InitialState.AllWait);
 
                         break;
                     }
-                case "GoddardMDS":
+                case "GoddardMDS_rand":
                     {
-                        node = new GoddardNode(id);
+                        node = new GoddardNode(id, InitialState.Random, Randomizer);
 
                         break;
                     }
-                case "TurauMDS":
+                case "GoddardMDS_allIn":
                     {
-                        node = new TurauNode(id);
+                        node = new GoddardNode(id, InitialState.AllIn);
+
+                        break;
+                    }
+                case "GoddardMDS_allWait":
+                    {
+                        node = new GoddardNode(id, InitialState.AllWait);
+
+                        break;
+                    }
+                case "TurauMDS_rand":
+                    {
+                        node = new TurauNode(id, InitialState.Random, Randomizer);
+
+                        break;
+                    }
+                case "TurauMDS_allIn":
+                    {
+                        node = new TurauNode(id, InitialState.AllIn);
+
+                        break;
+                    }
+                case "TurauMDS_allWait":
+                    {
+                        node = new TurauNode(id, InitialState.AllWait);
 
                         break;
                     }

@@ -32,8 +32,7 @@ namespace ChiuDominatingSet
                 return !Neighbours.Select(n => (ChiuNode)n).Any(n => n.State == ChiuState.WAIT && n.Id < Id);
             }
         }
-
-        int MoveCount { get; set; }
+        
         bool FirstTime { get; set; }
 
         object Lock { get; set; }
@@ -47,8 +46,6 @@ namespace ChiuDominatingSet
 
         public void RunRules()
         {
-            Thread.Sleep(500);
-
             if (State == ChiuState.WAIT && InNeighborCount == 0 && NoBetterNeighbor)
             {
                 SetState(ChiuState.IN);
@@ -76,7 +73,7 @@ namespace ChiuDominatingSet
             else
             {
                 Visualizer.Log("I'm {0}. My state is {1}, and does not change.", Id, State);
-
+                MoveCount--;
                 if (FirstTime)
                 {
                     FirstTime = false;
@@ -93,10 +90,7 @@ namespace ChiuDominatingSet
         void SetState(ChiuState state)
         {
             Visualizer.Log("I'm {0}. My state is {1}, was {2}", Id, state, State);
-
-            MoveCount++;
-            Program.IncrementTotalMoveCount();
-
+            
             State = state;
             Visualizer.Draw(State == ChiuState.IN);
 
@@ -133,14 +127,7 @@ namespace ChiuDominatingSet
         {
             return base.Selected() || State == ChiuState.IN;
         }
-
-        public enum InitialState
-        {
-            AllWait,
-            AllIn,
-            Random
-        }
-
+        
         ChiuState GetState(InitialState _is, Random randomizer)
         {
             switch (_is)
@@ -155,9 +142,7 @@ namespace ChiuDominatingSet
 
                         var randIndex = randomizer.Next(0, states.Length);
                         var state = (ChiuState)Enum.Parse(typeof(ChiuState), states[randIndex]);
-
-                        Console.WriteLine(Id + ":" + state + "-" + randIndex);
-
+                        
                         return state;
                     }
                 default: return ChiuState.WAIT;

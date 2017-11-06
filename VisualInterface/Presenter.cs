@@ -82,8 +82,8 @@ namespace VisualInterface
         {
             var invalidNodes = NodeHolder.GetCopyList().Where(n => !n.IsValid());
 
-            var runCountReport = String.Join("\n", NodeHolder.GetCopyList().Select(n => String.Format("node: {0}\t runCount: {1}", n.Id, n.RunCount)));
-            runCountReport += String.Format("\ntotal run count: {0}", NodeHolder.GetCopyList().Sum(n => n.RunCount));
+            var runCountReport = String.Join("\n", NodeHolder.GetCopyList().Select(n => String.Format("node: {0}\t runCount: {1}", n.Id, n.MessageCount)));
+            runCountReport += String.Format("\ntotal run count: {0}", NodeHolder.GetCopyList().Sum(n => n.MessageCount));
 
             if (!invalidNodes.Any())
             {

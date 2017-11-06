@@ -48,14 +48,14 @@ namespace TurauDominatingSet
                 return !Neighbours.Select(n => (TurauNode)n).Any(n => n.State == TurauState.WAIT && n.Id < Id);
             }
         }
-
-        int MoveCount { get; set; }
+        
         bool FirstTime { get; set; }
 
         object Lock { get; set; }
 
-        public TurauNode(int id) : base(id)
+        public TurauNode(int id, InitialState initialState = InitialState.AllWait, Random randomizer = null) : base(id)
         {
+            State = GetState(initialState, randomizer);
             Lock = new object();
             FirstTime = true;
         }
@@ -94,7 +94,7 @@ namespace TurauDominatingSet
             else
             {
                 Visualizer.Log("I'm {0}. My state is {1}, and does not change.", Id, State);
-                
+                MoveCount--;
                 if (FirstTime)
                 {
                     FirstTime = false;
@@ -111,8 +111,6 @@ namespace TurauDominatingSet
         void SetState(TurauState state)
         {
             Visualizer.Log("I'm {0}. My state is {1}, was {2}", Id, state, State);
-
-            MoveCount++;
 
             State = state;
             Visualizer.Draw(State == TurauState.IN);
@@ -189,6 +187,27 @@ namespace TurauDominatingSet
             else
             {
                 return true;
+            }
+        }
+
+        TurauState GetState(InitialState _is, Random randomizer)
+        {
+            switch (_is)
+            {
+                case InitialState.AllWait:
+                    return TurauState.WAIT;
+                case InitialState.AllIn:
+                    return TurauState.IN;
+                case InitialState.Random:
+                    {
+                        var states = Enum.GetNames(typeof(TurauState));
+
+                        var randIndex = randomizer.Next(0, states.Length);
+                        var state = (TurauState)Enum.Parse(typeof(TurauState), states[randIndex]);
+                        
+                        return state;
+                    }
+                default: return TurauState.WAIT;
             }
         }
     }

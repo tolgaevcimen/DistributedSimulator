@@ -48,6 +48,7 @@
     <Compile Include="AbstractEdge.cs" />
     <Compile Include="EdgeHolder.cs" />
     <Compile Include="IEdge.cs" />
+    <Compile Include="InitialState.cs" />
     <Compile Include="IVisualizer.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="MessageQueue.cs" />
