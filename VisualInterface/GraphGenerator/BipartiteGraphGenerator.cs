@@ -15,10 +15,10 @@ namespace VisualInterface.GraphGenerator
         public override void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, string SelectedAlgorithm)
         {
             var randomizer = new Random();
-            var arg = new PaintEventArgs(drawing_panel.CreateGraphics(), new Rectangle());
+            var arg = new PaintEventArgs(Drawing_panel.CreateGraphics(), new Rectangle());
 
-            var horizontalInterval = (drawing_panel.Width - 80) / 3;
-            var verticalInterval = (drawing_panel.Height - 80) / ((nodeCount / 2) - (nodeCount % 2 == 0 ? 1 : 0));
+            var horizontalInterval = (Drawing_panel.Width - 80) / 3;
+            var verticalInterval = (Drawing_panel.Height - 80) / ((nodeCount / 2) - (nodeCount % 2 == 0 ? 1 : 0));
 
             for (int i = 0; i < nodeCount; i++)
             {
@@ -34,7 +34,7 @@ namespace VisualInterface.GraphGenerator
 
                 if (!nodeHolder.AnyIntersecting(p))
                 {
-                    var node = NodeFactory.Create(SelectedAlgorithm, nodeHolder.NodeCount, new WinformsNodeVisualiser(arg, p.X, p.Y, nodeHolder.NodeCount, parentForm), parentForm.cb_selfStab.Checked);
+                    var node = NodeFactory.Create(SelectedAlgorithm, nodeHolder.NodeCount, new WinformsNodeVisualiser(arg, p.X, p.Y, nodeHolder.NodeCount, ParentForm), ParentForm.cb_selfStab.Checked);
 
                     nodeHolder.AddNode(node);
                 }

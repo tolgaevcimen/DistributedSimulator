@@ -1,7 +1,6 @@
 ﻿using AsyncSimulator;
 using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace TurauDominatingSet
@@ -64,41 +63,54 @@ namespace TurauDominatingSet
         {
             if (State == TurauState.OUT && InNeighborCount == 0)
             {
+                MoveCount++;
                 SetState(TurauState.WAIT);
             }
             else if (State == TurauState.WAIT && InNeighborCount != 0)
             {
+                MoveCount++;
                 SetState(TurauState.OUT);
             }
             else if (State == TurauState.WAIT && InNeighborCount == 0 && NoBetterNeighbor)
             {
+                MoveCount++;
                 SetState(TurauState.IN);
                 DependentUpon = null;
             }
             else if (State == TurauState.IN && InNeighborCount != 0 && NoDependentNeighbor)
             {
+                MoveCount++;
                 SetState(TurauState.OUT);
             }
             else if (State == TurauState.IN && DependentUpon != null)
             {
+                MoveCount++;
                 DependentUpon = null;
+                PokeNeighbors();
             }
             else if (State == TurauState.OUT && UniqueInNeighbour(out _Node w) && ((DependentUpon != null && DependentUpon.Id != w.Id) || DependentUpon == null && w != null) )
             {
+                MoveCount++;
                 DependentUpon = w;
+                PokeNeighbors();
             }
             else if (State == TurauState.OUT && InNeighborCount > 1 && DependentUpon != null)
             {
+                MoveCount++;
                 DependentUpon = null;
+                PokeNeighbors();
             }
             else
             {
-                Visualizer.Log("I'm {0}. My state is {1}, and does not change.", Id, State);
-                MoveCount--;
                 if (FirstTime)
                 {
+                    Visualizer.Log("I'm {0}. My state is {1}, and does not change. Will poke({2}).", Id, State, string.Join(", ", Neighbours.Select(n=>n.Id)));
                     FirstTime = false;
                     PokeNeighbors();
+                }
+                else
+                {
+                    Visualizer.Log("I'm {0}. My state is {1}, and does not change. Will Not poke.", Id, State);
                 }
             }
         }
@@ -204,7 +216,7 @@ namespace TurauDominatingSet
 
                         var randIndex = randomizer.Next(0, states.Length);
                         var state = (TurauState)Enum.Parse(typeof(TurauState), states[randIndex]);
-                        
+
                         return state;
                     }
                 default: return TurauState.WAIT;

@@ -16,17 +16,17 @@ namespace VisualInterface.GraphGenerator
 
         public override void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, string SelectedAlgorithm)
         {
-            var arg = new PaintEventArgs(drawing_panel.CreateGraphics(), new Rectangle());
+            var arg = new PaintEventArgs(Drawing_panel.CreateGraphics(), new Rectangle());
 
             for (int i = 0; i < nodeCount; i++)
             {
-                var interval = (drawing_panel.Width - 80) / (nodeCount - 1);
+                var interval = (Drawing_panel.Width - 80) / (nodeCount - 1);
 
-                var p = new Point(40 + (interval * i), drawing_panel.Height / 2);
+                var p = new Point(40 + (interval * i), Drawing_panel.Height / 2);
 
                 if (!nodeHolder.AnyIntersecting(p))
                 {
-                    var node = NodeFactory.Create(SelectedAlgorithm, nodeHolder.NodeCount, new WinformsNodeVisualiser(arg, p.X, p.Y, nodeHolder.NodeCount, parentForm), parentForm.cb_selfStab.Checked);
+                    var node = NodeFactory.Create(SelectedAlgorithm, nodeHolder.NodeCount, new WinformsNodeVisualiser(arg, p.X, p.Y, nodeHolder.NodeCount, ParentForm), ParentForm.cb_selfStab.Checked);
 
                     nodeHolder.AddNode(node);
                 }

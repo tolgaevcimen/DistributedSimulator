@@ -16,19 +16,19 @@ namespace VisualInterface.GraphGenerator
 
         public override void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, string SelectedAlgorithm)
         {
-            var arg = new PaintEventArgs(drawing_panel.CreateGraphics(), new Rectangle());
+            var arg = new PaintEventArgs(Drawing_panel.CreateGraphics(), new Rectangle());
 
             var queue = new Queue<int>();
 
             var totalHeight = Math.Floor(Math.Log(nodeCount, 2)) + 1;
 
-            var verticalInterval = (int)((drawing_panel.Height - 80) / (totalHeight - 1));
+            var verticalInterval = (int)((Drawing_panel.Height - 80) / (totalHeight - 1));
 
             for (int i = 0; i < nodeCount; i++)
             {
                 var currentDepth = (int)Math.Floor(Math.Log(i + 1, 2));
 
-                var horizontalInterval = (int)((drawing_panel.Width) / (Math.Pow(2, currentDepth) + 1));
+                var horizontalInterval = (int)((Drawing_panel.Width) / (Math.Pow(2, currentDepth) + 1));
 
                 var currentIndex = (int)(i - (Math.Pow(2, currentDepth) - 1) + 1);
 
@@ -38,7 +38,7 @@ namespace VisualInterface.GraphGenerator
 
                 if (!nodeHolder.AnyIntersecting(p))
                 {
-                    var node = NodeFactory.Create(SelectedAlgorithm, nodeHolder.NodeCount, new WinformsNodeVisualiser(arg, p.X, p.Y, nodeHolder.NodeCount, parentForm), parentForm.cb_selfStab.Checked);
+                    var node = NodeFactory.Create(SelectedAlgorithm, nodeHolder.NodeCount, new WinformsNodeVisualiser(arg, p.X, p.Y, nodeHolder.NodeCount, ParentForm), ParentForm.cb_selfStab.Checked);
 
                     nodeHolder.AddNode(node);
                 }

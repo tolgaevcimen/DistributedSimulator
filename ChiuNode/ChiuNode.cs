@@ -73,7 +73,6 @@ namespace ChiuDominatingSet
             else
             {
                 Visualizer.Log("I'm {0}. My state is {1}, and does not change.", Id, State);
-                MoveCount--;
                 if (FirstTime)
                 {
                     FirstTime = false;
@@ -89,6 +88,7 @@ namespace ChiuDominatingSet
 
         void SetState(ChiuState state)
         {
+            MoveCount++;
             Visualizer.Log("I'm {0}. My state is {1}, was {2}", Id, state, State);
             
             State = state;

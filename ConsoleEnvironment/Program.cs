@@ -12,7 +12,7 @@ namespace ConsoleEnvironment
     {
         static void Main(string[] args)
         {
-            var algorithms = new List<string>(new[] { "GoddardMDS_rand", "ChiuDS_rand", "GoddardMDS_rand", "TurauMDS_rand" });
+            var algorithms = new List<string>(new[] { "TurauMDS_rand", "ChiuDS_rand", "GoddardMDS_rand", "TurauMDS_rand" });
             var graphTypes = new List<GraphType>(new[] { GraphType.Line, GraphType.BinaryTree, GraphType.Star, GraphType.Circle, GraphType.Complete, GraphType.Random });
 
             foreach (var algorithm in algorithms)

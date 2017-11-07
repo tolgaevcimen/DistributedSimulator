@@ -75,7 +75,6 @@ namespace AsyncSimulator
         protected virtual void UserDefined_ReceiveMessageProcedure(Message m)
         {
             MessageCount++;
-            MoveCount++;
         }
 
         #region initiator

@@ -24,12 +24,11 @@ namespace GoddardMDSNode
 
         public void RunRules()
         {
-            Thread.Sleep(50);
-
             var realNeigborCount = GiveNeighborCount();
 
             if (x == 0 && c != realNeigborCount)
             {
+                MoveCount++;
                 Visualizer.Log("D1: I'm {0}.Rectifying neighbor count: {1}. ", Id, realNeigborCount);
 
                 c = realNeigborCount;
@@ -37,6 +36,7 @@ namespace GoddardMDSNode
             }
             else if (realNeigborCount == 0 && x == 0 && c == 0 && !Neighbours.Any(n => n.Id < Id && ((GoddardNode)n).c == 0))
             {
+                MoveCount++;
                 Visualizer.Log("D2: I'm {0}. Entering set. ", Id);
 
                 x = 1;
@@ -46,6 +46,7 @@ namespace GoddardMDSNode
             else if (realNeigborCount > 0 && x == 1 && Neighbours.
                 Where(n => ((GoddardNode)n).x == 0).All(n => ((GoddardNode)n).c == 2))
             {
+                MoveCount++;
                 Visualizer.Log("D3: I'm {0}. Leaving set. ", Id);
 
                 x = 0;
@@ -55,7 +56,6 @@ namespace GoddardMDSNode
             }
             else
             {
-                MoveCount--;
                 if (FirstTime)
                 {
                     Visualizer.Log("D-: I'm {0}. Forwarding message. ", Id);
