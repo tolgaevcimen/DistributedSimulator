@@ -75,15 +75,6 @@ namespace ChiuDominatingSet
             {
                 SetState(ChiuState.WAIT);
             }
-            else
-            {
-                //Visualizer.Log("I'm {0}. My state is {1}, and does not change.", Id, State);
-                //if (FirstTime)
-                //{
-                //    FirstTime = false;
-                //    PokeNeighbors();
-                //}
-            }
         }
         
         void SetState(ChiuState state)
@@ -94,40 +85,14 @@ namespace ChiuDominatingSet
             State = state;
             Visualizer.Draw(State == ChiuState.IN);
 
-            PokeNeighbors();
+            BroadcastState();
         }
-
-        void PokeNeighbors()
-        {
-            foreach (var neighbor in Neighbours)
-            {
-                Task.Run(() =>
-                {
-                    Underlying_Send(new Message
-                    {
-                        Source = this,
-                        DestinationId = neighbor.Key
-                    });
-                });
-            }
-
-            Task.Run(() => RunRules());
-        }
-
+        
         protected override void UpdateNeighbourInformation(_Node neighbour)
         {
             Neighbours[neighbour.Id] = new ChiuNode(neighbour.Id, ((ChiuNode)neighbour).State);
         }
-
-        public override void UserDefined_SingleInitiatorProcedure(_Node root)
-        {
-            //var initialNode = (ChiuNode)root;
-
-            //initialNode.FirstTime = true;
-            //initialNode.RunRules();
-            RunRules();
-        }
-
+        
         public override bool Selected()
         {
             return base.Selected() || State == ChiuState.IN;

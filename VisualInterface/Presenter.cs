@@ -25,7 +25,7 @@ namespace VisualInterface
             InitializeComponent();
 
             cb_choose_alg.Items.AddRange(Enum.GetNames(typeof(AlgorithmType)));
-            cb_choose_alg.SelectedIndex = 3;
+            cb_choose_alg.SelectedIndex = 0;
             SelectedAlgorithm = Algorithms[cb_choose_alg.SelectedIndex];
 
             cb_graph_type.Items.AddRange(Enum.GetNames(typeof(GraphType)));
@@ -34,10 +34,11 @@ namespace VisualInterface
             DrawingPanelHelper = new DrawingPanelHelper(this, drawing_panel, SelectedAlgorithm);
             EdgeHolder = new EdgeHolder();
             NodeHolder = new NodeHolder();
+            NodeHolder.Terminated += TerminationDetected;
         }
 
         #region mouse events for Creating Nodes and Edges
-                
+
         /// <summary>
         /// Creates randomly positioned nodes and ties them to each other in a given percentage.
         /// </summary>
@@ -129,20 +130,12 @@ namespace VisualInterface
         /// <param name="e"></param>
         private void btn_run_Click(object sender, EventArgs e)
         {
-            //var firstNode = NodeHolder.GetMinimumNode();
-            //if (firstNode == null) return;
-
-            //var initiator = NodeFactory.Create(SelectedAlgorithm, -1, null, cb_selfStab.Checked);
-            //firstNode.UserDefined_SingleInitiatorProcedure(firstNode);
-
-
             foreach (var node in NodeHolder.GetCopyList().AsParallel())
             {
                 Task.Run(() =>
                 {
-                    node.UserDefined_SingleInitiatorProcedure(null);
+                    node.UserDefined_SingleInitiatorProcedure();
                 });
-                //Console.WriteLine(node.Id);
             };
         }
 

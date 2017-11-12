@@ -30,13 +30,13 @@ namespace AsyncSimulator
         /// </summary>
         public IVisualizer Visualizer { get; set; }
 
-        public object ReceiveLock { get; set; }
+        object ReceiveLock { get; set; }
 
         protected bool FirstTime { get; set; }
 
         public int MessageCount { get; set; }
         public int MoveCount { get; set; }
-
+        
         /// <summary>
         /// As soon a node is created, the thread starts running.
         /// </summary>
@@ -85,19 +85,7 @@ namespace AsyncSimulator
         protected void UserDefined_ReceiveMessageProcedure(Message m)
         {
             MessageCount++;
-            UpdateNeighbourInformation(m.Source);
-
-            //if (Neighbours.Any(n => n.Value == null))
-            //{
-            //    foreach (var n in Neighbours)
-            //    {
-            //        Task.Run(() =>
-            //        {
-            //            NodeHolder.GetNodeById(n.Key).Underlying_Send(
-            //        });
-            //    }
-            //}
-
+            UpdateNeighbourInformation(m.Source);            
             RunRules();
         }
 
@@ -111,11 +99,31 @@ namespace AsyncSimulator
         /// This method will be implemented for single initiation strategies.
         /// </summary>
         /// <param name="root"></param>
-        public abstract void UserDefined_SingleInitiatorProcedure(_Node root);
+        public void UserDefined_SingleInitiatorProcedure()
+        {
+            Task.Run(() => RunRules());
+        }
 
         #endregion
 
         #region Sender
+
+        protected void BroadcastState()
+        {
+            foreach (var neighbor in Neighbours)
+            {
+                Task.Run(() =>
+                {
+                    Underlying_Send(new Message
+                    {
+                        Source = this,
+                        DestinationId = neighbor.Key
+                    });
+                });
+            }
+
+            Task.Run(() => RunRules());
+        }
 
         /// <summary>
         /// This method puts the given message to destinations ReceiveQueue

@@ -51,7 +51,7 @@ namespace NodeGenerator
             node.Visualizer = nodeVisualizer;
 
             if (selfStab)
-                node.UserDefined_SingleInitiatorProcedure(node);
+                node.UserDefined_SingleInitiatorProcedure();
 
             return node;
         }

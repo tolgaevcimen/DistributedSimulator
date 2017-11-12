@@ -161,7 +161,7 @@ namespace VisualInterface
                 {
                     Task.Run(() =>
                     {
-                        node.UserDefined_SingleInitiatorProcedure(node);
+                        node.UserDefined_SingleInitiatorProcedure();
                     });
                 }
             }

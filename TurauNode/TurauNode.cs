@@ -98,32 +98,26 @@ namespace TurauDominatingSet
             {
                 MoveCount++;
                 DependentUpon = null;
-                PokeNeighbors();
+
+                BroadcastState();
             }
             else if (State == TurauState.OUT && UniqueInNeighbour(out _Node w) && ((DependentUpon != null && DependentUpon.Id != w.Id) || DependentUpon == null && w != null))
             {
                 MoveCount++;
                 DependentUpon = w;
-                PokeNeighbors();
+
+                BroadcastState();
             }
             else if (State == TurauState.OUT && InNeighborCount > 1 && DependentUpon != null)
             {
                 MoveCount++;
                 DependentUpon = null;
-                PokeNeighbors();
+
+                BroadcastState();
             }
             else
             {
-                //if (FirstTime)
-                //{
-                //    Visualizer.Log("I'm {0}. My state is {1}, and does not change. Will poke({2}).", Id, State, string.Join(", ", Neighbours.Select(n => n.Key)));
-                //    FirstTime = false;
-                //    PokeNeighbors();
-                //}
-                //else
-                //{
-                //    Visualizer.Log("I'm {0}. My state is {1}, and does not change. Will Not poke.", Id, State);
-                //}
+                Visualizer.Log("I'm {0}. My state does not change.", Id);
             }
         }
 
@@ -134,40 +128,14 @@ namespace TurauDominatingSet
             State = state;
             Visualizer.Draw(State == TurauState.IN);
 
-            PokeNeighbors();
-        }
-
-        void PokeNeighbors()
-        {
-            foreach (var neighbor in Neighbours)
-            {
-                Task.Run(() =>
-                {
-                    Underlying_Send(new Message
-                    {
-                        Source = this,
-                        DestinationId = neighbor.Key
-                    });
-                });
-            }
-
-            Task.Run(() => RunRules());
+            BroadcastState();
         }
         
         protected override void UpdateNeighbourInformation(_Node neighbour)
         {
             Neighbours[neighbour.Id] = new TurauNode(neighbour.Id, ((TurauNode)neighbour).State);
         }
-
-        public override void UserDefined_SingleInitiatorProcedure(_Node root)
-        {
-            //var initialNode = (TurauNode)root;
-
-            //initialNode.FirstTime = true;
-            //initialNode.RunRules();
-            RunRules();
-        }
-
+        
         public override bool Selected()
         {
             return base.Selected() || State == TurauState.IN;

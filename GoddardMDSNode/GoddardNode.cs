@@ -37,7 +37,8 @@ namespace GoddardMDSNode
                 Visualizer.Log("D1: I'm {0}.Rectifying neighbor count: {1}. ", Id, realNeigborCount);
 
                 c = realNeigborCount;
-                PokeNeighbors();
+
+                BroadcastState();
             }
             else if (realNeigborCount == 0 && x == 0 && c == 0 && !GetNeighbours().Any(n => n.Id < Id && ((GoddardNode)n).c == 0))
             {
@@ -46,7 +47,8 @@ namespace GoddardMDSNode
 
                 x = 1;
                 Visualizer.Draw(true);
-                PokeNeighbors();
+
+                BroadcastState();
             }
             else if (realNeigborCount > 0 && x == 1 && GetNeighbours().
                 Where(n => ((GoddardNode)n).x == 0).All(n => ((GoddardNode)n).c == 2))
@@ -57,16 +59,8 @@ namespace GoddardMDSNode
                 x = 0;
                 c = realNeigborCount == 1 ? 1 : 2;
                 Visualizer.Draw(false);
-                PokeNeighbors();
-            }
-            else
-            {
-                //if (FirstTime)
-                //{
-                //    Visualizer.Log("D-: I'm {0}. Forwarding message. ", Id);
-                //    FirstTime = false;
-                //    PokeNeighbors();
-                //}
+
+                BroadcastState();
             }
         }
 
@@ -78,24 +72,7 @@ namespace GoddardMDSNode
 
             return 2;
         }
-
-        void PokeNeighbors()
-        {
-            foreach (var neighbor in Neighbours)
-            {
-                Task.Run(() =>
-                {
-                    Underlying_Send(new Message
-                    {
-                        Source = this,
-                        DestinationId = neighbor.Key
-                    });
-                });
-            }
-
-            Task.Run(() => RunRules());
-        }
-
+        
         public override bool Selected()
         {
             return base.Selected() || x == 1;
@@ -107,17 +84,7 @@ namespace GoddardMDSNode
 
             Neighbours[neighbour.Id] = new GoddardNode(neighbour.Id, goddardNode.x, goddardNode.c);
         }
-
-        public override void UserDefined_SingleInitiatorProcedure(_Node root)
-        {
-            //var initialNode = (GoddardNode)root;
-
-            //initialNode.FirstTime = true;
-            //initialNode.RunRules();
-
-            RunRules();
-        }
-
+        
         public override bool IsValid()
         {
             var realNeigborCount = GiveNeighborCount();
