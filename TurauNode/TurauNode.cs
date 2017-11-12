@@ -1,5 +1,6 @@
 ﻿using AsyncSimulator;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,13 +14,13 @@ namespace TurauDominatingSet
         {
             get
             {
-                return Neighbours.Select(n => (TurauNode)n).Count(n => n.State == TurauState.IN);
+                return GetNeighbours().Count(n => n.State == TurauState.IN);
             }
         }
 
         bool UniqueInNeighbour(out _Node w)
         {
-            var inNeighbours = Neighbours.Select(n => (TurauNode)n).Where(n => n.State == TurauState.IN);
+            var inNeighbours = GetNeighbours().Where(n => n.State == TurauState.IN);
             if (inNeighbours.Count() != 1)
             {
                 w = null;
@@ -34,7 +35,7 @@ namespace TurauDominatingSet
         {
             get
             {
-                return !Neighbours.Select(n => (TurauNode)n).Any(n => n.DependentUpon != null && n.DependentUpon.Id == Id);
+                return !GetNeighbours().Any(n => n.DependentUpon != null && n.DependentUpon.Id == Id);
             }
         }
 
@@ -44,17 +45,34 @@ namespace TurauDominatingSet
         {
             get
             {
-                return !Neighbours.Select(n => (TurauNode)n).Any(n => n.State == TurauState.WAIT && n.Id < Id);
+                return !GetNeighbours().Any(n => n.State == TurauState.WAIT && n.Id < Id);
             }
         }
-        
-        public TurauNode(int id, InitialState initialState = InitialState.AllWait, Random randomizer = null) : base(id)
+
+
+        IEnumerable<TurauNode> GetNeighbours()
+        {
+            return Neighbours.Values.Where(v => v != null).Select(n => (TurauNode)n);
+        }
+
+        public TurauNode(int id, NodeHolder nodeHolder, InitialState initialState = InitialState.AllWait, Random randomizer = null) : base(id, nodeHolder)
         {
             State = GetState(initialState, randomizer);
         }
 
-        public void RunRules()
+        public TurauNode(int id, TurauState state) : base(id, null)
         {
+            State = state;
+        }
+
+        protected override void RunRules()
+        {
+            //if (Neighbours.Values.Any(n => n == null))
+            //{
+            //    Visualizer.Log("I'm {0}, not gonna run", Id);
+            //    return;
+            //}
+
             if (State == TurauState.OUT && InNeighborCount == 0)
             {
                 MoveCount++;
@@ -82,7 +100,7 @@ namespace TurauDominatingSet
                 DependentUpon = null;
                 PokeNeighbors();
             }
-            else if (State == TurauState.OUT && UniqueInNeighbour(out _Node w) && ((DependentUpon != null && DependentUpon.Id != w.Id) || DependentUpon == null && w != null) )
+            else if (State == TurauState.OUT && UniqueInNeighbour(out _Node w) && ((DependentUpon != null && DependentUpon.Id != w.Id) || DependentUpon == null && w != null))
             {
                 MoveCount++;
                 DependentUpon = w;
@@ -96,19 +114,19 @@ namespace TurauDominatingSet
             }
             else
             {
-                if (FirstTime)
-                {
-                    Visualizer.Log("I'm {0}. My state is {1}, and does not change. Will poke({2}).", Id, State, string.Join(", ", Neighbours.Select(n=>n.Id)));
-                    FirstTime = false;
-                    PokeNeighbors();
-                }
-                else
-                {
-                    Visualizer.Log("I'm {0}. My state is {1}, and does not change. Will Not poke.", Id, State);
-                }
+                //if (FirstTime)
+                //{
+                //    Visualizer.Log("I'm {0}. My state is {1}, and does not change. Will poke({2}).", Id, State, string.Join(", ", Neighbours.Select(n => n.Key)));
+                //    FirstTime = false;
+                //    PokeNeighbors();
+                //}
+                //else
+                //{
+                //    Visualizer.Log("I'm {0}. My state is {1}, and does not change. Will Not poke.", Id, State);
+                //}
             }
         }
-        
+
         void SetState(TurauState state)
         {
             Visualizer.Log("I'm {0}. My state is {1}, was {2}", Id, state, State);
@@ -128,33 +146,33 @@ namespace TurauDominatingSet
                     Underlying_Send(new Message
                     {
                         Source = this,
-                        Destination = neighbor
+                        DestinationId = neighbor.Key
                     });
                 });
             }
 
             Task.Run(() => RunRules());
         }
-
-        protected override void UserDefined_ReceiveMessageProcedure(Message m)
+        
+        protected override void UpdateNeighbourInformation(_Node neighbour)
         {
-            base.UserDefined_ReceiveMessageProcedure(null);
-            RunRules();
+            Neighbours[neighbour.Id] = new TurauNode(neighbour.Id, ((TurauNode)neighbour).State);
         }
 
         public override void UserDefined_SingleInitiatorProcedure(_Node root)
         {
-            var initialNode = (TurauNode)root;
+            //var initialNode = (TurauNode)root;
 
-            initialNode.FirstTime = true;
-            initialNode.RunRules();
+            //initialNode.FirstTime = true;
+            //initialNode.RunRules();
+            RunRules();
         }
 
         public override bool Selected()
         {
             return base.Selected() || State == TurauState.IN;
         }
-        
+
         public override bool IsValid()
         {
             if (State == TurauState.OUT && InNeighborCount == 0)

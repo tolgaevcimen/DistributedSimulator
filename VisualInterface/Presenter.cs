@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using VisualInterface.GraphGenerator;
 
@@ -23,12 +24,12 @@ namespace VisualInterface
         {
             InitializeComponent();
 
-            cb_choose_alg.Items.AddRange(Algorithms.ToArray());
-            cb_choose_alg.SelectedIndex = 10;
-            SelectedAlgorithm = "TurauMDS_rand";
+            cb_choose_alg.Items.AddRange(Enum.GetNames(typeof(AlgorithmType)));
+            cb_choose_alg.SelectedIndex = 3;
+            SelectedAlgorithm = Algorithms[cb_choose_alg.SelectedIndex];
 
             cb_graph_type.Items.AddRange(Enum.GetNames(typeof(GraphType)));
-            cb_graph_type.SelectedIndex = 1;
+            cb_graph_type.SelectedIndex = 0;
 
             DrawingPanelHelper = new DrawingPanelHelper(this, drawing_panel, SelectedAlgorithm);
             EdgeHolder = new EdgeHolder();
@@ -82,12 +83,12 @@ namespace VisualInterface
         {
             var invalidNodes = NodeHolder.GetCopyList().Where(n => !n.IsValid());
 
-            var runCountReport = String.Join("\n", NodeHolder.GetCopyList().Select(n => String.Format("node: {0}\t runCount: {1}", n.Id, n.MessageCount)));
-            runCountReport += String.Format("\ntotal run count: {0}", NodeHolder.GetCopyList().Sum(n => n.MessageCount));
+            var runCountReport = string.Join("\n", NodeHolder.GetCopyList().Select(n => string.Format("node: {0}\t runCount: {1}", n.Id, n.MoveCount)));
+            runCountReport += string.Format("\ntotal run count: {0}", NodeHolder.GetCopyList().Sum(n => n.MoveCount));
 
             if (!invalidNodes.Any())
             {
-                MessageBox.Show(String.Format("{0}\nRun count report:\n{1}", "Each node is valid", runCountReport));
+                MessageBox.Show(string.Format("{0}\nRun count report:\n{1}", "Each node is valid", runCountReport));
             }
             else
             {
@@ -102,12 +103,12 @@ namespace VisualInterface
         /// <summary>
         /// Holds the list of algorithms. When new ones are added here, please add them to the factory implementation too.
         /// </summary>
-        private List<string> Algorithms = new List<string> { "Flooding", "FloodST", "UpdateBFS", "NeighDFS", "ChiuDS_allWait", "ChiuDS_allIn", "ChiuDS_rand", "GoddardMDS_allWait", "GoddardMDS_allIn", "GoddardMDS_allWait", "TurauMDS_rand", "TurauMDS_allIn", "TurauMDS_allWait" };
+        private List<AlgorithmType> Algorithms = Enum.GetNames(typeof(AlgorithmType)).Select(atn => (AlgorithmType)Enum.Parse(typeof(AlgorithmType), atn)).ToList();
 
         /// <summary>
         /// Holds the selected algorithms name.
         /// </summary>
-        private string SelectedAlgorithm { get; set; }
+        private AlgorithmType SelectedAlgorithm { get; set; }
 
         /// <summary>
         /// Event for setting the current algorithm. 
@@ -116,7 +117,7 @@ namespace VisualInterface
         /// <param name="e"></param>
         private void cb_choose_alg_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SelectedAlgorithm = cb_choose_alg.SelectedItem.ToString();
+            SelectedAlgorithm = Algorithms[cb_choose_alg.SelectedIndex];
         }
 
         #endregion
@@ -128,13 +129,23 @@ namespace VisualInterface
         /// <param name="e"></param>
         private void btn_run_Click(object sender, EventArgs e)
         {
-            var firstNode = NodeHolder.GetMinimumNode();
-            if (firstNode == null) return;
+            //var firstNode = NodeHolder.GetMinimumNode();
+            //if (firstNode == null) return;
 
-            var initiator = NodeFactory.Create(SelectedAlgorithm, -1, null, cb_selfStab.Checked);
-            firstNode.UserDefined_SingleInitiatorProcedure(firstNode);
+            //var initiator = NodeFactory.Create(SelectedAlgorithm, -1, null, cb_selfStab.Checked);
+            //firstNode.UserDefined_SingleInitiatorProcedure(firstNode);
+
+
+            foreach (var node in NodeHolder.GetCopyList().AsParallel())
+            {
+                Task.Run(() =>
+                {
+                    node.UserDefined_SingleInitiatorProcedure(null);
+                });
+                //Console.WriteLine(node.Id);
+            };
         }
-        
+
         public void DisableAlgorthmChange()
         {
             cb_choose_alg.Enabled = false;

@@ -1,17 +1,13 @@
 ﻿using AsyncSimulator;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace FloodingNode
 {
     public class _FloodingNode : _Node
     {
         public _FloodingNode ( int id )
-            : base(id)
+            : base(id, null)
         {
 
         }
@@ -26,9 +22,9 @@ namespace FloodingNode
             {
                 var m = new Message
                 {
-                    Data = this.Id + "-" + neighbour.Id,
+                    Data = this.Id + "-" + neighbour.Key,
                     Source = this,
-                    Destination = neighbour,
+                    Destination = neighbour.Value,
                     MessageType = 0
                 };
                 this.Underlying_Send(m);
@@ -47,6 +43,11 @@ namespace FloodingNode
                 Destination = root,
                 MessageType = 0
             });
+        }
+
+        protected override void UpdateNeighbourInformation(_Node neighbour)
+        {
+            throw new NotImplementedException();
         }
     }
 }

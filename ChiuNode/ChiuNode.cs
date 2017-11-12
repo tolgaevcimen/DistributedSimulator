@@ -1,6 +1,8 @@
 ﻿using AsyncSimulator;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ChiuDominatingSet
 {
@@ -12,7 +14,7 @@ namespace ChiuDominatingSet
         {
             get
             {
-                return Neighbours.Select(n => (ChiuNode)n).Count(n => n.State == ChiuState.IN);
+                return GetNeighbours().Count(n => n.State == ChiuState.IN);
             }
         }
 
@@ -20,7 +22,7 @@ namespace ChiuDominatingSet
         {
             get
             {
-                return !Neighbours.Select(n => (ChiuNode)n).Any(n => n.State == ChiuState.OUT1);
+                return !GetNeighbours().Any(n => n.State == ChiuState.OUT1);
             }
         }
 
@@ -28,16 +30,26 @@ namespace ChiuDominatingSet
         {
             get
             {
-                return !Neighbours.Select(n => (ChiuNode)n).Any(n => n.State == ChiuState.WAIT && n.Id < Id);
+                return !GetNeighbours().Any(n => n.State == ChiuState.WAIT && n.Id < Id);
             }
         }
-        
-        public ChiuNode(int id, InitialState initialState = InitialState.AllWait, Random randomizer = null) : base(id)
+
+        IEnumerable<ChiuNode> GetNeighbours()
+        {
+            return Neighbours.Values/*.Where(v => v != null)*/.Select(n => (ChiuNode)n);
+        }
+
+        public ChiuNode(int id, NodeHolder nodeHolder, InitialState initialState = InitialState.AllWait, Random randomizer = null) : base(id, nodeHolder)
         {
             State = GetState(initialState, randomizer);
         }
 
-        public void RunRules()
+        public ChiuNode(int id, ChiuState state) : base(id, null)
+        {
+            State = state;
+        }
+
+        protected override void RunRules()
         {
             if (State == ChiuState.WAIT && InNeighborCount == 0 && NoBetterNeighbor)
             {
@@ -65,12 +77,12 @@ namespace ChiuDominatingSet
             }
             else
             {
-                Visualizer.Log("I'm {0}. My state is {1}, and does not change.", Id, State);
-                if (FirstTime)
-                {
-                    FirstTime = false;
-                    PokeNeighbors();
-                }
+                //Visualizer.Log("I'm {0}. My state is {1}, and does not change.", Id, State);
+                //if (FirstTime)
+                //{
+                //    FirstTime = false;
+                //    PokeNeighbors();
+                //}
             }
         }
         
@@ -87,28 +99,33 @@ namespace ChiuDominatingSet
 
         void PokeNeighbors()
         {
-            foreach (var neighbor in Neighbours.AsParallel())
+            foreach (var neighbor in Neighbours)
             {
-                Underlying_Send(new Message
+                Task.Run(() =>
                 {
-                    Source = this,
-                    Destination = neighbor
+                    Underlying_Send(new Message
+                    {
+                        Source = this,
+                        DestinationId = neighbor.Key
+                    });
                 });
             }
+
+            Task.Run(() => RunRules());
         }
 
-        protected override void UserDefined_ReceiveMessageProcedure(Message m)
+        protected override void UpdateNeighbourInformation(_Node neighbour)
         {
-            base.UserDefined_ReceiveMessageProcedure(null);
-            RunRules();
+            Neighbours[neighbour.Id] = new ChiuNode(neighbour.Id, ((ChiuNode)neighbour).State);
         }
 
         public override void UserDefined_SingleInitiatorProcedure(_Node root)
         {
-            var initialNode = (ChiuNode)root;
+            //var initialNode = (ChiuNode)root;
 
-            initialNode.FirstTime = true;
-            initialNode.RunRules();
+            //initialNode.FirstTime = true;
+            //initialNode.RunRules();
+            RunRules();
         }
 
         public override bool Selected()
@@ -130,7 +147,17 @@ namespace ChiuDominatingSet
 
                         var randIndex = randomizer.Next(0, states.Length);
                         var state = (ChiuState)Enum.Parse(typeof(ChiuState), states[randIndex]);
-                        
+
+                        state = Id == 0 ? ChiuState.WAIT :
+                                Id == 1 ? ChiuState.IN :
+                                Id == 2 ? ChiuState.WAIT :
+                                Id == 3 ? ChiuState.OUT1 :
+                                Id == 4 ? ChiuState.WAIT :
+                                Id == 5 ? ChiuState.OUT2 :
+                                Id == 6 ? ChiuState.IN :
+                                Id == 7 ? ChiuState.WAIT :
+                                Id == 8 ? ChiuState.IN :
+                                ChiuState.IN;
                         return state;
                     }
                 default: return ChiuState.WAIT;
@@ -167,6 +194,11 @@ namespace ChiuDominatingSet
             {
                 return true;
             }
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}:{1}", Id, State);
         }
     }
 }

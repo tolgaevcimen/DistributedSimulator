@@ -109,8 +109,8 @@ namespace VisualInterface
         {
             foreach (var edge in ParentForm.EdgeHolder.GetCopyList())
             {
-                if ((edge.GetNode1().Id == m.Source.Id && edge.GetNode2().Id == m.Destination.Id) ||
-                    (edge.GetNode2().Id == m.Source.Id && edge.GetNode1().Id == m.Destination.Id))
+                if ((edge.GetNode1().Id == m.Source.Id && edge.GetNode2().Id == m.DestinationId) ||
+                    (edge.GetNode2().Id == m.Source.Id && edge.GetNode1().Id == m.DestinationId))
                 {
                     edge.Colorify(false);
 

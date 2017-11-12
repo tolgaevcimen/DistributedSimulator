@@ -52,29 +52,13 @@
       <Project>{6b034cef-a5dd-4025-aef8-49093e72c4ec}</Project>
       <Name>ChiuNode</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FloodingNode\FloodingNode.csproj">
-      <Project>{001847dc-fbff-4114-b6c9-00c388fd5857}</Project>
-      <Name>FloodingNode</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FloodSTNode\FloodSTNode.csproj">
-      <Project>{3b0a53f7-5ebc-4269-a38e-40fb077578e6}</Project>
-      <Name>FloodSTNode</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GoddardMDSNode\GoddardMDSNode.csproj">
       <Project>{7033cf9e-d993-4f95-8749-1c8da60a7e97}</Project>
       <Name>GoddardMDSNode</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NeighDfsNode\NeighDfsNode.csproj">
-      <Project>{a9b62a8b-f497-42a0-8f43-0a414b813ad3}</Project>
-      <Name>NeighDfsNode</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TurauNode\TurauNode.csproj">
       <Project>{a841b497-1268-48f1-a8a7-87fe4629a659}</Project>
       <Name>TurauNode</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\UpdateBfsNode\UpdateBfsNode.csproj">
-      <Project>{61c46d30-5c07-4297-9d70-bf17a8200ef5}</Project>
-      <Name>UpdateBfsNode</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

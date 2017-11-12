@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AsyncSimulator
 {
@@ -11,10 +13,12 @@ namespace AsyncSimulator
         /// </summary>
         public int Id { get; set; }
 
+        public NodeHolder NodeHolder { get; set; }
+
         /// <summary>
         /// List of neighbours of this node. Empty initially.
         /// </summary>
-        public List<_Node> Neighbours { get; set; }
+        public Dictionary<int, _Node> Neighbours { get; set; }
 
         /// <summary>
         /// A thread safe queue for received messages.
@@ -37,12 +41,14 @@ namespace AsyncSimulator
         /// As soon a node is created, the thread starts running.
         /// </summary>
         /// <param name="id"></param>
-        public _Node(int id)
+        public _Node(int id, NodeHolder nodeHolder)
         {
             Id = id;
 
-            /// initialize lists
-            Neighbours = new List<_Node>();
+            NodeHolder = nodeHolder;
+
+            /// initialize listsse
+            Neighbours = new Dictionary<int, _Node>();
             ReceiveQueue = new MessageQueue<Message>();
             ReceiveQueue.MessageAdded += ReceiveQueue_NewMessage;
 
@@ -76,10 +82,28 @@ namespace AsyncSimulator
         /// This method will be implemented in sub classes for algorithm details.
         /// </summary>
         /// <param name="m"></param>
-        protected virtual void UserDefined_ReceiveMessageProcedure(Message m)
+        protected void UserDefined_ReceiveMessageProcedure(Message m)
         {
             MessageCount++;
+            UpdateNeighbourInformation(m.Source);
+
+            //if (Neighbours.Any(n => n.Value == null))
+            //{
+            //    foreach (var n in Neighbours)
+            //    {
+            //        Task.Run(() =>
+            //        {
+            //            NodeHolder.GetNodeById(n.Key).Underlying_Send(
+            //        });
+            //    }
+            //}
+
+            RunRules();
         }
+
+        protected abstract void UpdateNeighbourInformation(_Node neighbour);
+
+        protected abstract void RunRules();
 
         #region initiator
 
@@ -99,7 +123,12 @@ namespace AsyncSimulator
         /// <param name="m"></param>
         public void Underlying_Send(Message m)
         {
-            m.Destination.ReceiveQueue.Enqueue(m);
+            var destination = NodeHolder.GetNodeById(m.DestinationId);
+            if (destination == null)
+            {
+                throw new ArgumentNullException("Destination");
+            }
+            destination.ReceiveQueue.Enqueue(m);
         }
 
         #endregion

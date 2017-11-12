@@ -28,7 +28,7 @@ namespace NeighDfsNode
         /// </summary>
         /// <param name="id"></param>
         public _NeighDfsNode ( int id )
-            : base(id)
+            : base(id, null)
         {
             VisitedNodes = new List<int>();
             Randomizer = new Random();
@@ -51,7 +51,7 @@ namespace NeighDfsNode
             }
 
             VisitedNodes.AddRange((List<int>)receivedMessage.Data);
-            var unvisitedNodes = Neighbours.Select(n => n.Id).Except(VisitedNodes);
+            var unvisitedNodes = Neighbours.Select(n => n.Key).Except(VisitedNodes);
 
             Thread.Sleep(500);
 
@@ -59,7 +59,7 @@ namespace NeighDfsNode
             if ( unvisitedNodes.Any() )
             {
                 var randomNodeId = unvisitedNodes.ElementAt(Randomizer.Next(0, unvisitedNodes.Count()));
-                var randomNode = Neighbours.First(n => n.Id == randomNodeId);
+                var randomNode = Neighbours.First(n => n.Key == randomNodeId);
                 
                 var vislist = VisitedNodes.ToList();
                 vislist.Add(Id);
@@ -67,7 +67,7 @@ namespace NeighDfsNode
                 var token = new Message
                 {
                     Source = this,
-                    Destination = randomNode,
+                    Destination = randomNode.Value,
                     Data = vislist,
                     MessageType = MessageTypes.Token
                 };
@@ -114,6 +114,11 @@ namespace NeighDfsNode
                 Data = new List<int>(),
                 MessageType = MessageTypes.Token
             });
+        }
+
+        protected override void UpdateNeighbourInformation(_Node neighbour)
+        {
+            throw new NotImplementedException();
         }
     }
 }

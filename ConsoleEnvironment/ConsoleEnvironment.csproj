@@ -72,10 +72,6 @@
       <Project>{440fa7c3-094a-4913-8cf5-14b440c0b86e}</Project>
       <Name>AsyncSimulator</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FloodingNode\FloodingNode.csproj">
-      <Project>{001847dc-fbff-4114-b6c9-00c388fd5857}</Project>
-      <Name>FloodingNode</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NodeGenerator\NodeGenerator.csproj">
       <Project>{f3a2b616-aef6-4647-b7aa-7a5b25209e10}</Project>
       <Name>NodeGenerator</Name>
