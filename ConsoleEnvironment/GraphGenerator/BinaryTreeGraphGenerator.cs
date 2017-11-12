@@ -8,7 +8,7 @@ namespace ConsoleEnvironment.GraphGenerator
 {
     class BinaryTreeGraphGenerator : AbstractGraphGenerator
     {
-        public override void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, string SelectedAlgorithm)
+        public override void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, AlgorithmType SelectedAlgorithm)
         {
             base.Generate(nodeCount, nodeHolder, edgeHolder, SelectedAlgorithm);
 

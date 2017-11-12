@@ -20,7 +20,7 @@ namespace VisualInterface
         /// <summary>
         /// Holds the selected algorithms name.
         /// </summary>
-        string SelectedAlgorithm { get; set; }
+        AlgorithmType SelectedAlgorithm { get; set; }
         /// <summary>
         /// Holds the edge that just has been started to be drawn.
         /// </summary>
@@ -34,7 +34,7 @@ namespace VisualInterface
             }
         }
 
-        public DrawingPanelHelper(Presenter presenterForm, Panel drawingPanel, string selectedAlgorithm)
+        public DrawingPanelHelper(Presenter presenterForm, Panel drawingPanel, AlgorithmType selectedAlgorithm)
         {
             PresenterForm = presenterForm;
             DrawingPanel = drawingPanel;
@@ -119,7 +119,7 @@ namespace VisualInterface
             {
                 if (!PresenterForm.NodeHolder.AnyIntersecting(e.Location))
                 {
-                    var node = NodeFactory.Create(SelectedAlgorithm, PresenterForm.NodeHolder.NodeCount, GetNewNodeVisualizer(e, pea), PresenterForm.cb_selfStab.Checked);
+                    var node = NodeFactory.Create(SelectedAlgorithm, PresenterForm.NodeHolder.NodeCount, GetNewNodeVisualizer(e, pea), PresenterForm.cb_selfStab.Checked, PresenterForm.NodeHolder);
                     node.Visualizer.Draw(node.Selected());
                     PresenterForm.NodeHolder.AddNode(node);
 
@@ -161,7 +161,7 @@ namespace VisualInterface
                 {
                     Task.Run(() =>
                     {
-                        node.UserDefined_SingleInitiatorProcedure(node);
+                        node.UserDefined_SingleInitiatorProcedure();
                     });
                 }
             }

@@ -4,6 +4,6 @@ namespace ConsoleEnvironment.GraphGenerator
 {
     internal interface IGraphGenerator
     {
-        void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, string SelectedAlgorithm);
+        void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, AlgorithmType SelectedAlgorithm);
     }
 }

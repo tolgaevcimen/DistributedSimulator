@@ -6,9 +6,20 @@ namespace ConsoleEnvironment.GraphGenerator
 {
     class RandomGraphGenerator : AbstractGraphGenerator
     {
-        public override void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, string SelectedAlgorithm)
+        public override void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, AlgorithmType SelectedAlgorithm)
         {
             base.Generate(nodeCount, nodeHolder, edgeHolder, SelectedAlgorithm);
+
+            for (int i = 0; i < nodeCount; i++)
+            {
+                if (i != nodeCount - 1)
+                {
+                    var node1 = nodeHolder.GetNodeAt(i);
+                    var node2 = nodeHolder.GetNodeAt(i + 1);
+
+                    edgeHolder.AddEgde(new ConsoleEdge(node1, node2));
+                }
+            }
 
             var randomizer = new Random();
 
@@ -16,9 +27,9 @@ namespace ConsoleEnvironment.GraphGenerator
             {
                 foreach (var node2 in nodeHolder.GetCopyList().Where(n => n != node1))
                 {
-                    if (randomizer.Next() % 100 > 10) continue;
+                    if (randomizer.Next() % 100 > 2) continue;
 
-                    if (node1.Neighbours.Contains(node2)) continue;
+                    if (node1.Neighbours.ContainsKey(node2.Id)) continue;
                     
                     edgeHolder.AddEgde(new ConsoleEdge(node1, node2));
                 }

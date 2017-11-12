@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace VisualInterface
 {
-    public class WinformsEdge : AbstractEdge 
+    public class WinformsEdge : AbstractEdge
     {
         Color EdgeColor { get; set; }
         Color SelectedEdgeColor { get; set; }
@@ -25,10 +25,10 @@ namespace VisualInterface
             EdgeColor = Color.Pink;
             SelectedEdgeColor = Color.LightBlue;
             RevertedEdgeColor = Color.Black;
-            
+
             SolidPen = new Pen(EdgeColor, Thickness);
             LastUsedPen = SolidPen;
-            
+
             PaintArgs = e;
 
             HandleVisualization();
@@ -46,13 +46,31 @@ namespace VisualInterface
             Node1.Visualizer.Draw(Node1.Selected());
             Node2.Visualizer.Draw(Node2.Selected());
         }
-        
+
         void HandleSelfStabilization()
         {
             if (Program.Presenter.cb_selfStab.Checked)
             {
-                Node1.UserDefined_SingleInitiatorProcedure(Node1);
-                Node2.UserDefined_SingleInitiatorProcedure(Node2);
+                //Node1.UserDefined_SingleInitiatorProcedure(Node1);
+                //Node2.UserDefined_SingleInitiatorProcedure(Node2);
+
+                Task.Run(() =>
+                {
+                    Node1.Underlying_Send(new AsyncSimulator.Message
+                    {
+                        Source = Node1,
+                        DestinationId = Node2.Id
+                    });
+                });
+
+                //Task.Run(() =>
+                //{
+                //    Node2.Underlying_Send(new AsyncSimulator.Message
+                //    {
+                //        Source = Node2,
+                //        Destination = Node1
+                //    });
+                //});
             }
         }
 
@@ -80,11 +98,11 @@ namespace VisualInterface
             Program.Presenter.EdgeHolder.RedrawAllEdges();
             Program.Presenter.NodeHolder.RedrawAllNodes();
 
-            if (Program.Presenter.cb_selfStab.Checked && onlyEdgeDeleted)
-            {
-                Task.Run(() => Node1.UserDefined_SingleInitiatorProcedure(Node1));
-                Task.Run(() => Node2.UserDefined_SingleInitiatorProcedure(Node2));
-            }
+            //if (Program.Presenter.cb_selfStab.Checked && onlyEdgeDeleted)
+            //{
+            //    Task.Run(() => Node1.UserDefined_SingleInitiatorProcedure(Node1));
+            //    Task.Run(() => Node2.UserDefined_SingleInitiatorProcedure(Node2));
+            //}
         }
 
         public override void Draw()

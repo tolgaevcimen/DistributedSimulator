@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractEdge.cs" />
+    <Compile Include="AlgorithmType.cs" />
     <Compile Include="EdgeHolder.cs" />
     <Compile Include="IEdge.cs" />
     <Compile Include="InitialState.cs" />

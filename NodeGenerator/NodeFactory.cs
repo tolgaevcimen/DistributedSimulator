@@ -1,9 +1,5 @@
 ﻿using AsyncSimulator;
-using FloodingNode;
-using FloodSTNode;
 using System;
-using UpdateBfsNode;
-using NeighDfsNode;
 using ChiuDominatingSet;
 using GoddardMDSNode;
 using TurauDominatingSet;
@@ -16,96 +12,46 @@ namespace NodeGenerator
     public class NodeFactory
     {
         public static Random Randomizer = new Random();
-        public static _Node Create(string algorithmType, int id, IVisualizer nodeVisualizer, bool selfStab)
+        public static _Node Create(AlgorithmType algorithmType, int id, IVisualizer nodeVisualizer, bool selfStab, NodeHolder nodeHolder)
         {
             _Node node = null;
             switch (algorithmType)
             {
-                case "Flooding":
-                    {
-                        node = new _FloodingNode(id);
-
-                        break;
-                    }
-                case "FloodST":
-                    {
-                        node = new _FloodSTNode(id);
-
-                        break;
-                    }
-                case "UpdateBFS":
-                    {
-                        node = new _UpdateBfsNode(id);
-
-                        break;
-                    }
-                case "NeighDFS":
-                    {
-                        node = new _NeighDfsNode(id);
-
-                        break;
-                    }
-                case "ChiuDS_rand":
-                    {
-                        node = new ChiuNode(id, InitialState.Random, Randomizer);
-                        
-                        break;
-                    }
-                case "ChiuDS_allIn":
-                    {
-                        node = new ChiuNode(id, InitialState.AllIn);
-
-                        break;
-                    }
-                case "ChiuDS_allWait":
-                    {
-                        node = new ChiuNode(id, InitialState.AllWait);
-
-                        break;
-                    }
-                case "GoddardMDS_rand":
-                    {
-                        node = new GoddardNode(id, InitialState.Random, Randomizer);
-
-                        break;
-                    }
-                case "GoddardMDS_allIn":
-                    {
-                        node = new GoddardNode(id, InitialState.AllIn);
-
-                        break;
-                    }
-                case "GoddardMDS_allWait":
-                    {
-                        node = new GoddardNode(id, InitialState.AllWait);
-
-                        break;
-                    }
-                case "TurauMDS_rand":
-                    {
-                        node = new TurauNode(id, InitialState.Random, Randomizer);
-
-                        break;
-                    }
-                case "TurauMDS_allIn":
-                    {
-                        node = new TurauNode(id, InitialState.AllIn);
-
-                        break;
-                    }
-                case "TurauMDS_allWait":
-                    {
-                        node = new TurauNode(id, InitialState.AllWait);
-
-                        break;
-                    }
-                default: throw new Exception("Unknown algorithm");
+                case AlgorithmType.ChiuMDS_rand:
+                    node = new ChiuNode(id, nodeHolder, InitialState.Random, Randomizer);
+                    break;
+                case AlgorithmType.ChiuMDS_allIn:
+                    node = new ChiuNode(id, nodeHolder, InitialState.AllIn);
+                    break;
+                case AlgorithmType.ChiuMDS_allWait:
+                    node = new ChiuNode(id, nodeHolder, InitialState.AllWait);
+                    break;
+                case AlgorithmType.GoddardMDS_rand:
+                    node = new GoddardNode(id, nodeHolder, InitialState.Random, Randomizer);
+                    break;
+                case AlgorithmType.GoddardMDS_allIn:
+                    node = new GoddardNode(id, nodeHolder, InitialState.AllIn);
+                    break;
+                case AlgorithmType.GoddardMDS_allWait:
+                    node = new GoddardNode(id, nodeHolder, InitialState.AllWait);
+                    break;
+                case AlgorithmType.TurauMDS_rand:
+                    node = new TurauNode(id, nodeHolder, InitialState.Random, Randomizer);
+                    break;
+                case AlgorithmType.TurauMDS_allIn:
+                    node = new TurauNode(id, nodeHolder, InitialState.AllIn);
+                    break;
+                case AlgorithmType.TurauMDS_allWait:
+                    node = new TurauNode(id, nodeHolder, InitialState.AllWait);
+                    break;
+                default:
+                    throw new Exception("Unknown algorithm");
             }
 
             node.Visualizer = nodeVisualizer;
 
             if (selfStab)
-                node.UserDefined_SingleInitiatorProcedure(node);
+                node.UserDefined_SingleInitiatorProcedure();
 
             return node;
         }

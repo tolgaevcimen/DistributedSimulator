@@ -33,7 +33,7 @@ namespace UpdateBfsNode
         /// </summary>
         /// <param name="id"></param>
         public _UpdateBfsNode ( int id )
-            : base(id)
+            : base(id, null)
         {
             Children = new List<_Node>();
             Others = new List<_Node>();
@@ -80,14 +80,14 @@ namespace UpdateBfsNode
                             Underlying_Send(ack);
 
                             /// sending layer to to neighbours
-                            foreach ( var neighbour in Neighbours.Where(n => n.Id != receivedMessage.Source.Id) )
+                            foreach ( var neighbour in Neighbours.Where(n => n.Key != receivedMessage.Source.Id) )
                             {
                                 Thread.Sleep(new Random().Next(100,900));
                                 var layer = new Message
                                 {
                                     Data = _layer + 1,
                                     Source = this,
-                                    Destination = neighbour,
+                                    Destination = neighbour.Value,
                                     MessageType = MessageTypes.Layer
                                 };
                                 Underlying_Send(layer);
@@ -139,6 +139,11 @@ namespace UpdateBfsNode
                 Destination = root,
                 MessageType = MessageTypes.Layer
             });
+        }
+
+        protected override void UpdateNeighbourInformation(_Node neighbour)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

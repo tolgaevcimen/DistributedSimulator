@@ -88,6 +88,14 @@ namespace AsyncSimulator
             }
         }
 
+        public _Node GetNodeById(int id)
+        {
+            lock (AllNodesLock)
+            {
+                return AllNodes.FirstOrDefault(n => n.Id == id);
+            }
+        }
+
         [Obsolete]
         public List<_Node> GetCopyList()
         {

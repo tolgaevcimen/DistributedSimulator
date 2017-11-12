@@ -12,9 +12,8 @@ namespace VisualInterface.GraphGenerator
         {
         }
 
-        public override void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, string SelectedAlgorithm)
+        public override void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, AlgorithmType SelectedAlgorithm)
         {
-            var randomizer = new Random();
             var arg = new PaintEventArgs(Drawing_panel.CreateGraphics(), new Rectangle());
 
             var radius = (Math.Min(Drawing_panel.Height, Drawing_panel.Width) - 80) / 2;
@@ -28,7 +27,7 @@ namespace VisualInterface.GraphGenerator
 
                 if (!nodeHolder.AnyIntersecting(p))
                 {
-                    var node = NodeFactory.Create(SelectedAlgorithm, nodeHolder.NodeCount, new WinformsNodeVisualiser(arg, p.X, p.Y, nodeHolder.NodeCount, ParentForm), ParentForm.cb_selfStab.Checked);
+                    var node = NodeFactory.Create(SelectedAlgorithm, nodeHolder.NodeCount, new WinformsNodeVisualiser(arg, p.X, p.Y, nodeHolder.NodeCount, ParentForm), ParentForm.cb_selfStab.Checked, nodeHolder);
 
                     nodeHolder.AddNode(node);
                 }
