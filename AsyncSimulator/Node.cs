@@ -36,7 +36,9 @@ namespace AsyncSimulator
 
         public int MessageCount { get; set; }
         public int MoveCount { get; set; }
-        
+
+        public DateTime LastReceivedMessageTime { get; set; }
+
         /// <summary>
         /// As soon a node is created, the thread starts running.
         /// </summary>
@@ -85,6 +87,7 @@ namespace AsyncSimulator
         protected void UserDefined_ReceiveMessageProcedure(Message m)
         {
             MessageCount++;
+            LastReceivedMessageTime = DateTime.Now;
             UpdateNeighbourInformation(m.Source);            
             RunRules();
         }
