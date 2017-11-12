@@ -1,7 +1,6 @@
 ﻿using AsyncSimulator;
 using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace GoddardMDSNode
@@ -10,16 +9,10 @@ namespace GoddardMDSNode
     {
         public int x { get; set; }
         public int c { get; set; }
-
-        bool FirstTime { get; set; }
-
-        object Lock { get; set; }
-
+        
         public GoddardNode(int id, InitialState initialState = InitialState.AllWait, Random randomizer = null) : base(id)
         {
             x = GetState(initialState, randomizer);
-            Lock = new object();
-            FirstTime = true;
         }
 
         public void RunRules()

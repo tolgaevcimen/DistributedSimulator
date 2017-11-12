@@ -1,7 +1,6 @@
 ﻿using AsyncSimulator;
 using System;
 using System.Linq;
-using System.Threading;
 
 namespace ChiuDominatingSet
 {
@@ -33,15 +32,9 @@ namespace ChiuDominatingSet
             }
         }
         
-        bool FirstTime { get; set; }
-
-        object Lock { get; set; }
-
         public ChiuNode(int id, InitialState initialState = InitialState.AllWait, Random randomizer = null) : base(id)
         {
             State = GetState(initialState, randomizer);
-            Lock = new object();
-            FirstTime = true;
         }
 
         public void RunRules()
@@ -80,12 +73,7 @@ namespace ChiuDominatingSet
                 }
             }
         }
-
-        public void AddNeighbor(ChiuNode node)
-        {
-            Neighbours.Add(node);
-        }
-
+        
         void SetState(ChiuState state)
         {
             MoveCount++;

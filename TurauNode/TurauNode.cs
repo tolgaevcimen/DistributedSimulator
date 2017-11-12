@@ -48,15 +48,9 @@ namespace TurauDominatingSet
             }
         }
         
-        bool FirstTime { get; set; }
-
-        object Lock { get; set; }
-
         public TurauNode(int id, InitialState initialState = InitialState.AllWait, Random randomizer = null) : base(id)
         {
             State = GetState(initialState, randomizer);
-            Lock = new object();
-            FirstTime = true;
         }
 
         public void RunRules()
@@ -114,12 +108,7 @@ namespace TurauDominatingSet
                 }
             }
         }
-
-        public void AddNeighbor(TurauNode node)
-        {
-            Neighbours.Add(node);
-        }
-
+        
         void SetState(TurauState state)
         {
             Visualizer.Log("I'm {0}. My state is {1}, was {2}", Id, state, State);

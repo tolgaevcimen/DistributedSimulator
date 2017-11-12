@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6B034CEF-A5DD-4025-AEF8-49093E72C4EC}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ChiuDominatingSet</RootNamespace>
     <AssemblyName>ChiuDominatingSet</AssemblyName>
@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="ChiuNode.cs" />
     <Compile Include="ChiuState.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

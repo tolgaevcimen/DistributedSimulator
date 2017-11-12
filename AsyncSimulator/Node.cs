@@ -28,6 +28,8 @@ namespace AsyncSimulator
 
         public object ReceiveLock { get; set; }
 
+        protected bool FirstTime { get; set; }
+
         public int MessageCount { get; set; }
         public int MoveCount { get; set; }
 
@@ -45,6 +47,8 @@ namespace AsyncSimulator
             ReceiveQueue.MessageAdded += ReceiveQueue_NewMessage;
 
             ReceiveLock = new object();
+
+            FirstTime = true;
         }
 
         private void ReceiveQueue_NewMessage(object sender, EventArgs e)
