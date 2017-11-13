@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlgorithmRunner.cs" />
     <Compile Include="ConsoleEdge.cs" />
     <Compile Include="ConsoleNodeVisualizer.cs" />
     <Compile Include="GraphGenerator\AbstractGraphGenerator.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="GraphGenerator\TripletTreeGraphGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RunReport.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
