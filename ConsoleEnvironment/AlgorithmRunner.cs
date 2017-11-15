@@ -21,16 +21,17 @@ namespace ConsoleEnvironment
         public NodeHolder NodeHolder { get; set; }
         public RunReport RunReport { get; set; }
 
+        public DateTime StartTime { get; set; }
+        public TimeSpan Duration { get; set; }
+
         public int NumberToRunForEachNodeCount = 5;
         public int IndexToRunForEachNodeCount = 0;
-        public int NumberToIncreaseNodeCount = 25;//-->wrong
-        public int IndexToIncreaseNodeCount = 1;
-        public int NodeCountFold = 10;
 
-        public AlgorithmRunner(AlgorithmType algorithmType, GraphType graphType)
+        public AlgorithmRunner(AlgorithmType algorithmType, GraphType graphType, int nodeCount)
         {
             AlgorithmType = algorithmType;
             GraphType = graphType;
+            NodeCount = nodeCount;
         }
 
         public bool BatchCompleted { get; set; }
@@ -44,16 +45,13 @@ namespace ConsoleEnvironment
                 Thread.Sleep(500);
             }
             Console.WriteLine("batch completed!!!!!");
-            Console.ReadKey();
         }
 
         private void Run()
         {
-            Console.WriteLine("Running for {0}-{1}", IndexToIncreaseNodeCount, IndexToIncreaseNodeCount);
+            StartTime = DateTime.Now;
             InitializeHolders();
-
-            NodeCount = IndexToIncreaseNodeCount * NodeCountFold;
-
+            
             var graphGenerator = GraphFactory.GetGraphGenerator(GraphType);
             graphGenerator.Generate(NodeCount, NodeHolder, EdgeHolder, AlgorithmType);
 
@@ -73,6 +71,8 @@ namespace ConsoleEnvironment
 
         private void NodeHolder_Terminated(object sender, EventArgs e)
         {
+            Console.Clear();
+            Duration = DateTime.Now.Subtract(StartTime);
             HandleReport();
             IndexToRunForEachNodeCount++;
             if (IndexToRunForEachNodeCount >= NumberToRunForEachNodeCount)
@@ -91,6 +91,7 @@ namespace ConsoleEnvironment
             RunReport.GatherMoveCount(NodeHolder.GetCopyList());
             RunReport.ReportInvalidNodes(NodeHolder.GetCopyList());
             RunReport.ReportDegrees(NodeHolder.GetCopyList());
+            RunReport.SetDuration(Duration.TotalSeconds);
             
             using (var streamWriter = new StreamWriter("test.txt", true))
                 streamWriter.WriteLine(RunReport.ToString());
@@ -101,12 +102,14 @@ namespace ConsoleEnvironment
             EdgeHolder = new EdgeHolder();
             NodeHolder = new NodeHolder();
             NodeHolder.Terminated += NodeHolder_Terminated;
-            RunReport = new RunReport(AlgorithmType, GraphType);
+            RunReport = new RunReport(AlgorithmType, GraphType, NodeCount);
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            EdgeHolder = null;
+            NodeHolder = null;
+            RunReport = null;
         }
     }
 }

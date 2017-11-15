@@ -24,13 +24,14 @@ namespace AsyncSimulator
         /// A thread safe queue for received messages.
         /// </summary>
         protected MessageQueue<Message> ReceiveQueue { get; set; }
-        
+
         /// <summary>
         /// This is the hooker of the strategy pattern.
         /// </summary>
         public IVisualizer Visualizer { get; set; }
 
         object ReceiveLock { get; set; }
+        object NeighbourhoodLock { get; set; }
 
         protected bool FirstTime { get; set; }
 
@@ -49,12 +50,13 @@ namespace AsyncSimulator
 
             NodeHolder = nodeHolder;
 
-            /// initialize listsse
+            /// initialize lists
             Neighbours = new Dictionary<int, _Node>();
             ReceiveQueue = new MessageQueue<Message>();
             ReceiveQueue.MessageAdded += ReceiveQueue_NewMessage;
 
             ReceiveLock = new object();
+            NeighbourhoodLock = new object();
 
             FirstTime = true;
         }
@@ -88,7 +90,7 @@ namespace AsyncSimulator
         {
             MessageCount++;
             LastReceivedMessageTime = DateTime.Now;
-            UpdateNeighbourInformation(m.Source);            
+            UpdateNeighbourInformation(m.Source);
             RunRules();
         }
 
@@ -113,16 +115,19 @@ namespace AsyncSimulator
 
         protected void BroadcastState()
         {
-            foreach (var neighbor in Neighbours)
+            lock (NeighbourhoodLock)
             {
-                Task.Run(() =>
+                foreach (var neighbor in Neighbours)
                 {
-                    Underlying_Send(new Message
+                    Task.Run(() =>
                     {
-                        Source = this,
-                        DestinationId = neighbor.Key
+                        Underlying_Send(new Message
+                        {
+                            Source = this,
+                            DestinationId = neighbor.Key
+                        });
                     });
-                });
+                }
             }
 
             Task.Run(() => RunRules());
@@ -143,7 +148,47 @@ namespace AsyncSimulator
         }
 
         #endregion
-        
+
+        public void AddNeighbour(_Node node)
+        {
+            lock (NeighbourhoodLock)
+            {
+                Neighbours.Add(node.Id, node);
+            }
+        }
+
+        public void RemoveNeighbour(int nodeId)
+        {
+            lock (NeighbourhoodLock)
+            {
+                Neighbours.Remove(nodeId);
+            }
+        }
+
+        public void UpdateNeighbour(_Node neighbour)
+        {
+            lock (NeighbourhoodLock)
+            {
+                Neighbours[neighbour.Id] = neighbour;
+            }
+        }
+
+        public List<_Node> GetCopyOfNeigbours()
+        {
+            lock (NeighbourhoodLock)
+            {
+                return new List<_Node>(Neighbours.Values);
+            }
+        }
+
+        public bool IsNeigbourOf(int nodeId)
+        {
+            lock (NeighbourhoodLock)
+            {
+                return Neighbours.ContainsKey(nodeId);
+            }
+        }
+
         public virtual bool IsValid()
         {
             return false;

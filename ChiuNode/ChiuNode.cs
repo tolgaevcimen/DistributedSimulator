@@ -36,7 +36,7 @@ namespace ChiuDominatingSet
 
         IEnumerable<ChiuNode> GetNeighbours()
         {
-            return Neighbours.Values/*.Where(v => v != null)*/.Select(n => (ChiuNode)n);
+            return GetCopyOfNeigbours()/*.Where(v => v != null)*/.Select(n => (ChiuNode)n);
         }
 
         public ChiuNode(int id, NodeHolder nodeHolder, InitialState initialState = InitialState.AllWait, Random randomizer = null) : base(id, nodeHolder)
@@ -90,7 +90,7 @@ namespace ChiuDominatingSet
         
         protected override void UpdateNeighbourInformation(_Node neighbour)
         {
-            Neighbours[neighbour.Id] = new ChiuNode(neighbour.Id, ((ChiuNode)neighbour).State);
+            UpdateNeighbour(new ChiuNode(neighbour.Id, ((ChiuNode)neighbour).State));
         }
         
         public override bool Selected()
@@ -113,16 +113,16 @@ namespace ChiuDominatingSet
                         var randIndex = randomizer.Next(0, states.Length);
                         var state = (ChiuState)Enum.Parse(typeof(ChiuState), states[randIndex]);
 
-                        state = Id == 0 ? ChiuState.WAIT :
-                                Id == 1 ? ChiuState.IN :
-                                Id == 2 ? ChiuState.WAIT :
-                                Id == 3 ? ChiuState.OUT1 :
-                                Id == 4 ? ChiuState.WAIT :
-                                Id == 5 ? ChiuState.OUT2 :
-                                Id == 6 ? ChiuState.IN :
-                                Id == 7 ? ChiuState.WAIT :
-                                Id == 8 ? ChiuState.IN :
-                                ChiuState.IN;
+                        //state = Id == 0 ? ChiuState.WAIT :
+                        //        Id == 1 ? ChiuState.IN :
+                        //        Id == 2 ? ChiuState.WAIT :
+                        //        Id == 3 ? ChiuState.OUT1 :
+                        //        Id == 4 ? ChiuState.WAIT :
+                        //        Id == 5 ? ChiuState.OUT2 :
+                        //        Id == 6 ? ChiuState.IN :
+                        //        Id == 7 ? ChiuState.WAIT :
+                        //        Id == 8 ? ChiuState.IN :
+                        //        ChiuState.IN;
                         return state;
                     }
                 default: return ChiuState.WAIT;

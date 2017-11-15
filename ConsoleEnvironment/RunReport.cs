@@ -1,8 +1,10 @@
 ﻿using AsyncSimulator;
 using ConsoleEnvironment.GraphGenerator;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Script.Serialization;
 
 namespace ConsoleEnvironment
 {
@@ -29,10 +31,13 @@ namespace ConsoleEnvironment
         public double AvgDegree { get; set; }
         public int MinDegree { get; set; }
 
-        public RunReport(AlgorithmType algorithmType, GraphType graphType)
+        public double Duration { get; set; }
+
+        public RunReport(AlgorithmType algorithmType, GraphType graphType, int nodeCount)
         {
             AlgorithmType = algorithmType;
             GraphType = graphType;
+            NodeCount = nodeCount;
         }
 
         public void ReportTopology(List<IEdge> edges)
@@ -94,9 +99,16 @@ namespace ConsoleEnvironment
             //Console.WriteLine("minDegree: {0}, avarageDegree: {1}, maxDegree: {2}", minDegree, avarageDegree, maxDegree);
         }
 
+        public void SetDuration(double seconds)
+        {
+            Duration = seconds;
+        }
+
         public override string ToString()
         {
-            return string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}",
+            //return JsonConvert.SerializeObject(this);
+
+            return string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}\t{14}",
                 AlgorithmType,
                 GraphType,
                 NodeCount,
@@ -104,12 +116,14 @@ namespace ConsoleEnvironment
                 TotalMessageCount,
                 string.Join(", ", EachNodesMoveCount.Select(kv => string.Format("{0}: {1}", kv.Key, kv.Value))),
                 TotalMoveCount,
+                Duration,
                 string.Join(", ", Topology.Select(t => string.Format("({0}-{1})", t.Item1, t.Item2))),
                 string.Join(", ", BeforeInNodes),
                 string.Join(", ", BeforeNInNodes),
                 string.Join(", ", AfterInNodes),
                 string.Join(", ", AfterNInNodes),
-                MinDegree + "|" + AvgDegree + "|" + MaxDegree);
+                MinDegree + "|" + AvgDegree + "|" + MaxDegree,
+                string.Join(", ", InvalidNodes));
         }
     }
 }

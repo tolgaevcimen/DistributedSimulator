@@ -13,7 +13,7 @@ namespace GoddardMDSNode
 
         IEnumerable<GoddardNode> GetNeighbours()
         {
-            return Neighbours.Values.Where(v => v != null).Select(n => (GoddardNode)n);
+            return GetCopyOfNeigbours().Where(v => v != null).Select(n => (GoddardNode)n);
         }
 
         public GoddardNode(int id, NodeHolder nodeHolder, InitialState initialState = InitialState.AllWait, Random randomizer = null) : base(id, nodeHolder)
@@ -81,8 +81,7 @@ namespace GoddardMDSNode
         protected override void UpdateNeighbourInformation(_Node neighbour)
         {
             var goddardNode = (GoddardNode)neighbour;
-
-            Neighbours[neighbour.Id] = new GoddardNode(neighbour.Id, goddardNode.x, goddardNode.c);
+            UpdateNeighbour(new GoddardNode(neighbour.Id, goddardNode.x, goddardNode.c));
         }
         
         public override bool IsValid()

@@ -29,7 +29,7 @@ namespace ConsoleEnvironment.GraphGenerator
                 {
                     if (randomizer.Next() % 100 > 2) continue;
 
-                    if (node1.Neighbours.ContainsKey(node2.Id)) continue;
+                    if (node1.IsNeigbourOf(node2.Id)) continue;
                     
                     edgeHolder.AddEgde(new ConsoleEdge(node1, node2));
                 }

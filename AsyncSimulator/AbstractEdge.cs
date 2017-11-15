@@ -31,8 +31,8 @@ namespace AsyncSimulator
         public virtual void Delete(bool onlyEdgeDeleted)
         {
             // set neighbourhood
-            Node1.Neighbours.Remove(Node2.Id);
-            Node2.Neighbours.Remove(Node1.Id);
+            Node1.RemoveNeighbour(Node2.Id);
+            Node2.RemoveNeighbour(Node1.Id);
         }
 
         public abstract void Draw();
@@ -52,8 +52,8 @@ namespace AsyncSimulator
         void HandleNeighbourhood()
         {
             /// set neighbourhood
-            Node1.Neighbours.Add(Node2.Id, Node2);
-            Node2.Neighbours.Add(Node1.Id, Node1);
+            Node1.AddNeighbour(Node2);
+            Node2.AddNeighbour(Node1);
         }        
     }
 }
