@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AsyncSimulator
 {
@@ -103,6 +105,36 @@ namespace AsyncSimulator
             {
                 return new List<_Node>(AllNodes);
             }
+        }
+
+        bool DetectingTermination { get; set; }
+
+        public void StartTerminationDetection()
+        {
+            DetectingTermination = true;
+            Task.Run(() =>
+            {
+                while (DetectingTermination)
+                {
+                    Thread.Sleep(1000);
+                    lock (AllNodesLock)
+                    {
+                        if (AllNodes.All(n => n.IsValid()
+                            && DateTime.Now.Subtract(n.LastReceivedMessageTime) > TimeSpan.FromSeconds(1)))
+                        {
+                            OnTerminated();
+                            DetectingTermination = false;
+                        }
+                    }
+                }
+            });
+        }
+
+        public event EventHandler Terminated;
+        protected virtual void OnTerminated()
+        {
+            DetectingTermination = false;
+            Terminated?.Invoke(this, EventArgs.Empty);
         }
     }
 }

@@ -52,7 +52,7 @@ namespace TurauDominatingSet
 
         IEnumerable<TurauNode> GetNeighbours()
         {
-            return Neighbours.Values.Where(v => v != null).Select(n => (TurauNode)n);
+            return GetCopyOfNeigbours().Where(v => v != null).Select(n => (TurauNode)n);
         }
 
         public TurauNode(int id, NodeHolder nodeHolder, InitialState initialState = InitialState.AllWait, Random randomizer = null) : base(id, nodeHolder)
@@ -67,12 +67,6 @@ namespace TurauDominatingSet
 
         protected override void RunRules()
         {
-            //if (Neighbours.Values.Any(n => n == null))
-            //{
-            //    Visualizer.Log("I'm {0}, not gonna run", Id);
-            //    return;
-            //}
-
             if (State == TurauState.OUT && InNeighborCount == 0)
             {
                 MoveCount++;
@@ -133,7 +127,7 @@ namespace TurauDominatingSet
         
         protected override void UpdateNeighbourInformation(_Node neighbour)
         {
-            Neighbours[neighbour.Id] = new TurauNode(neighbour.Id, ((TurauNode)neighbour).State);
+            UpdateNeighbour(new TurauNode(neighbour.Id, ((TurauNode)neighbour).State));
         }
         
         public override bool Selected()

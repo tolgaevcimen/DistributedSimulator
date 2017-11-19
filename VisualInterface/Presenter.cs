@@ -1,5 +1,4 @@
 ﻿using AsyncSimulator;
-using NodeGenerator;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -35,6 +34,11 @@ namespace VisualInterface
             EdgeHolder = new EdgeHolder();
             NodeHolder = new NodeHolder();
             NodeHolder.Terminated += TerminationDetected;
+        }
+
+        private void TerminationDetected(object sender, EventArgs e)
+        {
+            btn_proof_Click(null, null);
         }
 
         #region mouse events for Creating Nodes and Edges
@@ -137,6 +141,7 @@ namespace VisualInterface
                     node.UserDefined_SingleInitiatorProcedure();
                 });
             };
+            NodeHolder.StartTerminationDetection();
         }
 
         public void DisableAlgorthmChange()

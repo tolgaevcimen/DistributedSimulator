@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AsyncSimulator
@@ -24,19 +25,29 @@ namespace AsyncSimulator
         /// A thread safe queue for received messages.
         /// </summary>
         protected MessageQueue<Message> ReceiveQueue { get; set; }
-        
+
         /// <summary>
         /// This is the hooker of the strategy pattern.
         /// </summary>
         public IVisualizer Visualizer { get; set; }
 
         object ReceiveLock { get; set; }
+        object NeighbourhoodLock { get; set; }
 
-        protected bool FirstTime { get; set; }
+        int PreviousReceiveQueueLength { get; set; }
 
-        public int MessageCount { get; set; }
+        int BackoffPeriod = 50;
+
+        //public int MessageCount { get; set; }
+        public int SentMessageCount { get; set; }
+        public int ReceivedMessageCount { get; set; }
+
         public int MoveCount { get; set; }
-        
+
+        public int MessageJammed { get; set; }
+
+        public DateTime LastReceivedMessageTime { get; set; }
+
         /// <summary>
         /// As soon a node is created, the thread starts running.
         /// </summary>
@@ -47,30 +58,47 @@ namespace AsyncSimulator
 
             NodeHolder = nodeHolder;
 
-            /// initialize listsse
+            /// initialize lists
             Neighbours = new Dictionary<int, _Node>();
             ReceiveQueue = new MessageQueue<Message>();
             ReceiveQueue.MessageAdded += ReceiveQueue_NewMessage;
 
             ReceiveLock = new object();
-
-            FirstTime = true;
+            NeighbourhoodLock = new object();
         }
 
         private void ReceiveQueue_NewMessage(object sender, EventArgs e)
         {
             if (ReceiveQueue.Count == 0) return;
 
-            var m = ReceiveQueue.Dequeue();
+            Message m = null;
 
-            Trace.WriteLine(String.Format("Acquiring lock - {0}", m));
+            //Trace.WriteLine(String.Format("Acquiring lock - {0}", m));
             lock (ReceiveLock)
             {
+                m = ReceiveQueue.Dequeue();
+                Trace.WriteLine(string.Format("receive queue has {0} messages after dequeueing {1}", ReceiveQueue.Count, m));
+
+                HandleCongestionBackoff();
+
                 Trace.WriteLine(String.Format("Acquiried lock - {0}", m));
                 UserDefined_ReceiveMessageProcedure(m);
                 Trace.WriteLine(String.Format("Releasing lock - {0}", m));
             }
             Trace.WriteLine(String.Format("Released lock - {0}", m));
+        }
+
+        void HandleCongestionBackoff()
+        {
+            if (ReceiveQueue.Count >= 1 && PreviousReceiveQueueLength == 0)
+            {
+                MessageJammed++;
+                Trace.WriteLine(string.Format("congested at {0}", Id));
+                ReceiveQueue.ForEach(message => message.Source.SentMessageCount++);
+                ReceivedMessageCount++;
+                Thread.Sleep(BackoffPeriod);
+            }
+            PreviousReceiveQueueLength = ReceiveQueue.Count;
         }
 
         public virtual bool Selected()
@@ -84,8 +112,9 @@ namespace AsyncSimulator
         /// <param name="m"></param>
         protected void UserDefined_ReceiveMessageProcedure(Message m)
         {
-            MessageCount++;
-            UpdateNeighbourInformation(m.Source);            
+            ReceivedMessageCount++;
+            LastReceivedMessageTime = DateTime.Now;
+            UpdateNeighbourInformation(m.Source);
             RunRules();
         }
 
@@ -110,16 +139,19 @@ namespace AsyncSimulator
 
         protected void BroadcastState()
         {
-            foreach (var neighbor in Neighbours)
+            lock (NeighbourhoodLock)
             {
-                Task.Run(() =>
+                foreach (var neighbor in Neighbours)
                 {
-                    Underlying_Send(new Message
+                    Task.Run(() =>
                     {
-                        Source = this,
-                        DestinationId = neighbor.Key
+                        Underlying_Send(new Message
+                        {
+                            Source = this,
+                            DestinationId = neighbor.Key
+                        });
                     });
-                });
+                }
             }
 
             Task.Run(() => RunRules());
@@ -136,11 +168,52 @@ namespace AsyncSimulator
             {
                 throw new ArgumentNullException("Destination");
             }
+            SentMessageCount++;
             destination.ReceiveQueue.Enqueue(m);
         }
 
         #endregion
-        
+
+        public void AddNeighbour(_Node node)
+        {
+            lock (NeighbourhoodLock)
+            {
+                Neighbours.Add(node.Id, node);
+            }
+        }
+
+        public void RemoveNeighbour(int nodeId)
+        {
+            lock (NeighbourhoodLock)
+            {
+                Neighbours.Remove(nodeId);
+            }
+        }
+
+        public void UpdateNeighbour(_Node neighbour)
+        {
+            lock (NeighbourhoodLock)
+            {
+                Neighbours[neighbour.Id] = neighbour;
+            }
+        }
+
+        public List<_Node> GetCopyOfNeigbours()
+        {
+            lock (NeighbourhoodLock)
+            {
+                return new List<_Node>(Neighbours.Values);
+            }
+        }
+
+        public bool IsNeigbourOf(int nodeId)
+        {
+            lock (NeighbourhoodLock)
+            {
+                return Neighbours.ContainsKey(nodeId);
+            }
+        }
+
         public virtual bool IsValid()
         {
             return false;
