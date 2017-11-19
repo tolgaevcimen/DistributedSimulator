@@ -15,7 +15,7 @@ namespace ConsoleEnvironment
         {
             var algorithms = Enum.GetNames(typeof(AlgorithmType)).Select(atn => (AlgorithmType)Enum.Parse(typeof(AlgorithmType), atn)).ToList();
 
-            var graphTypes = new List<GraphType>(new[] { GraphType.Random, GraphType.Line, GraphType.BinaryTree, GraphType.Star, GraphType.Circle, GraphType.Complete, GraphType.Random });
+            var graphTypes = new List<GraphType>(new[] { GraphType.Random3, GraphType.Random6, GraphType.Random9, GraphType.Line, GraphType.BinaryTree, GraphType.Star, GraphType.Circle, GraphType.Complete });
 
             foreach (var algorithm in algorithms)
             {

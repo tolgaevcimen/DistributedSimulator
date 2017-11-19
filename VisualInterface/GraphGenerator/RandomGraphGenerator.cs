@@ -9,8 +9,10 @@ namespace VisualInterface.GraphGenerator
 {
     class RandomGraphGenerator : AbstractGraphGenerator
     {
+        int Grade { get; set; }
         public RandomGraphGenerator(Presenter parentForm, Panel drawing_panel) : base(parentForm, drawing_panel)
         {
+            Grade = 3;
         }
 
         public override void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, AlgorithmType SelectedAlgorithm)
@@ -68,14 +70,28 @@ namespace VisualInterface.GraphGenerator
 
             foreach (var node1 in nodeHolder.GetCopyList())
             {
-                foreach (var node2 in nodeHolder.GetCopyList().Where(n => n != node1))
+                for (int i = 0; i < Grade; i++)
                 {
-                    if (randomizer.Next() % 100 > 10) continue;
+                    if (node1.Neighbours.Count >= Grade)
+                    {
+                        break;
+                    }
+                    var nextNodeId = randomizer.Next(0, nodeCount);
+                    while (nextNodeId == node1.Id || node1.IsNeigbourOf(nextNodeId))
+                    {
+                        nextNodeId = randomizer.Next(0, nodeCount);
+                    }
 
-                    if (node1.Neighbours.ContainsKey(node2.Id)) continue;
-                    
-                    edgeHolder.AddEgde(new WinformsEdge(arg, node1, node2));
+                    edgeHolder.AddEgde(new WinformsEdge(arg, node1, nodeHolder.GetNodeById(nextNodeId)));
                 }
+                //foreach (var node2 in nodeHolder.GetCopyList().Where(n => n != node1))
+                //{
+                //    if (randomizer.Next() % 100 > 10) continue;
+
+                //    if (node1.Neighbours.ContainsKey(node2.Id)) continue;
+                    
+                //    edgeHolder.AddEgde(new WinformsEdge(arg, node1, node2));
+                //}
             }
         }
 

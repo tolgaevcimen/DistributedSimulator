@@ -67,12 +67,6 @@ namespace TurauDominatingSet
 
         protected override void RunRules()
         {
-            //if (Neighbours.Values.Any(n => n == null))
-            //{
-            //    Visualizer.Log("I'm {0}, not gonna run", Id);
-            //    return;
-            //}
-
             if (State == TurauState.OUT && InNeighborCount == 0)
             {
                 MoveCount++;

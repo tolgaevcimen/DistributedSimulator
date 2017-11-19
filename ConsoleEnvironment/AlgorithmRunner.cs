@@ -87,10 +87,11 @@ namespace ConsoleEnvironment
         private void HandleReport()
         {
             RunReport.ReportNodes(NodeHolder.GetCopyList(), false);
-            RunReport.GatherMessageCount(NodeHolder.GetCopyList());
+            RunReport.GatherMessageCounts(NodeHolder.GetCopyList());
             RunReport.GatherMoveCount(NodeHolder.GetCopyList());
             RunReport.ReportInvalidNodes(NodeHolder.GetCopyList());
             RunReport.ReportDegrees(NodeHolder.GetCopyList());
+            RunReport.ReportCongestions(NodeHolder.GetCopyList());
             RunReport.SetDuration(Duration.TotalSeconds);
             
             using (var streamWriter = new StreamWriter("test.txt", true))

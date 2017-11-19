@@ -1,10 +1,8 @@
 ﻿using AsyncSimulator;
 using ConsoleEnvironment.GraphGenerator;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Script.Serialization;
 
 namespace ConsoleEnvironment
 {
@@ -22,8 +20,10 @@ namespace ConsoleEnvironment
         public List<int> AfterNInNodes { get; set; }
         public List<int> InvalidNodes { get; set; }
 
-        public Dictionary<int, int> EachNodesMessageCount { get; set; }
-        public int TotalMessageCount { get; set; }
+        public Dictionary<int, int> EachNodesReceiveCount { get; set; }
+        public int TotalReceiveCount { get; set; }
+        public Dictionary<int, int> EachNodesSentCount { get; set; }
+        public int TotalSentCount { get; set; }
         public Dictionary<int, int> EachNodesMoveCount { get; set; }
         public int TotalMoveCount { get; set; }
 
@@ -32,6 +32,8 @@ namespace ConsoleEnvironment
         public int MinDegree { get; set; }
 
         public double Duration { get; set; }
+
+        public Dictionary<int, int> EachNodesCongestionCount { get; set; }
 
         public RunReport(AlgorithmType algorithmType, GraphType graphType, int nodeCount)
         {
@@ -63,10 +65,13 @@ namespace ConsoleEnvironment
             }
         }
 
-        public void GatherMessageCount(List<_Node> nodes)
+        public void GatherMessageCounts(List<_Node> nodes)
         {
-            EachNodesMessageCount = nodes.ToDictionary(n => n.Id, n => n.MessageCount);
-            TotalMessageCount = nodes.Sum(n => n.MessageCount);
+            EachNodesReceiveCount = nodes.ToDictionary(n => n.Id, n => n.ReceivedMessageCount);
+            TotalReceiveCount = nodes.Sum(n => n.ReceivedMessageCount);
+
+            EachNodesSentCount = nodes.ToDictionary(n => n.Id, n => n.SentMessageCount);
+            TotalSentCount = nodes.Sum(n => n.SentMessageCount);
 
             //Console.WriteLine("eachNodeMessageCount: {0}", eachNodeMessageCount);
             //Console.WriteLine("totalMessageCount: {0}", totalMessageCount);
@@ -99,6 +104,11 @@ namespace ConsoleEnvironment
             //Console.WriteLine("minDegree: {0}, avarageDegree: {1}, maxDegree: {2}", minDegree, avarageDegree, maxDegree);
         }
 
+        public void ReportCongestions(List<_Node> nodes)
+        {
+            EachNodesCongestionCount = nodes.ToDictionary(n => n.Id, n => n.MessageJammed);
+        }
+
         public void SetDuration(double seconds)
         {
             Duration = seconds;
@@ -108,12 +118,14 @@ namespace ConsoleEnvironment
         {
             //return JsonConvert.SerializeObject(this);
 
-            return string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}\t{14}",
+            return string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}\t{14}\t{15}\t{16}\t{17}",
                 AlgorithmType,
                 GraphType,
                 NodeCount,
-                string.Join(", ", EachNodesMessageCount.Select(kv => string.Format("{0}: {1}", kv.Key, kv.Value))),
-                TotalMessageCount,
+                string.Join(", ", EachNodesReceiveCount.Select(kv => string.Format("{0}: {1}", kv.Key, kv.Value))),
+                TotalReceiveCount,
+                string.Join(", ", EachNodesSentCount.Select(kv => string.Format("{0}: {1}", kv.Key, kv.Value))),
+                TotalSentCount,
                 string.Join(", ", EachNodesMoveCount.Select(kv => string.Format("{0}: {1}", kv.Key, kv.Value))),
                 TotalMoveCount,
                 Duration,
@@ -123,7 +135,8 @@ namespace ConsoleEnvironment
                 string.Join(", ", AfterInNodes),
                 string.Join(", ", AfterNInNodes),
                 MinDegree + "|" + AvgDegree + "|" + MaxDegree,
-                string.Join(", ", InvalidNodes));
+                string.Join(", ", InvalidNodes),
+                string.Join(", ", EachNodesCongestionCount.Select(kv => string.Format("{0}: {1}", kv.Key, kv.Value))));
         }
     }
 }

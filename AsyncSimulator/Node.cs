@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AsyncSimulator
@@ -33,10 +34,17 @@ namespace AsyncSimulator
         object ReceiveLock { get; set; }
         object NeighbourhoodLock { get; set; }
 
-        protected bool FirstTime { get; set; }
+        int PreviousReceiveQueueLength { get; set; }
 
-        public int MessageCount { get; set; }
+        int BackoffPeriod = 50;
+
+        //public int MessageCount { get; set; }
+        public int SentMessageCount { get; set; }
+        public int ReceivedMessageCount { get; set; }
+
         public int MoveCount { get; set; }
+
+        public int MessageJammed { get; set; }
 
         public DateTime LastReceivedMessageTime { get; set; }
 
@@ -57,24 +65,40 @@ namespace AsyncSimulator
 
             ReceiveLock = new object();
             NeighbourhoodLock = new object();
-
-            FirstTime = true;
         }
 
         private void ReceiveQueue_NewMessage(object sender, EventArgs e)
         {
             if (ReceiveQueue.Count == 0) return;
 
-            var m = ReceiveQueue.Dequeue();
+            Message m = null;
 
-            Trace.WriteLine(String.Format("Acquiring lock - {0}", m));
+            //Trace.WriteLine(String.Format("Acquiring lock - {0}", m));
             lock (ReceiveLock)
             {
+                m = ReceiveQueue.Dequeue();
+                Trace.WriteLine(string.Format("receive queue has {0} messages after dequeueing {1}", ReceiveQueue.Count, m));
+
+                HandleCongestionBackoff();
+
                 Trace.WriteLine(String.Format("Acquiried lock - {0}", m));
                 UserDefined_ReceiveMessageProcedure(m);
                 Trace.WriteLine(String.Format("Releasing lock - {0}", m));
             }
             Trace.WriteLine(String.Format("Released lock - {0}", m));
+        }
+
+        void HandleCongestionBackoff()
+        {
+            if (ReceiveQueue.Count >= 1 && PreviousReceiveQueueLength == 0)
+            {
+                MessageJammed++;
+                Trace.WriteLine(string.Format("congested at {0}", Id));
+                ReceiveQueue.ForEach(message => message.Source.SentMessageCount++);
+                ReceivedMessageCount++;
+                Thread.Sleep(BackoffPeriod);
+            }
+            PreviousReceiveQueueLength = ReceiveQueue.Count;
         }
 
         public virtual bool Selected()
@@ -88,7 +112,7 @@ namespace AsyncSimulator
         /// <param name="m"></param>
         protected void UserDefined_ReceiveMessageProcedure(Message m)
         {
-            MessageCount++;
+            ReceivedMessageCount++;
             LastReceivedMessageTime = DateTime.Now;
             UpdateNeighbourInformation(m.Source);
             RunRules();
@@ -144,6 +168,7 @@ namespace AsyncSimulator
             {
                 throw new ArgumentNullException("Destination");
             }
+            SentMessageCount++;
             destination.ReceiveQueue.Enqueue(m);
         }
 

@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace AsyncSimulator
 {
-    public class MessageQueue<T>
+    public class MessageQueue<T> where T : Message
     {
         private readonly ConcurrentQueue<T> queue = new ConcurrentQueue<T>();
         public event EventHandler MessageAdded;
@@ -21,7 +21,7 @@ namespace AsyncSimulator
                 Trace.WriteLine(String.Format("item({0}) already exists", item));
                 return;
             }
-
+            
             queue.Enqueue(item);
             OnMessageAdded();
         }
@@ -38,6 +38,14 @@ namespace AsyncSimulator
                 Thread.Sleep(50);
             }
             return item;
+        }
+
+        public void ForEach(Action<Message> method)
+        {
+            foreach (var message in queue)
+            {
+                method(message);
+            }
         }
     }
 }

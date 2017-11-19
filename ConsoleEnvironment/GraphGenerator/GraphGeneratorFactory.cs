@@ -6,8 +6,12 @@
         {
             switch (graphType)
             {
-                case GraphType.Random:
-                    return new RandomGraphGenerator();
+                case GraphType.Random3:
+                    return new RandomGraphGenerator(3);
+                case GraphType.Random6:
+                    return new RandomGraphGenerator(6);
+                case GraphType.Random9:
+                    return new RandomGraphGenerator(9);
                 case GraphType.Line:
                     return new LineGraphGenerator();
                 case GraphType.Circle:
