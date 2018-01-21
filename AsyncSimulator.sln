@@ -25,6 +25,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodeGenerator", "NodeGenera
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleEnvironment", "ConsoleEnvironment\ConsoleEnvironment.csproj", "{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleForStatisticsEnvironment", "ConsoleForStatisticsEnvironment\ConsoleForStatisticsEnvironment.csproj", "{6614D817-3DFD-4B6D-AD6B-318ADB327F01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadStatistics", "ReadStatistics\ReadStatistics.csproj", "{0F4E2E52-75B8-450E-91E1-F8B239A49804}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +75,14 @@ Global
 		{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6614D817-3DFD-4B6D-AD6B-318ADB327F01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6614D817-3DFD-4B6D-AD6B-318ADB327F01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6614D817-3DFD-4B6D-AD6B-318ADB327F01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6614D817-3DFD-4B6D-AD6B-318ADB327F01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F4E2E52-75B8-450E-91E1-F8B239A49804}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F4E2E52-75B8-450E-91E1-F8B239A49804}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F4E2E52-75B8-450E-91E1-F8B239A49804}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F4E2E52-75B8-450E-91E1-F8B239A49804}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
