@@ -23,13 +23,17 @@ namespace ConsoleForStatisticsEnvironment.GraphGenerator
 
                 if (node1 == null)
                 {
-                    node1 = NodeFactory.Create(AlgorithmType, tuple.Item1, new ConsoleNodeVisualizer(tuple.Item1, edgeHolder), false, nodeHolder);
+                    node1 = Topology.States != null ?
+                        NodeFactory.Create(AlgorithmType, tuple.Item1, new ConsoleNodeVisualizer(tuple.Item1, edgeHolder), false, nodeHolder, Topology.States[tuple.Item1]) :
+                        NodeFactory.Create(AlgorithmType, tuple.Item1, new ConsoleNodeVisualizer(tuple.Item1, edgeHolder), false, nodeHolder);
                     nodeHolder.AddNode(node1);
                 }
 
                 if (node2 == null)
                 {
-                    node2 = NodeFactory.Create(AlgorithmType, tuple.Item2, new ConsoleNodeVisualizer(tuple.Item2, edgeHolder), false, nodeHolder);
+                    node2 = Topology.States != null ?
+                        NodeFactory.Create(AlgorithmType, tuple.Item2, new ConsoleNodeVisualizer(tuple.Item2, edgeHolder), false, nodeHolder, Topology.States[tuple.Item2]) :
+                        NodeFactory.Create(AlgorithmType, tuple.Item2, new ConsoleNodeVisualizer(tuple.Item2, edgeHolder), false, nodeHolder);
                     nodeHolder.AddNode(node2);
                 }
 

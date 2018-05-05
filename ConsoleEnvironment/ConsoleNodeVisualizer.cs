@@ -20,9 +20,9 @@ namespace ConsoleEnvironment
             throw new NotImplementedException();
         }
 
-        public void Draw(bool changeColor = false)
+        public void Draw(NodeState nodeState)
         {
-            if (changeColor)
+            if (nodeState == NodeState.IN)
             {
                 Console.WriteLine("I'm({0}) IN", Id);
             }

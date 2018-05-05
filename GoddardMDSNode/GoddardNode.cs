@@ -7,8 +7,8 @@ namespace GoddardMDSNode
 {
     public class GoddardNode : _Node
     {
-        int x { get; set; }
-        int c { get; set; }
+        int In_X { get; set; }
+        int OutputState_C { get; set; }
 
         IEnumerable<GoddardNode> GetNeighbours()
         {
@@ -17,84 +17,101 @@ namespace GoddardMDSNode
 
         public GoddardNode(int id, NodeHolder nodeHolder, InitialState initialState = InitialState.AllWait, Random randomizer = null) : base(id, nodeHolder)
         {
-            x = GetState(initialState, randomizer);
+            In_X = GetState(initialState, randomizer);
+        }
+
+        public GoddardNode(int id, NodeHolder nodeHolder, int predefinedState) : base(id, nodeHolder)
+        {
+            In_X = predefinedState;
         }
 
         public GoddardNode(int id, int x, int c) : base(id, null)
         {
-            this.x = x;
-            this.c = c;
+            this.In_X = x;
+            this.OutputState_C = c;
         }
 
         protected override void RunRules()
         {
-            var realNeigborCount = GiveNeighborCount();
+            var stateAccordingToNeighbours = GiveCurrentState();
 
-            if (x == 0 && c != realNeigborCount)
+            // current state not correct,
+            // correcting
+            if (stateAccordingToNeighbours != OutputState_C && In_X == 0)
             {
                 MoveCount++;
-                Visualizer.Log("D1: I'm {0}.Rectifying neighbor count: {1}. ", Id, realNeigborCount);
+                Visualizer.Log("D1: I'm {0}.Rectifying neighbor count: {1}. ", Id, stateAccordingToNeighbours);
 
-                c = realNeigborCount;
+                OutputState_C = stateAccordingToNeighbours;
 
                 BroadcastState();
             }
-            else if (realNeigborCount == 0 && x == 0 && c == 0 && !GetNeighbours().Any(n => n.Id < Id && n.c == 0))
+            // all my neighoburs are OUT, I'm OUT, I have no neighbour whose id is smaller then me, they have no IN neighbours
+            // I'm going IN
+            else if (stateAccordingToNeighbours == 0 && OutputState_C == 0 && In_X == 0 && !GetNeighbours().
+                Any(n => n.Id < Id && n.OutputState_C == 0))
             {
                 MoveCount++;
                 Visualizer.Log("D2: I'm {0}. Entering set. ", Id);
 
-                x = 1;
-                Visualizer.Draw(true);
+                In_X = 1;
+                //Visualizer.Draw(true);
+                Visualizer.Draw(GetState());
 
                 BroadcastState();
             }
-            else if (realNeigborCount > 0 && x == 1 && GetNeighbours().
-                Where(n => n.x == 0).All(n => n.c == 2))
+            // I'm IN, but none of my neighbours depend on me,
+            // I'm going OUT
+            else if (stateAccordingToNeighbours > 0 && In_X == 1 && GetNeighbours().
+                Where(n => n.In_X == 0).All(n => n.OutputState_C == 2))
             {
                 MoveCount++;
                 Visualizer.Log("D3: I'm {0}. Leaving set. ", Id);
 
-                x = 0;
-                c = realNeigborCount == 1 ? 1 : 2;
-                Visualizer.Draw(false);
+                In_X = 0;
+                OutputState_C = stateAccordingToNeighbours == 1 ? 1 : 2;
+                //Visualizer.Draw(false);
+                Visualizer.Draw(GetState());
 
                 BroadcastState();
             }
         }
 
-        int GiveNeighborCount()
+        int GiveCurrentState()
         {
-            if (GetNeighbours().All(n => n.x == 0)) return 0;
+            // all neighbours are OUT
+            if (GetNeighbours().All(n => n.In_X == 0)) return 0;
 
-            if (GetNeighbours().Count(n => n.x == 1) == 1) return 1;
+            // there is exactly 1 IN neighbour
+            if (GetNeighbours().Count(n => n.In_X == 1) == 1) return 1;
 
+            // there are more than 1 IN neigbour
             return 2;
         }
         
         public override bool Selected()
         {
-            return base.Selected() || x == 1;
+            return base.Selected() || In_X == 1;
         }
         
         protected override void UpdateNeighbourInformation(_Node neighbour)
         {
             var goddardNode = (GoddardNode)neighbour;
-            UpdateNeighbour(new GoddardNode(neighbour.Id, goddardNode.x, goddardNode.c));
+            UpdateNeighbour(new GoddardNode(neighbour.Id, goddardNode.In_X, goddardNode.OutputState_C));
         }
         
         public override bool IsValid()
         {
-            var realNeigborCount = GiveNeighborCount();
-            if (x == 0 && c != realNeigborCount)
+            var realNeigborCount = GiveCurrentState();
+            if (In_X == 0 && OutputState_C != realNeigborCount)
             {
                 return false;
             }
-            else if (realNeigborCount == 0 && x == 0 && c == 0 && !GetNeighbours().Any(n => n.Id < Id && n.c == 0))
+            else if (realNeigborCount == 0 && In_X == 0 && OutputState_C == 0 && !GetNeighbours().Any(n => n.Id < Id && n.OutputState_C == 0))
             {
                 return false;
             }
-            else if (realNeigborCount > 0 && x == 1 && GetNeighbours().Where(n => n.x == 0).All(n => n.c == 2))
+            else if (realNeigborCount > 0 && In_X == 1 && GetNeighbours().Where(n => n.In_X == 0).All(n => n.OutputState_C == 2))
             {
                 return false;
             }
@@ -120,6 +137,11 @@ namespace GoddardMDSNode
                     }
                 default: return 0;
             }
+        }
+
+        public override NodeState GetState()
+        {
+            return In_X == 0 ? NodeState.WAIT : NodeState.IN;
         }
     }
 }

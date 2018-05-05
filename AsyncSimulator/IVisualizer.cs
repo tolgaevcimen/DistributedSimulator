@@ -27,7 +27,7 @@ namespace AsyncSimulator
         /// Method for drawing the node.
         /// </summary>
         /// <param name="changeColor">if set to true, the color of the node will change from default color to selected color.</param>
-        void Draw(bool changeColor = false);
+        void Draw(NodeState nodeColor);
 
         void Delete();
 

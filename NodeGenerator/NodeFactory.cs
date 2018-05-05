@@ -12,13 +12,13 @@ namespace NodeGenerator
     public class NodeFactory
     {
         public static Random Randomizer = new Random();
-        public static _Node Create(AlgorithmType algorithmType, int id, IVisualizer nodeVisualizer, bool selfStab, NodeHolder nodeHolder)
+        public static _Node Create(AlgorithmType algorithmType, int id, IVisualizer nodeVisualizer, bool selfStab, NodeHolder nodeHolder, int predefinedState = 0)
         {
             _Node node = null;
             switch (algorithmType)
             {
                 case AlgorithmType.ChiuMDS_rand:
-                    node = new ChiuNode(id, nodeHolder, InitialState.Random, Randomizer);
+                    node = new ChiuNode(id, nodeHolder, predefinedState);
                     break;
                 case AlgorithmType.ChiuMDS_allIn:
                     node = new ChiuNode(id, nodeHolder, InitialState.AllIn);
@@ -27,7 +27,7 @@ namespace NodeGenerator
                     node = new ChiuNode(id, nodeHolder, InitialState.AllWait);
                     break;
                 case AlgorithmType.GoddardMDS_rand:
-                    node = new GoddardNode(id, nodeHolder, InitialState.Random, Randomizer);
+                    node = new GoddardNode(id, nodeHolder, predefinedState);
                     break;
                 case AlgorithmType.GoddardMDS_allIn:
                     node = new GoddardNode(id, nodeHolder, InitialState.AllIn);
@@ -36,7 +36,7 @@ namespace NodeGenerator
                     node = new GoddardNode(id, nodeHolder, InitialState.AllWait);
                     break;
                 case AlgorithmType.TurauMDS_rand:
-                    node = new TurauNode(id, nodeHolder, InitialState.Random, Randomizer);
+                    node = new TurauNode(id, nodeHolder, predefinedState);
                     break;
                 case AlgorithmType.TurauMDS_allIn:
                     node = new TurauNode(id, nodeHolder, InitialState.AllIn);

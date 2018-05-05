@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ConsoleForStatisticsEnvironment.GraphGenerator
 {
@@ -13,6 +14,7 @@ namespace ConsoleForStatisticsEnvironment.GraphGenerator
         public Topology Generate(int nodeCount)
         {
             var topology = new Topology();
+            topology.States = new Dictionary<int, int>();
 
             for (int i = 0; i < nodeCount; i++)
             {
@@ -26,6 +28,11 @@ namespace ConsoleForStatisticsEnvironment.GraphGenerator
             
             for (int nodeIndex = 0; nodeIndex < nodeCount; nodeIndex++)
             {
+                if (topology.States != null)
+                {
+                    topology.States[nodeIndex] = randomizer.Next(0, 2);
+                }
+
                 for (int i = 0; i < Grade; i++)
                 {
                     if (topology.DegreeOf(nodeIndex) >= Grade) break;
@@ -38,7 +45,6 @@ namespace ConsoleForStatisticsEnvironment.GraphGenerator
 
                     topology.Neighbourhoods.Add(new Tuple<int, int>(nodeIndex, nextNodeId));
                 }
-
             }
 
             return topology;

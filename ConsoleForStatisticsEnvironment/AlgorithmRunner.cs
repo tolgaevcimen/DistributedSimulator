@@ -17,23 +17,25 @@ namespace ConsoleForStatisticsEnvironment
 
         public EdgeHolder EdgeHolder { get; set; }
         public NodeHolder NodeHolder { get; set; }
-        
+
         public DateTime StartTime { get; set; }
         public TimeSpan Duration { get; set; }
         public RunReport RunReport { get; set; }
-        
+
         public int IndexToRunForEachNodeCount = 0;
-        
+
         public bool BatchCompleted { get; set; }
 
         public List<Topology> Topologies { get; set; }
+        public string FolderName { get; set; }
 
-        public AlgorithmRunner(List<Topology> topologies, AlgorithmType algorithmType, GraphType graphType, int nodeCount)
+        public AlgorithmRunner(List<Topology> topologies, AlgorithmType algorithmType, GraphType graphType, int nodeCount, string folderName)
         {
             Topologies = topologies;
             AlgorithmType = algorithmType;
             GraphType = graphType;
             NodeCount = nodeCount;
+            FolderName = folderName;
         }
 
         public void StartRunning()
@@ -52,7 +54,7 @@ namespace ConsoleForStatisticsEnvironment
         {
             StartTime = DateTime.Now;
             InitializeHolders();
-            
+
             RunReport.ReportTopology(EdgeHolder.GetCopyList());
             RunReport.ReportNodes(NodeHolder.GetCopyList(), true);
 
@@ -71,15 +73,25 @@ namespace ConsoleForStatisticsEnvironment
         {
             Duration = DateTime.Now.Subtract(StartTime);
             Console.Clear();
+            Console.WriteLine(GetFileNameForCurrentRun());
             HandleReport();
+            if (PrepareNextRun())
+            {
+                Run();
+            }
+        }
+
+        private bool PrepareNextRun()
+        {
             IndexToRunForEachNodeCount++;
             if (IndexToRunForEachNodeCount >= Topologies.Count)
             {
                 BatchCompleted = true;
                 IndexToRunForEachNodeCount = 0;
-                return;
+                return false;
             }
-            Run();
+
+            return true;
         }
 
         private void HandleReport()
@@ -91,13 +103,23 @@ namespace ConsoleForStatisticsEnvironment
             RunReport.ReportDegrees(NodeHolder.GetCopyList());
             RunReport.ReportCongestions(NodeHolder.GetCopyList());
             RunReport.SetDuration(Duration.TotalSeconds);
-            
-            using (var streamWriter = new StreamWriter("5_try_all_types_2.txt", true))
+
+            if (!Directory.Exists(FolderName))
+            {
+                Directory.CreateDirectory(FolderName);
+            }
+
+            using (var streamWriter = new StreamWriter(FolderName + ".txt", true))
                 streamWriter.WriteLine(RunReport.ToString());
-            using (var streamWriter = new StreamWriter(string.Format("jsons\\{0}.{1}.{2}.{3}.json", GraphType, AlgorithmType, NodeCount, IndexToRunForEachNodeCount), true))
+            using (var streamWriter = new StreamWriter(GetFileNameForCurrentRun(), false))
                 streamWriter.WriteLine(RunReport.Serialize());
         }
-        
+
+        private string GetFileNameForCurrentRun()
+        {
+            return string.Format("{4}\\{0}.{1}.{2}.{3}.json", GraphType, AlgorithmType, NodeCount, IndexToRunForEachNodeCount, FolderName);
+        }
+
         private void InitializeHolders()
         {
             EdgeHolder = new EdgeHolder();

@@ -43,8 +43,8 @@ namespace VisualInterface
             Path.AddLine(Node1.Visualizer.Location, Node2.Visualizer.Location);
 
             /// redraw the nodes
-            Node1.Visualizer.Draw(Node1.Selected());
-            Node2.Visualizer.Draw(Node2.Selected());
+            Node1.Visualizer.Draw(Node1.GetState());
+            Node2.Visualizer.Draw(Node2.GetState());
         }
 
         void HandleSelfStabilization()
@@ -91,8 +91,8 @@ namespace VisualInterface
             base.Delete(onlyEdgeDeleted);
 
             // redraw the nodes
-            Node1.Visualizer.Draw(Node1.Selected());
-            Node2.Visualizer.Draw(Node2.Selected());
+            Node1.Visualizer.Draw(Node1.GetState());
+            Node2.Visualizer.Draw(Node2.GetState());
 
             Program.Presenter.EdgeHolder.RemoveEdge(this);
             Program.Presenter.EdgeHolder.RedrawAllEdges();

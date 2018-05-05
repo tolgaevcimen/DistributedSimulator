@@ -36,7 +36,7 @@ namespace AsyncSimulator
 
         int PreviousReceiveQueueLength { get; set; }
 
-        int BackoffPeriod = 50;
+        int BackoffPeriod = 10;
 
         //public int MessageCount { get; set; }
         public int SentMessageCount { get; set; }
@@ -77,15 +77,15 @@ namespace AsyncSimulator
             lock (ReceiveLock)
             {
                 m = ReceiveQueue.Dequeue();
-                Trace.WriteLine(string.Format("receive queue has {0} messages after dequeueing {1}", ReceiveQueue.Count, m));
+                //Trace.WriteLine(string.Format("receive queue has {0} messages after dequeueing {1}", ReceiveQueue.Count, m));
 
                 HandleCongestionBackoff();
 
-                Trace.WriteLine(String.Format("Acquiried lock - {0}", m));
+                //Trace.WriteLine(String.Format("Acquiried lock - {0}", m));
                 UserDefined_ReceiveMessageProcedure(m);
-                Trace.WriteLine(String.Format("Releasing lock - {0}", m));
+                //Trace.WriteLine(String.Format("Releasing lock - {0}", m));
             }
-            Trace.WriteLine(String.Format("Released lock - {0}", m));
+            //Trace.WriteLine(String.Format("Released lock - {0}", m));
         }
 
         void HandleCongestionBackoff()
@@ -105,6 +105,8 @@ namespace AsyncSimulator
         {
             return false;
         }
+
+        public abstract NodeState GetState();
 
         /// <summary>
         /// This method will be implemented in sub classes for algorithm details.

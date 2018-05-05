@@ -120,7 +120,7 @@ namespace VisualInterface
                 if (!PresenterForm.NodeHolder.AnyIntersecting(e.Location))
                 {
                     var node = NodeFactory.Create(SelectedAlgorithm, PresenterForm.NodeHolder.NodeCount, GetNewNodeVisualizer(e, pea), PresenterForm.cb_selfStab.Checked, PresenterForm.NodeHolder);
-                    node.Visualizer.Draw(node.Selected());
+                    node.Visualizer.Draw(node.GetState());
                     PresenterForm.NodeHolder.AddNode(node);
 
                     PresenterForm.DisableAlgorthmChange();

@@ -12,8 +12,10 @@ namespace VisualInterface
         private PaintEventArgs PaintArgs { get; set; }
 
         private int Diameter = 40;
-        private Brush NodeColor = Brushes.Red;
-        private Brush CoveredNodeColor = Brushes.Blue;
+        private Brush WaitNodeColor = Brushes.LightSkyBlue;
+        private Brush OutNodeColor = Brushes.DarkGray;
+        private Brush InNodeColor = Brushes.Black;
+
         private Font DefaultFontForId = new Font(FontFamily.GenericSansSerif, 20, FontStyle.Bold);
 
         public PointF Location { get; set; }
@@ -30,7 +32,7 @@ namespace VisualInterface
             PaintArgs = e;
             ParentForm = parentForm;
 
-            Draw();
+            Draw(NodeState.WAIT);
         }
 
         public void Delete()
@@ -48,20 +50,45 @@ namespace VisualInterface
                 catch { }
         }
 
+        ///// <summary>
+        ///// Changes nodes color. Default is Red, if changeColor parameter is set to true, then it will be blue.
+        ///// </summary>
+        ///// <param name="changeColor"></param>
+        //public void Draw(bool changeColor = false)
+        //{
+        //    if (Deleted) return;
+
+        //    bool drawn = false;
+        //    while (!drawn)
+        //        try
+        //        {
+        //            PaintArgs.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+        //            PaintArgs.Graphics.FillEllipse(changeColor ? CoveredNodeColor : NodeColor, Location.X - Diameter / 2, Location.Y - Diameter / 2, Diameter, Diameter);
+
+        //            var offSet = Id < 10 ? 8 : 0;
+        //            PaintArgs.Graphics.DrawString(Id.ToString(), DefaultFontForId, Brushes.White, Location.X - Diameter / 2 + offSet, Location.Y - Diameter / 2 + 4);
+
+        //            drawn = true;
+        //        }
+        //        catch { }
+        //}
+
         /// <summary>
         /// Changes nodes color. Default is Red, if changeColor parameter is set to true, then it will be blue.
         /// </summary>
         /// <param name="changeColor"></param>
-        public void Draw(bool changeColor = false)
+        public void Draw(NodeState nodeColor)
         {
             if (Deleted) return;
+
+            var color = nodeColor == NodeState.WAIT ? WaitNodeColor : nodeColor == NodeState.OUT ? OutNodeColor : InNodeColor;
 
             bool drawn = false;
             while (!drawn)
                 try
                 {
                     PaintArgs.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                    PaintArgs.Graphics.FillEllipse(changeColor ? CoveredNodeColor : NodeColor, Location.X - Diameter / 2, Location.Y - Diameter / 2, Diameter, Diameter);
+                    PaintArgs.Graphics.FillEllipse(color, Location.X - Diameter / 2, Location.Y - Diameter / 2, Diameter, Diameter);
 
                     var offSet = Id < 10 ? 8 : 0;
                     PaintArgs.Graphics.DrawString(Id.ToString(), DefaultFontForId, Brushes.White, Location.X - Diameter / 2 + offSet, Location.Y - Diameter / 2 + 4);
@@ -70,6 +97,7 @@ namespace VisualInterface
                 }
                 catch { }
         }
+
 
         public IEdge GetEdgeTo(_Node n2)
         {
@@ -114,8 +142,8 @@ namespace VisualInterface
                 {
                     edge.Colorify(false);
 
-                    edge.GetNode1().Visualizer.Draw(true);
-                    edge.GetNode2().Visualizer.Draw(true);
+                    edge.GetNode1().Visualizer.Draw(NodeState.IN);
+                    edge.GetNode2().Visualizer.Draw(NodeState.IN);
                     break;
                 }
             }

@@ -7,6 +7,7 @@ namespace ConsoleForStatisticsEnvironment.GraphGenerator
     public class Topology
     {
         public List<Tuple<int, int>> Neighbourhoods { get; set; }
+        public Dictionary<int, int> States { get; set; }
 
         public Topology()
         {

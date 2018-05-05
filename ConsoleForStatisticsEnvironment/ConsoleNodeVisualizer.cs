@@ -1,5 +1,6 @@
 ﻿using AsyncSimulator;
 using System;
+using System.Diagnostics;
 
 namespace ConsoleForStatisticsEnvironment
 {
@@ -20,9 +21,9 @@ namespace ConsoleForStatisticsEnvironment
             throw new NotImplementedException();
         }
 
-        public void Draw(bool changeColor = false)
+        public void Draw(NodeState nodeState)
         {
-            if (changeColor)
+            if (nodeState == NodeState.IN)
             {
                 Console.WriteLine("I'm({0}) IN", Id);
             }
@@ -53,7 +54,7 @@ namespace ConsoleForStatisticsEnvironment
 
         public void Log(string l, params object[] args)
         {
-            Console.WriteLine(l, args);
+            Trace.WriteLine(string.Format(l, args));
         }
 
         public bool OnIt(System.Drawing.PointF p)

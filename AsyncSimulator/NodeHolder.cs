@@ -29,6 +29,7 @@ namespace AsyncSimulator
             lock (AllNodesLock)
             {
                 AllNodes.Clear();
+                NodeCount = 0;
             }
         }
 
@@ -61,7 +62,7 @@ namespace AsyncSimulator
         {
             lock (AllNodesLock)
             {
-                AllNodes.ForEach(n => n.Visualizer.Draw(n.Selected()));
+                AllNodes.ForEach(n => n.Visualizer.Draw(n.GetState()));
             }
         }
 
@@ -116,11 +117,10 @@ namespace AsyncSimulator
             {
                 while (DetectingTermination)
                 {
-                    Thread.Sleep(1000);
+                    Thread.Sleep(100);
                     lock (AllNodesLock)
                     {
-                        if (AllNodes.All(n => n.IsValid()
-                            && DateTime.Now.Subtract(n.LastReceivedMessageTime) > TimeSpan.FromSeconds(1)))
+                        if (AllNodes.All(n => n.IsValid() && DateTime.Now.Subtract(n.LastReceivedMessageTime) > TimeSpan.FromMilliseconds(400)))
                         {
                             OnTerminated();
                             DetectingTermination = false;

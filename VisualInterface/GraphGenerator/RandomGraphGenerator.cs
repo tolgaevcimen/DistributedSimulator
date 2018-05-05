@@ -22,6 +22,8 @@ namespace VisualInterface.GraphGenerator
             var radius = (Math.Min(Drawing_panel.Height, Drawing_panel.Width) - 80) / 2;
             var origin = new Point(Drawing_panel.Width / 2, Drawing_panel.Height / 2);
 
+            var randomizer = new Random();
+
             for (int i = 0; i < nodeCount; i++)
             {
                 var angle = 360 / (float)nodeCount * i;
@@ -30,7 +32,7 @@ namespace VisualInterface.GraphGenerator
 
                 if (!nodeHolder.AnyIntersecting(p))
                 {
-                    var node = NodeFactory.Create(SelectedAlgorithm, nodeHolder.NodeCount, new WinformsNodeVisualiser(arg, p.X, p.Y, nodeHolder.NodeCount, ParentForm), ParentForm.cb_selfStab.Checked, nodeHolder);
+                    var node = NodeFactory.Create(SelectedAlgorithm, nodeHolder.NodeCount, new WinformsNodeVisualiser(arg, p.X, p.Y, nodeHolder.NodeCount, ParentForm), ParentForm.cb_selfStab.Checked, nodeHolder, randomizer.Next(0, 3));
 
                     nodeHolder.AddNode(node);
                 }
@@ -66,8 +68,6 @@ namespace VisualInterface.GraphGenerator
                 }
             }
 
-            var randomizer = new Random();
-
             foreach (var node1 in nodeHolder.GetCopyList())
             {
                 for (int i = 0; i < Grade; i++)
@@ -89,7 +89,7 @@ namespace VisualInterface.GraphGenerator
                 //    if (randomizer.Next() % 100 > 10) continue;
 
                 //    if (node1.Neighbours.ContainsKey(node2.Id)) continue;
-                    
+
                 //    edgeHolder.AddEgde(new WinformsEdge(arg, node1, node2));
                 //}
             }

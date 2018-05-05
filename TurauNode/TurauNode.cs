@@ -57,7 +57,12 @@ namespace TurauDominatingSet
 
         public TurauNode(int id, NodeHolder nodeHolder, InitialState initialState = InitialState.AllWait, Random randomizer = null) : base(id, nodeHolder)
         {
-            State = GetState(initialState, randomizer);
+            State = GenerateState(initialState, randomizer);
+        }
+
+        public TurauNode(int id, NodeHolder nodeHolder, int predefinedState) : base(id, nodeHolder)
+        {
+            State = predefinedState == 0 ? TurauState.WAIT : TurauState.IN;
         }
 
         public TurauNode(int id, TurauState state) : base(id, null)
@@ -120,7 +125,7 @@ namespace TurauDominatingSet
             Visualizer.Log("I'm {0}. My state is {1}, was {2}", Id, state, State);
 
             State = state;
-            Visualizer.Draw(State == TurauState.IN);
+            Visualizer.Draw(GetState());
 
             BroadcastState();
         }
@@ -171,7 +176,7 @@ namespace TurauDominatingSet
             }
         }
 
-        TurauState GetState(InitialState _is, Random randomizer)
+        TurauState GenerateState(InitialState _is, Random randomizer)
         {
             switch (_is)
             {
@@ -190,6 +195,11 @@ namespace TurauDominatingSet
                     }
                 default: return TurauState.WAIT;
             }
+        }
+
+        public override NodeState GetState()
+        {
+            return State == TurauState.WAIT ? NodeState.WAIT : State == TurauState.OUT ? NodeState.OUT : NodeState.IN;
         }
     }
 }

@@ -12,10 +12,10 @@ namespace ReadStatistics
 {
     class Program
     {
-        static string JsonsPath = @"C:\Users\htolg\Documents\Visual Studio 2017\Projects\AsyncSimulator\AsyncSimulator\ConsoleForStatisticsEnvironment\bin\Release\jsons";
-        static int NumberToIncreaseNodeCount = 25;
-        static int NodeCountFold = 15;
-        static int EachNodeCountRunCount = 5;
+        static string JsonsPath = @"C:\Users\htolg\Documents\Visual Studio 2017\Projects\AsyncSimulator\AsyncSimulator\ConsoleForStatisticsEnvironment\bin\Release\random_graphs_random_states_25x150x10-10";
+        static int NumberToIncreaseNodeCount = 10;
+        static int NodeCountFold = 150;
+        static int EachNodeCountRunCount = 25;
 
         static double TimeToTransmit = 0.001;
         static double TransmitEnergy = 1;
@@ -23,16 +23,23 @@ namespace ReadStatistics
         static double ReceiveEnergy = 1;
         static double IdleEnergy = 0.5;
 
+        static string OutputFileName = "random_graphs_random_states_25x150x10-10.txt";
+
         static void Main(string[] args)
         {
-            var graphTypes = new List<GraphType> { GraphType.Random3, GraphType.Random6, GraphType.Random9, GraphType.Line, GraphType.BinaryTree, GraphType.Star, GraphType.Circle, GraphType.Complete };
-            var algorithTypes = new List<AlgorithmType> { AlgorithmType.ChiuMDS_allWait, AlgorithmType.GoddardMDS_allWait, AlgorithmType.TurauMDS_allWait };
+            //var graphTypes = new List<GraphType> { GraphType.Random3, GraphType.Random6, GraphType.Random9, GraphType.Line, GraphType.BinaryTree, GraphType.Star, GraphType.Circle, GraphType.Bipartite, GraphType.Complete };
+            var graphTypes = new List<GraphType> { GraphType.Random3, GraphType.Random6, GraphType.Random9 };
+            //var algorithTypes = new List<AlgorithmType> { AlgorithmType.ChiuMDS_allWait, AlgorithmType.GoddardMDS_allWait, AlgorithmType.TurauMDS_allWait };
+            //var algorithTypes = new List<AlgorithmType> { AlgorithmType.ChiuMDS_allIn, AlgorithmType.GoddardMDS_allIn, AlgorithmType.TurauMDS_allIn };
+            var algorithTypes = new List<AlgorithmType> { AlgorithmType.ChiuMDS_rand, AlgorithmType.GoddardMDS_rand, AlgorithmType.TurauMDS_rand };
 
+            var zeroHeader = "\t" + string.Join("\t", graphTypes.Select(gt => string.Join("\t", algorithTypes.Select(at => string.Format("{0} - {1}\t{0} - {1}\t{0} - {1}\t{0} - {1}", gt, at)))));
             var header = "\t" + string.Join("\t\t\t\t", graphTypes.Select(gt => string.Join("\t\t\t\t", algorithTypes.Select(at => string.Format("{0} - {1}", gt, at)))));
             var secondHeader = "NodeCount\t" + string.Join("\t", graphTypes.Select(gt => string.Join("\t", algorithTypes.Select(at => "Energy\tDuration\tMoveCount\tDominators"))));
 
-            using (var streamWriter = new StreamWriter("5_try_all_types_post_processed.txt", false))
+            using (var streamWriter = new StreamWriter(OutputFileName, false))
             {
+                streamWriter.WriteLine(zeroHeader);
                 streamWriter.WriteLine(header);
                 streamWriter.WriteLine(secondHeader);
             }
@@ -70,7 +77,6 @@ namespace ReadStatistics
                         }
 
                         // alg columns
-
                         reportLine.Add(new ReportData(
                             totalEnergy / EachNodeCountRunCount,
                             totalDuration / EachNodeCountRunCount,
@@ -88,7 +94,7 @@ namespace ReadStatistics
                     line += string.Format("\t{0}\t{1}\t{2}\t{3}", data.Energy, data.Duration, data.MoveCount, data.DominatorCount);
                 }
 
-                using (var streamWriter = new StreamWriter("5_try_all_types_post_processed.txt", true))
+                using (var streamWriter = new StreamWriter(OutputFileName, true))
                     streamWriter.WriteLine(line);
             }
 
@@ -98,14 +104,28 @@ namespace ReadStatistics
 
         static double CalculateEnergy(RunReport report)
         {
-            var transmitTime = report.TotalSentCount * TimeToTransmit;
-            var receiveTime = report.TotalReceiveCount * TimeToReceive;
+            if (report.AlgorithmType == AlgorithmType.GoddardMDS_rand)
+            {
+                var transmitTime = report.TotalSentCount * TimeToTransmit;
+                var receiveTime = report.TotalReceiveCount * TimeToReceive;
 
-            var transmitEnergy = transmitTime * TransmitEnergy;
-            var receiveEnergy = receiveTime * ReceiveEnergy;
-            var idleEnergy = (report.Duration - (transmitTime + receiveTime)) * IdleEnergy;
+                var transmitEnergy = transmitTime * TransmitEnergy * 2;
+                var receiveEnergy = receiveTime * ReceiveEnergy * 2;
+                var idleEnergy = (report.Duration - (transmitTime + receiveTime)) * IdleEnergy;
 
-            return transmitEnergy + receiveEnergy + idleEnergy;
+                return transmitEnergy + receiveEnergy + idleEnergy;
+            }
+            else
+            {
+                var transmitTime = report.TotalSentCount * TimeToTransmit;
+                var receiveTime = report.TotalReceiveCount * TimeToReceive;
+
+                var transmitEnergy = transmitTime * TransmitEnergy;
+                var receiveEnergy = receiveTime * ReceiveEnergy;
+                var idleEnergy = (report.Duration - (transmitTime + receiveTime)) * IdleEnergy;
+
+                return transmitEnergy + receiveEnergy + idleEnergy;
+            }
         }
     }
 }
