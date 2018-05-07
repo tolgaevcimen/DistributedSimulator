@@ -1,4 +1,4 @@
-﻿namespace AsyncSimulator
+﻿namespace SupportedAlgorithmAndGraphTypes
 {
     public enum AlgorithmType
     {

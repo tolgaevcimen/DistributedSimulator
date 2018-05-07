@@ -3,6 +3,7 @@ using System;
 using ChiuDominatingSet;
 using GoddardMDSNode;
 using TurauDominatingSet;
+using SupportedAlgorithmAndGraphTypes;
 
 namespace NodeGenerator
 {

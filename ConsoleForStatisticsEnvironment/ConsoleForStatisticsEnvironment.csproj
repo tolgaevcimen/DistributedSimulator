@@ -57,7 +57,6 @@
     <Compile Include="TopologyGenerator\CircleTopologyGenerator.cs" />
     <Compile Include="TopologyGenerator\LineTopologyGenerator.cs" />
     <Compile Include="TopologyGenerator\TopologyGeneratorFactory.cs" />
-    <Compile Include="GraphGenerator\GraphType.cs" />
     <Compile Include="GraphGenerator\IGraphGenerator.cs" />
     <Compile Include="TopologyGenerator\RandomTopologyGenerator.cs" />
     <Compile Include="TopologyGenerator\Topology.cs" />
@@ -74,6 +73,14 @@
     <ProjectReference Include="..\NodeGenerator\NodeGenerator.csproj">
       <Project>{f3a2b616-aef6-4647-b7aa-7a5b25209e10}</Project>
       <Name>NodeGenerator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PerformanceAnalyser\PerformanceAnalyser.csproj">
+      <Project>{f3157062-9ed1-40f4-bd57-00575cbde3ce}</Project>
+      <Name>PerformanceAnalyser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SupportedAlgorithmAndGraphTypes\SupportedAlgorithmAndGraphTypes.csproj">
+      <Project>{b7836723-6676-4991-8bf0-59e15d3203f6}</Project>
+      <Name>SupportedAlgorithmAndGraphTypes</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

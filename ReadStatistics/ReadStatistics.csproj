@@ -63,6 +63,10 @@
       <Project>{6614D817-3DFD-4B6D-AD6B-318ADB327F01}</Project>
       <Name>ConsoleForStatisticsEnvironment</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SupportedAlgorithmAndGraphTypes\SupportedAlgorithmAndGraphTypes.csproj">
+      <Project>{b7836723-6676-4991-8bf0-59e15d3203f6}</Project>
+      <Name>SupportedAlgorithmAndGraphTypes</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

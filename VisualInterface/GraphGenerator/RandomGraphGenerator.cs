@@ -1,5 +1,6 @@
 ﻿using AsyncSimulator;
 using NodeGenerator;
+using SupportedAlgorithmAndGraphTypes;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -10,9 +11,9 @@ namespace VisualInterface.GraphGenerator
     class RandomGraphGenerator : AbstractGraphGenerator
     {
         int Grade { get; set; }
-        public RandomGraphGenerator(Presenter parentForm, Panel drawing_panel) : base(parentForm, drawing_panel)
+        public RandomGraphGenerator(Presenter parentForm, Panel drawing_panel, int grade) : base(parentForm, drawing_panel)
         {
-            Grade = 3;
+            Grade = grade;
         }
 
         public override void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, AlgorithmType SelectedAlgorithm)

@@ -1,5 +1,5 @@
 ﻿using AsyncSimulator;
-using System.Windows.Forms;
+using SupportedAlgorithmAndGraphTypes;
 
 namespace VisualInterface.GraphGenerator
 {

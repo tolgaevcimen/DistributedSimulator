@@ -1,5 +1,6 @@
 ﻿using AsyncSimulator;
 using NodeGenerator;
+using SupportedAlgorithmAndGraphTypes;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,7 +9,7 @@ using System.Windows.Forms;
 
 namespace VisualInterface
 {
-    internal class DrawingPanelHelper
+    public class DrawingPanelHelper
     {
         Presenter PresenterForm { get; set; }
         Panel DrawingPanel { get; set; }

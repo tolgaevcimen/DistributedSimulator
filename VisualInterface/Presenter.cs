@@ -1,20 +1,27 @@
 ﻿using AsyncSimulator;
+using PerformanceAnalyserLibrary;
+using SupportedAlgorithmAndGraphTypes;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using VisualInterface.GraphGenerator;
+using VisualInterface.PerformanceAnalyserSection;
 
 namespace VisualInterface
 {
-    internal partial class Presenter : Form
+    public partial class Presenter : Form
     {
         public EdgeHolder EdgeHolder { get; set; }
         public NodeHolder NodeHolder { get; set; }
 
         public DrawingPanelHelper DrawingPanelHelper { get; set; }
+
+        public PerformanceAnalyserFormOperations PerformanceAnalyserFormOperations { get; set; }
 
         /// <summary>
         /// Initiates the presenter form.
@@ -34,6 +41,15 @@ namespace VisualInterface
             EdgeHolder = new EdgeHolder();
             NodeHolder = new NodeHolder();
             NodeHolder.Terminated += TerminationDetected;
+
+            clb_algorithmTypes.Items.AddRange(Enum.GetNames(typeof(AlgorithmType)));
+            clb_graphTypes.Items.AddRange(Enum.GetNames(typeof(GraphType)));
+
+            visualSimulatorPanel.Dock = DockStyle.Fill; // remove this
+
+            PerformanceAnalyserFormOperations = new PerformanceAnalyserFormOperations(this);
+            btn_cancel.Click += new EventHandler(PerformanceAnalyserFormOperations.btn_cancel_Click);
+            btn_runPerformanceAnalysis.Click += new EventHandler(PerformanceAnalyserFormOperations.btn_runPerformanceAnalysis_Click);
         }
 
         private void TerminationDetected(object sender, EventArgs e)
@@ -147,6 +163,14 @@ namespace VisualInterface
         public void DisableAlgorthmChange()
         {
             cb_choose_alg.Enabled = false;
+        }
+
+        private void TogglePanels(object sender, EventArgs e)
+        {
+            performanceAnalyserPanel.Dock = DockStyle.Fill; // remove this
+            visualSimulatorPanel.Dock = DockStyle.Fill; // remove this
+            performanceAnalyserPanel.Visible = !performanceAnalyserPanel.Visible;
+            visualSimulatorPanel.Visible = !visualSimulatorPanel.Visible;
         }
     }
 }

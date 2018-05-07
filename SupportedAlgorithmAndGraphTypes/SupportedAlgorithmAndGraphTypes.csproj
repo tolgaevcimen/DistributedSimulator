@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F3A2B616-AEF6-4647-B7AA-7A5B25209E10}</ProjectGuid>
+    <ProjectGuid>{B7836723-6676-4991-8BF0-59E15D3203F6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NodeGenerator</RootNamespace>
-    <AssemblyName>NodeGenerator</AssemblyName>
+    <RootNamespace>SupportedAlgorithmAndGraphTypes</RootNamespace>
+    <AssemblyName>SupportedAlgorithmAndGraphTypes</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,30 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NodeFactory.cs" />
+    <Compile Include="AlgorithmType.cs" />
+    <Compile Include="GraphType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AsyncSimulator\AsyncSimulator.csproj">
-      <Project>{440fa7c3-094a-4913-8cf5-14b440c0b86e}</Project>
-      <Name>AsyncSimulator</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChiuNode\ChiuNode.csproj">
-      <Project>{6b034cef-a5dd-4025-aef8-49093e72c4ec}</Project>
-      <Name>ChiuNode</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GoddardMDSNode\GoddardMDSNode.csproj">
-      <Project>{7033cf9e-d993-4f95-8749-1c8da60a7e97}</Project>
-      <Name>GoddardMDSNode</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SupportedAlgorithmAndGraphTypes\SupportedAlgorithmAndGraphTypes.csproj">
-      <Project>{b7836723-6676-4991-8bf0-59e15d3203f6}</Project>
-      <Name>SupportedAlgorithmAndGraphTypes</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TurauNode\TurauNode.csproj">
-      <Project>{a841b497-1268-48f1-a8a7-87fe4629a659}</Project>
-      <Name>TurauNode</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

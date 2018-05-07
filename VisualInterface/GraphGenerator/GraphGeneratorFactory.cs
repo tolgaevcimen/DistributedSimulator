@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using SupportedAlgorithmAndGraphTypes;
+using System.Windows.Forms;
 
 namespace VisualInterface.GraphGenerator
 {
@@ -8,8 +9,12 @@ namespace VisualInterface.GraphGenerator
         {
             switch (graphType)
             {
-                case GraphType.Random:
-                    return new RandomGraphGenerator(parentForm, drawing_panel);
+                case GraphType.Random3:
+                    return new RandomGraphGenerator(parentForm, drawing_panel, 3);
+                case GraphType.Random6:
+                    return new RandomGraphGenerator(parentForm, drawing_panel, 6);
+                case GraphType.Random9:
+                    return new RandomGraphGenerator(parentForm, drawing_panel, 9);
                 case GraphType.Line:
                     return new LineGraphGenerator(parentForm, drawing_panel);
                 case GraphType.Circle:
