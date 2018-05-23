@@ -1,4 +1,5 @@
 ﻿using AsyncSimulator;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,12 @@ namespace ChiuDominatingSet
 {
     public class ChiuNode : _Node
     {
+        public ChiuNode() : base(0, null)
+        {
+
+        }
+
+        [JsonProperty]
         public ChiuState State { get; set; }
 
         int InNeighborCount

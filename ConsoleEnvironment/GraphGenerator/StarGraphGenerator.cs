@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using AsyncSimulator;
+using SupportedAlgorithmAndGraphTypes;
 
 namespace ConsoleEnvironment.GraphGenerator
 {

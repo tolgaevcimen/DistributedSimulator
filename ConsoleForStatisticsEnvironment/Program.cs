@@ -20,17 +20,17 @@ namespace ConsoleForStatisticsEnvironment
             var specialGraphTypes = new List<GraphType>(new[] { GraphType.Line, GraphType.BinaryTree, GraphType.Star, GraphType.Circle, GraphType.Bipartite, GraphType.Complete });
 
 
-            PerformanceAnalyser.Run(25, NumberToIncreaseNodeCount, NodeCountFold, randomGraphTypes, randomAlgorithms, "random_graphs_random_states_25x150x10-10");
+            //PerformanceAnalyser.Run(25, NumberToIncreaseNodeCount, NodeCountFold, randomGraphTypes, randomAlgorithms, "random_graphs_random_states_25x150x10-10");
 
-            PerformanceAnalyser.Run(25, NumberToIncreaseNodeCount, NodeCountFold, randomGraphTypes, inAlgorithms, "random_graphs_in_states_25x150x10-10");
+            //PerformanceAnalyser.Run(25, NumberToIncreaseNodeCount, NodeCountFold, randomGraphTypes, inAlgorithms, "random_graphs_in_states_25x150x10-10");
 
-            PerformanceAnalyser.Run(25, NumberToIncreaseNodeCount, NodeCountFold, randomGraphTypes, waitAlgorithms, "random_graphs_wait_states_25x150x10-10");
+            //PerformanceAnalyser.Run(25, NumberToIncreaseNodeCount, NodeCountFold, randomGraphTypes, waitAlgorithms, "random_graphs_wait_states_25x150x10-10");
 
-            PerformanceAnalyser.Run(1, NumberToIncreaseNodeCount, NodeCountFold, specialGraphTypes, randomAlgorithms, "special_graphs_random_algs_1x150x10-10");
+            //PerformanceAnalyser.Run(1, NumberToIncreaseNodeCount, NodeCountFold, specialGraphTypes, randomAlgorithms, "special_graphs_random_algs_1x150x10-10");
 
-            PerformanceAnalyser.Run(1, NumberToIncreaseNodeCount, NodeCountFold, specialGraphTypes, inAlgorithms, "special_graphs_in_algs_1x150x10-10");
+            //PerformanceAnalyser.Run(1, NumberToIncreaseNodeCount, NodeCountFold, specialGraphTypes, inAlgorithms, "special_graphs_in_algs_1x150x10-10");
 
-            PerformanceAnalyser.Run(1, NumberToIncreaseNodeCount, NodeCountFold, specialGraphTypes, waitAlgorithms, "special_graphs_wait_algs_1x150x10-10");
+            //PerformanceAnalyser.Run(1, NumberToIncreaseNodeCount, NodeCountFold, specialGraphTypes, waitAlgorithms, "special_graphs_wait_algs_1x150x10-10");
 
             Console.WriteLine("Finished");
             Console.ReadLine();

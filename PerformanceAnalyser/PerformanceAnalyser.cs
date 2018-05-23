@@ -23,13 +23,13 @@ namespace PerformanceAnalyserLibrary
 
         public event EventHandler StepDone;
 
-        public PerformanceAnalyser(int topologyCount, int numberToIncreaseNodeCount, int nodeCountFold, List<GraphType> graphTypes, List<AlgorithmType> algorithmTypes)
+        public PerformanceAnalyser(SimulationProperties simulationProperties)
         {
-            TopologyCount = topologyCount;
-            NumberToIncreaseNodeCount = numberToIncreaseNodeCount;
-            NodeCountFold = nodeCountFold;
-            GraphTypes = graphTypes;
-            AlgorithmTypes = algorithmTypes;
+            TopologyCount = simulationProperties.EachNodeCountRunCount;
+            NumberToIncreaseNodeCount = simulationProperties.NumberToIncreaseNodeCount;
+            NodeCountFold = simulationProperties.NodeCountFold;
+            GraphTypes = simulationProperties.GraphTypes;
+            AlgorithmTypes = simulationProperties.AlgorithmTypes;
 
             CalculateStepCount();
         }
@@ -62,7 +62,7 @@ namespace PerformanceAnalyserLibrary
                             List<Topology> topologies = new List<Topology>();
                             for (int i = 0; i < TopologyCount; i++)
                             {
-                                if (AlgorithmTypes.All(a => File.Exists("..\\Release\\" + GetFileNameForCurrentRun(CurrentGraphType, a, NodeCount, i, folderName))))
+                                if (AlgorithmTypes.All(a => File.Exists(GetFileNameForCurrentRun(CurrentGraphType, a, NodeCount, i, folderName))))
                                 {
                                     continue;
                                 }
@@ -89,22 +89,19 @@ namespace PerformanceAnalyserLibrary
                                 }
                                 catch (Exception e)
                                 {
-                                    Console.WriteLine("Exception occured while processing algorithm: {0} for nodeCount: {1} for graphType: {2}", CurrentAlgorithmType, IndexToIncreaseNodeCount, CurrentGraphType);
-                                    Console.WriteLine(e.Message);
+                                    throw new Exception(string.Format("Exception occured while processing algorithm: {0}. ExceptionMessage: {1}", CurrentAlgorithmType, e.Message));
                                 }
                             }
                         }
                         catch (Exception e)
                         {
-                            Console.WriteLine("Exception occured while processing for nodeCount: {0} for graphType: {1}", IndexToIncreaseNodeCount, CurrentGraphType);
-                            Console.WriteLine(e.Message);
+                            throw new Exception(string.Format("Exception occured while processing for nodeCount: {0}. ExceptionMessage: {1}", NodeCount, e.Message));
                         }
                     }
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Exception occured while processing for graphType: {0}", CurrentGraphType);
-                    Console.WriteLine(e.Message);
+                    throw new Exception(string.Format("Exception occured while processing for graphType: {0}. ExceptionMessage: {1}", CurrentGraphType, e.Message));
                 }
             }
 
@@ -141,7 +138,7 @@ namespace PerformanceAnalyserLibrary
             StepDone?.Invoke(this, LastStepDoneArgs);
         }
 
-        private static string GetFileNameForCurrentRun(GraphType GraphType, AlgorithmType AlgorithmType, int NodeCount, int IndexToRunForEachNodeCount, string FolderName)
+        private string GetFileNameForCurrentRun(GraphType GraphType, AlgorithmType AlgorithmType, int NodeCount, int IndexToRunForEachNodeCount, string FolderName)
         {
             return string.Format("{4}\\{0}.{1}.{2}.{3}.json", GraphType, AlgorithmType, NodeCount, IndexToRunForEachNodeCount, FolderName);
         }

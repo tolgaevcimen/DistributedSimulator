@@ -60,7 +60,6 @@
     <Compile Include="GraphGenerator\CircleGraphGenerator.cs" />
     <Compile Include="GraphGenerator\CompleteGraphGenerator.cs" />
     <Compile Include="GraphGenerator\GraphGeneratorFactory.cs" />
-    <Compile Include="GraphGenerator\GraphType.cs" />
     <Compile Include="GraphGenerator\IGraphGenerator.cs" />
     <Compile Include="GraphGenerator\LineGraphGenerator.cs" />
     <Compile Include="GraphGenerator\RandomGraphGenerator.cs" />
@@ -83,6 +82,10 @@
     <ProjectReference Include="..\NodeGenerator\NodeGenerator.csproj">
       <Project>{f3a2b616-aef6-4647-b7aa-7a5b25209e10}</Project>
       <Name>NodeGenerator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SupportedAlgorithmAndGraphTypes\SupportedAlgorithmAndGraphTypes.csproj">
+      <Project>{B7836723-6676-4991-8BF0-59E15D3203F6}</Project>
+      <Name>SupportedAlgorithmAndGraphTypes</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

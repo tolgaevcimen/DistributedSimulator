@@ -38,6 +38,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -91,6 +94,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="ClassDiagram.cd" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -124,6 +128,10 @@
     <ProjectReference Include="..\PerformanceAnalyser\PerformanceAnalyser.csproj">
       <Project>{f3157062-9ed1-40f4-bd57-00575cbde3ce}</Project>
       <Name>PerformanceAnalyser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StatisticReader\StatisticReader.csproj">
+      <Project>{72adc696-f526-4684-895c-7d649dde9844}</Project>
+      <Name>StatisticReader</Name>
     </ProjectReference>
     <ProjectReference Include="..\SupportedAlgorithmAndGraphTypes\SupportedAlgorithmAndGraphTypes.csproj">
       <Project>{b7836723-6676-4991-8bf0-59e15d3203f6}</Project>

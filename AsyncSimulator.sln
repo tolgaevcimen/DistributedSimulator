@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerformanceAnalyser", "Perf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupportedAlgorithmAndGraphTypes", "SupportedAlgorithmAndGraphTypes\SupportedAlgorithmAndGraphTypes.csproj", "{B7836723-6676-4991-8BF0-59E15D3203F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StatisticReader", "StatisticReader\StatisticReader.csproj", "{72ADC696-F526-4684-895C-7D649DDE9844}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,7 +74,6 @@ Global
 		{F3A2B616-AEF6-4647-B7AA-7A5B25209E10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3A2B616-AEF6-4647-B7AA-7A5B25209E10}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A170C60B-66D2-48DD-ACA8-79E387E3B2EB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6614D817-3DFD-4B6D-AD6B-318ADB327F01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -91,6 +92,10 @@ Global
 		{B7836723-6676-4991-8BF0-59E15D3203F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7836723-6676-4991-8BF0-59E15D3203F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7836723-6676-4991-8BF0-59E15D3203F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72ADC696-F526-4684-895C-7D649DDE9844}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72ADC696-F526-4684-895C-7D649DDE9844}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72ADC696-F526-4684-895C-7D649DDE9844}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72ADC696-F526-4684-895C-7D649DDE9844}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,7 @@
 ﻿using AsyncSimulator;
 using ConsoleForStatisticsEnvironment.GraphGenerator;
 using Newtonsoft.Json;
+using SupportedAlgorithmAndGraphTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;

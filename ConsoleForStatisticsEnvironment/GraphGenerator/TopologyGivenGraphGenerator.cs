@@ -1,5 +1,6 @@
 ﻿using AsyncSimulator;
 using NodeGenerator;
+using SupportedAlgorithmAndGraphTypes;
 
 namespace ConsoleForStatisticsEnvironment.GraphGenerator
 {

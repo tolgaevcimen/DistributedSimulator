@@ -13,6 +13,11 @@ namespace PerformanceAnalyserLibrary.GraphGenerator
 
         public Topology Generate(int nodeCount)
         {
+            if (nodeCount <= Grade)
+            {
+                throw new Exception(string.Format("node count cannot be less that degree of the graph. nodeCount: {0}, degree: {1}", nodeCount, Grade));
+            }
+
             var topology = new Topology();
             topology.States = new Dictionary<int, int>();
 

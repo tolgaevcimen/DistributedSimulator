@@ -1,5 +1,6 @@
 ﻿using AsyncSimulator;
 using ConsoleEnvironment.GraphGenerator;
+using SupportedAlgorithmAndGraphTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;

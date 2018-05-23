@@ -1,4 +1,5 @@
 ﻿using PerformanceAnalyserLibrary;
+using StatisticReaderLibrary;
 using SupportedAlgorithmAndGraphTypes;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace VisualInterface.PerformanceAnalyserSection
         public PerformanceAnalyserFormOperations(Presenter presenter)
         {
             this.presenter = presenter;
+            InitializeFormAccessors();
         }
 
         public void btn_runPerformanceAnalysis_Click(object sender, EventArgs e)
@@ -21,24 +23,8 @@ namespace VisualInterface.PerformanceAnalyserSection
                 return;
             }
 
-            var graphTypes = new List<GraphType>();
-            var algorithmTypes = new List<AlgorithmType>();
-
-            foreach (string graphType in presenter.clb_graphTypes.CheckedItems)
-            {
-                graphTypes.Add((GraphType)Enum.Parse(typeof(GraphType), graphType));
-            }
-
-            foreach (string algorithmType in presenter.clb_algorithmTypes.CheckedItems)
-            {
-                algorithmTypes.Add((AlgorithmType)Enum.Parse(typeof(AlgorithmType), algorithmType));
-            }
-
-            var topologyCount = int.Parse(presenter.tb_topologyCount.Text);
-            var numberToIncreaseNodeCount = int.Parse(presenter.tb_numberToIncreaseNodeCount.Text);
-            var nodeCountFold = int.Parse(presenter.tb_nodeCountFold.Text);
-
-            var performanceAnalyser = new PerformanceAnalyser(topologyCount, numberToIncreaseNodeCount, nodeCountFold, graphTypes, algorithmTypes);
+            var simulationProperties = GatherSimulationProperties();
+            var performanceAnalyser = new PerformanceAnalyser(simulationProperties);
 
             progressBar.Maximum = performanceAnalyser.TotalStepCount;
             performanceAnalyser.StepDone += PerformanceAnalyser_StepDone;
@@ -109,6 +95,8 @@ namespace VisualInterface.PerformanceAnalyserSection
         private void OnPerformanceAnalyserFinished()
         {
             ToggleFields(new List<Control>() { tb_sessionName, tb_nodeCountFold, tb_numberToIncreaseNodeCount, tb_topologyCount, clb_algorithmTypes, clb_graphTypes, btn_runPerformanceAnalysis }, true);
+
+            CompileResults();
         }
 
         private void ToggleFields(List<Control> controls, bool enabled)
@@ -117,6 +105,50 @@ namespace VisualInterface.PerformanceAnalyserSection
             {
                 control.SetPropertyThreadSafe(() => control.Enabled, enabled);
             }
+        }
+
+        private SimulationProperties GatherSimulationProperties()
+        {
+            var graphTypes = new List<GraphType>();
+            var algorithmTypes = new List<AlgorithmType>();
+
+            foreach (string graphType in presenter.clb_graphTypes.CheckedItems)
+            {
+                graphTypes.Add((GraphType)Enum.Parse(typeof(GraphType), graphType));
+            }
+
+            foreach (string algorithmType in presenter.clb_algorithmTypes.CheckedItems)
+            {
+                algorithmTypes.Add((AlgorithmType)Enum.Parse(typeof(AlgorithmType), algorithmType));
+            }
+
+            var topologyCount = int.Parse(presenter.tb_topologyCount.Text);
+            var numberToIncreaseNodeCount = int.Parse(presenter.tb_numberToIncreaseNodeCount.Text);
+            var nodeCountFold = int.Parse(presenter.tb_nodeCountFold.Text);
+
+            return new SimulationProperties(numberToIncreaseNodeCount, nodeCountFold, topologyCount, algorithmTypes, graphTypes);
+        }
+
+        private SystemProperties GatherSystemProperties()
+        {
+            var timeToTransmit = double.Parse(tb_timeToTransmit.Text);
+            var timeToReceive = double.Parse(tb_timeToReceive.Text);
+            var transmitEnergy = double.Parse(tb_transmitEnergy.Text);
+            var receiveEnergy = double.Parse(tb_receiveEnergy.Text);
+            var idleEnergy = double.Parse(tb_idleEnergy.Text);
+
+            return new SystemProperties(timeToTransmit, transmitEnergy, timeToReceive, receiveEnergy, idleEnergy);
+        }
+
+        private void CompileResults()
+        {
+            var simulationProperties = GatherSimulationProperties();
+            var systemProperties = GatherSystemProperties();
+            var statisticReader = new StatisticReader(simulationProperties, systemProperties, tb_sessionName.Text, string.Format("{0}\\{0}.txt", tb_sessionName.Text));
+
+            statisticReader.Process();
+
+            MessageBox.Show("results are compiled");
         }
     }
 }

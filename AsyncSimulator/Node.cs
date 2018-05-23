@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -7,11 +8,13 @@ using System.Threading.Tasks;
 
 namespace AsyncSimulator
 {
-    public abstract class _Node
+    [JsonObject(MemberSerialization.OptIn)]
+    public abstract class _Node //: ISerializableNode
     {
         /// <summary>
         /// Id of a node.
         /// </summary>
+        [JsonProperty]
         public int Id { get; set; }
 
         public NodeHolder NodeHolder { get; set; }
@@ -20,6 +23,9 @@ namespace AsyncSimulator
         /// List of neighbours of this node. Empty initially.
         /// </summary>
         public Dictionary<int, _Node> Neighbours { get; set; }
+
+        [JsonProperty]
+        private List<int> _Neighbours { get { return GetCopyOfNeigbours().Select(n => n.Id).ToList(); } set { Neighbours = value.ToDictionary(v => v, k => null as _Node); } }
 
         /// <summary>
         /// A thread safe queue for received messages.
@@ -105,7 +111,7 @@ namespace AsyncSimulator
         {
             return false;
         }
-
+        
         public abstract NodeState GetState();
 
         /// <summary>
@@ -220,5 +226,7 @@ namespace AsyncSimulator
         {
             return false;
         }
+
+        //public abstract string Serialize();
     }
 }

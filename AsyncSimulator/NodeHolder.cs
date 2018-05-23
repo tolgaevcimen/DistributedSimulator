@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -108,7 +109,7 @@ namespace AsyncSimulator
             }
         }
 
-        bool DetectingTermination { get; set; }
+        public bool DetectingTermination { get; set; }
 
         public void StartTerminationDetection()
         {

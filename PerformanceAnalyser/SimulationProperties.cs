@@ -1,0 +1,23 @@
+﻿using SupportedAlgorithmAndGraphTypes;
+using System.Collections.Generic;
+
+namespace PerformanceAnalyserLibrary
+{
+    public class SimulationProperties
+    {
+        public int NumberToIncreaseNodeCount { get; }
+        public int NodeCountFold { get; }
+        public int EachNodeCountRunCount { get; }
+        public List<AlgorithmType> AlgorithmTypes { get; }
+        public List<GraphType> GraphTypes { get; }
+
+        public SimulationProperties(int numberToIncreaseNodeCount, int nodeCountFold, int eachNodeCountRunCount, List<AlgorithmType> algorithmTypes, List<GraphType> graphTypes)
+        {
+            NumberToIncreaseNodeCount = numberToIncreaseNodeCount;
+            NodeCountFold = nodeCountFold;
+            EachNodeCountRunCount = eachNodeCountRunCount;
+            AlgorithmTypes = algorithmTypes;
+            GraphTypes = graphTypes;
+        }
+    }
+}

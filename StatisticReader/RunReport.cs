@@ -1,12 +1,8 @@
-﻿using AsyncSimulator;
-using ConsoleForStatisticsEnvironment.GraphGenerator;
+﻿using SupportedAlgorithmAndGraphTypes;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ReadStatistics
+namespace StatisticReaderLibrary
 {
     class RunReport
     {

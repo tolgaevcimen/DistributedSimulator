@@ -47,8 +47,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReportData.cs" />
-    <Compile Include="RunReport.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -62,6 +60,14 @@
     <ProjectReference Include="..\ConsoleForStatisticsEnvironment\ConsoleForStatisticsEnvironment.csproj">
       <Project>{6614D817-3DFD-4B6D-AD6B-318ADB327F01}</Project>
       <Name>ConsoleForStatisticsEnvironment</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PerformanceAnalyser\PerformanceAnalyser.csproj">
+      <Project>{F3157062-9ED1-40F4-BD57-00575CBDE3CE}</Project>
+      <Name>PerformanceAnalyser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StatisticReader\StatisticReader.csproj">
+      <Project>{72adc696-f526-4684-895c-7d649dde9844}</Project>
+      <Name>StatisticReader</Name>
     </ProjectReference>
     <ProjectReference Include="..\SupportedAlgorithmAndGraphTypes\SupportedAlgorithmAndGraphTypes.csproj">
       <Project>{b7836723-6676-4991-8bf0-59e15d3203f6}</Project>

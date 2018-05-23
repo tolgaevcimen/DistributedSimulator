@@ -1,12 +1,13 @@
 ﻿using AsyncSimulator;
-using PerformanceAnalyserLibrary;
+using ChiuDominatingSet;
+using Newtonsoft.Json;
 using SupportedAlgorithmAndGraphTypes;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using VisualInterface.GraphGenerator;
@@ -172,5 +173,120 @@ namespace VisualInterface
             performanceAnalyserPanel.Visible = !performanceAnalyserPanel.Visible;
             visualSimulatorPanel.Visible = !visualSimulatorPanel.Visible;
         }
+
+        private void saveTopologyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (cb_selfStab.Checked)
+            {
+                MessageBox.Show("Please disble self-stab mode, and try again.");
+                return;
+            }
+
+            if (NodeHolder.DetectingTermination)
+            {
+                MessageBox.Show("Please wait for the run to complete, and try again.");
+                return;
+            }
+
+            if (NodeHolder.NodeCount == 0)
+            {
+                MessageBox.Show("Please add some nodes and edges, and try again.");
+                return;
+            }
+
+            var filePath = string.Empty;
+            using (var fileDialog = new SaveFileDialog() { Filter = "Json files(*.json) | *.json" })
+            {
+                var fileSelected = fileDialog.ShowDialog();
+                if (fileSelected != DialogResult.OK) return;
+
+                var serializedList = SerializeTopology();
+                using (var streamWriter = new StreamWriter(fileDialog.OpenFile()))
+                {
+                    streamWriter.Write(serializedList);
+                }
+
+                filePath = fileDialog.FileName;
+            }
+
+            var response = MessageBox.Show("Current topology successfully saved. Do you want to open the directory the file is saved?", "Successful", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if (response == DialogResult.Yes)
+            {
+                Process.Start(Path.GetDirectoryName(filePath));
+            }
+        }
+
+        private void importTopologyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (NodeHolder.NodeCount != 0)
+            {
+                MessageBox.Show("Please clear all nodes and edges, and try again.");
+                return;
+            }
+
+            using (var fileDialog = new OpenFileDialog() { Filter = "Json files(*.json) | *.json" })
+            {
+                var fileSelected = fileDialog.ShowDialog();
+                if (fileSelected != DialogResult.OK) return;
+
+                var json = string.Empty;
+                using (var streamReader = new StreamReader(fileDialog.OpenFile()))
+                {
+                    json = streamReader.ReadToEnd();
+                }
+
+                var algorithmType = DeserializeAlgorithmType(json).AlgorithmType;
+
+                if (algorithmType == AlgorithmType.ChiuMDS_rand)
+                {
+                    var nodeHolder = DeserializeTopology<ChiuNode>(json);
+                    return;
+                }
+
+            }
+        }
+
+
+        public string SerializeTopology()
+        {
+            var nodes = NodeHolder.GetCopyList();
+
+            return JsonConvert.SerializeObject(new SerializationContext() { AlgorithmType = SelectedAlgorithm, Nodes = nodes });
+        }
+
+        public DeserializationContext<T> DeserializeTopology<T>(string json) where T : _Node
+        {
+            var nh = JsonConvert.DeserializeObject<DeserializationContext<T>>(json);
+
+            return nh;
+        }
+
+
+        public DeserializationContext DeserializeAlgorithmType(string json)
+        {
+            var nh = JsonConvert.DeserializeObject<DeserializationContext>(json);
+
+            return nh;
+        }
+
+        public class SerializationContext
+        {
+            public AlgorithmType AlgorithmType { get; set; }
+            public List<_Node> Nodes { get; set; }
+        }
+
+        public class DeserializationContext
+        {
+            public AlgorithmType AlgorithmType { get; set; }
+        }
+
+        public class DeserializationContext<T> where T : _Node
+        {
+            public AlgorithmType AlgorithmType { get; set; }
+            public List<T> Nodes { get; set; }
+        }
+
+        // TODO: Seralization - move outside
+        // TODO: Initialize node holder and visual from serialization context
     }
 }

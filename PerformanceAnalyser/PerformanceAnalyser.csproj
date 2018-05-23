@@ -51,6 +51,7 @@
     <Compile Include="GraphGenerator\IGraphGenerator.cs" />
     <Compile Include="PerformanceAnalyser.cs" />
     <Compile Include="RunReport.cs" />
+    <Compile Include="SimulationProperties.cs" />
     <Compile Include="StepDoneArgs.cs" />
     <Compile Include="TopologyGenerator\BinaryTreeTopologyGenerator.cs" />
     <Compile Include="TopologyGenerator\BipartiteTopologyGenerator.cs" />

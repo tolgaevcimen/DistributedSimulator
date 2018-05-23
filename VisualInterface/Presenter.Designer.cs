@@ -43,7 +43,6 @@
             this.menuBar = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveTopologyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportTopologyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importTopologyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.performanceAnalyserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,6 +72,16 @@
             this.btn_cancel = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.tb_sessionName = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.tb_timeToTransmit = new System.Windows.Forms.TextBox();
+            this.tb_transmitEnergy = new System.Windows.Forms.TextBox();
+            this.tb_timeToReceive = new System.Windows.Forms.TextBox();
+            this.tb_receiveEnergy = new System.Windows.Forms.TextBox();
+            this.tb_idleEnergy = new System.Windows.Forms.TextBox();
             this.visualSimulatorPanel.SuspendLayout();
             this.menuPanel.SuspendLayout();
             this.menuBar.SuspendLayout();
@@ -257,7 +266,7 @@
             this.visualSimulatorToolStripMenuItem});
             this.menuBar.Location = new System.Drawing.Point(0, 0);
             this.menuBar.Name = "menuBar";
-            this.menuBar.Size = new System.Drawing.Size(1661, 24);
+            this.menuBar.Size = new System.Drawing.Size(1805, 24);
             this.menuBar.TabIndex = 2;
             this.menuBar.Text = "menuStrip1";
             // 
@@ -265,7 +274,6 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveTopologyToolStripMenuItem,
-            this.exportTopologyToolStripMenuItem,
             this.importTopologyToolStripMenuItem,
             this.exportLogsToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -277,18 +285,14 @@
             this.saveTopologyToolStripMenuItem.Name = "saveTopologyToolStripMenuItem";
             this.saveTopologyToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.saveTopologyToolStripMenuItem.Text = "Save Topology";
-            // 
-            // exportTopologyToolStripMenuItem
-            // 
-            this.exportTopologyToolStripMenuItem.Name = "exportTopologyToolStripMenuItem";
-            this.exportTopologyToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
-            this.exportTopologyToolStripMenuItem.Text = "Export Topology";
+            this.saveTopologyToolStripMenuItem.Click += new System.EventHandler(this.saveTopologyToolStripMenuItem_Click);
             // 
             // importTopologyToolStripMenuItem
             // 
             this.importTopologyToolStripMenuItem.Name = "importTopologyToolStripMenuItem";
             this.importTopologyToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.importTopologyToolStripMenuItem.Text = "Import Topology";
+            this.importTopologyToolStripMenuItem.Click += new System.EventHandler(this.importTopologyToolStripMenuItem_Click);
             // 
             // exportLogsToolStripMenuItem
             // 
@@ -318,46 +322,59 @@
             this.mainPanel.Location = new System.Drawing.Point(0, 24);
             this.mainPanel.Margin = new System.Windows.Forms.Padding(0);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(1661, 694);
+            this.mainPanel.Size = new System.Drawing.Size(1805, 694);
             this.mainPanel.TabIndex = 3;
             // 
             // performanceAnalyserPanel
             // 
-            this.performanceAnalyserPanel.ColumnCount = 3;
+            this.performanceAnalyserPanel.ColumnCount = 5;
+            this.performanceAnalyserPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
+            this.performanceAnalyserPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.performanceAnalyserPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
             this.performanceAnalyserPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.performanceAnalyserPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.performanceAnalyserPanel.Controls.Add(this.btn_runPerformanceAnalysis, 1, 6);
+            this.performanceAnalyserPanel.Controls.Add(this.btn_runPerformanceAnalysis, 1, 7);
             this.performanceAnalyserPanel.Controls.Add(this.label1, 0, 1);
             this.performanceAnalyserPanel.Controls.Add(this.label2, 0, 2);
             this.performanceAnalyserPanel.Controls.Add(this.label3, 0, 3);
             this.performanceAnalyserPanel.Controls.Add(this.label4, 0, 4);
-            this.performanceAnalyserPanel.Controls.Add(this.label5, 0, 5);
+            this.performanceAnalyserPanel.Controls.Add(this.label5, 0, 6);
             this.performanceAnalyserPanel.Controls.Add(this.tb_topologyCount, 1, 1);
             this.performanceAnalyserPanel.Controls.Add(this.tb_numberToIncreaseNodeCount, 1, 2);
             this.performanceAnalyserPanel.Controls.Add(this.tb_nodeCountFold, 1, 3);
             this.performanceAnalyserPanel.Controls.Add(this.clb_graphTypes, 1, 4);
-            this.performanceAnalyserPanel.Controls.Add(this.clb_algorithmTypes, 1, 5);
-            this.performanceAnalyserPanel.Controls.Add(this.label6, 0, 10);
-            this.performanceAnalyserPanel.Controls.Add(this.label7, 0, 11);
-            this.performanceAnalyserPanel.Controls.Add(this.label8, 0, 12);
-            this.performanceAnalyserPanel.Controls.Add(this.label9, 0, 13);
-            this.performanceAnalyserPanel.Controls.Add(this.lbl_currentAlgorithm, 1, 10);
-            this.performanceAnalyserPanel.Controls.Add(this.lbl_currentTopologyType, 1, 11);
-            this.performanceAnalyserPanel.Controls.Add(this.lbl_currentNodeCount, 1, 12);
-            this.performanceAnalyserPanel.Controls.Add(this.lbl_currentTopologyIndex, 1, 13);
-            this.performanceAnalyserPanel.Controls.Add(this.progressBar, 0, 14);
-            this.performanceAnalyserPanel.Controls.Add(this.btn_cancel, 1, 7);
+            this.performanceAnalyserPanel.Controls.Add(this.clb_algorithmTypes, 1, 6);
+            this.performanceAnalyserPanel.Controls.Add(this.label6, 0, 11);
+            this.performanceAnalyserPanel.Controls.Add(this.label7, 0, 12);
+            this.performanceAnalyserPanel.Controls.Add(this.label8, 0, 13);
+            this.performanceAnalyserPanel.Controls.Add(this.label9, 0, 14);
+            this.performanceAnalyserPanel.Controls.Add(this.lbl_currentAlgorithm, 1, 11);
+            this.performanceAnalyserPanel.Controls.Add(this.lbl_currentTopologyType, 1, 12);
+            this.performanceAnalyserPanel.Controls.Add(this.lbl_currentNodeCount, 1, 13);
+            this.performanceAnalyserPanel.Controls.Add(this.lbl_currentTopologyIndex, 1, 14);
+            this.performanceAnalyserPanel.Controls.Add(this.progressBar, 0, 15);
+            this.performanceAnalyserPanel.Controls.Add(this.btn_cancel, 1, 8);
             this.performanceAnalyserPanel.Controls.Add(this.label10, 0, 0);
             this.performanceAnalyserPanel.Controls.Add(this.tb_sessionName, 1, 0);
+            this.performanceAnalyserPanel.Controls.Add(this.label11, 2, 0);
+            this.performanceAnalyserPanel.Controls.Add(this.label12, 2, 1);
+            this.performanceAnalyserPanel.Controls.Add(this.label13, 2, 2);
+            this.performanceAnalyserPanel.Controls.Add(this.label14, 2, 3);
+            this.performanceAnalyserPanel.Controls.Add(this.label15, 2, 4);
+            this.performanceAnalyserPanel.Controls.Add(this.tb_timeToTransmit, 3, 0);
+            this.performanceAnalyserPanel.Controls.Add(this.tb_transmitEnergy, 3, 1);
+            this.performanceAnalyserPanel.Controls.Add(this.tb_timeToReceive, 3, 2);
+            this.performanceAnalyserPanel.Controls.Add(this.tb_receiveEnergy, 3, 3);
+            this.performanceAnalyserPanel.Controls.Add(this.tb_idleEnergy, 3, 4);
             this.performanceAnalyserPanel.Location = new System.Drawing.Point(636, 23);
             this.performanceAnalyserPanel.Name = "performanceAnalyserPanel";
-            this.performanceAnalyserPanel.RowCount = 17;
+            this.performanceAnalyserPanel.RowCount = 18;
             this.performanceAnalyserPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.performanceAnalyserPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.performanceAnalyserPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.performanceAnalyserPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.performanceAnalyserPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.performanceAnalyserPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.performanceAnalyserPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.performanceAnalyserPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.performanceAnalyserPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.performanceAnalyserPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
@@ -370,7 +387,7 @@
             this.performanceAnalyserPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
             this.performanceAnalyserPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.performanceAnalyserPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.performanceAnalyserPanel.Size = new System.Drawing.Size(869, 585);
+            this.performanceAnalyserPanel.Size = new System.Drawing.Size(1157, 585);
             this.performanceAnalyserPanel.TabIndex = 2;
             this.performanceAnalyserPanel.Visible = false;
             // 
@@ -423,6 +440,7 @@
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label4.Location = new System.Drawing.Point(3, 120);
             this.label4.Name = "label4";
+            this.performanceAnalyserPanel.SetRowSpan(this.label4, 2);
             this.label4.Size = new System.Drawing.Size(294, 100);
             this.label4.TabIndex = 3;
             this.label4.Text = "Graph Types to Compare";
@@ -476,6 +494,7 @@
             this.clb_graphTypes.FormattingEnabled = true;
             this.clb_graphTypes.Location = new System.Drawing.Point(303, 123);
             this.clb_graphTypes.Name = "clb_graphTypes";
+            this.performanceAnalyserPanel.SetRowSpan(this.clb_graphTypes, 2);
             this.clb_graphTypes.Size = new System.Drawing.Size(194, 94);
             this.clb_graphTypes.TabIndex = 9;
             // 
@@ -578,11 +597,11 @@
             // 
             // progressBar
             // 
-            this.performanceAnalyserPanel.SetColumnSpan(this.progressBar, 3);
+            this.performanceAnalyserPanel.SetColumnSpan(this.progressBar, 4);
             this.progressBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.progressBar.Location = new System.Drawing.Point(3, 503);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(863, 48);
+            this.progressBar.Size = new System.Drawing.Size(994, 48);
             this.progressBar.TabIndex = 19;
             // 
             // btn_cancel
@@ -615,11 +634,111 @@
             this.tb_sessionName.Size = new System.Drawing.Size(194, 23);
             this.tb_sessionName.TabIndex = 22;
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label11.Location = new System.Drawing.Point(503, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(294, 30);
+            this.label11.TabIndex = 23;
+            this.label11.Text = "Time to Transmit";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label12.Location = new System.Drawing.Point(503, 30);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(294, 30);
+            this.label12.TabIndex = 24;
+            this.label12.Text = "Transmit Energy";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label13.Location = new System.Drawing.Point(503, 60);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(294, 30);
+            this.label13.TabIndex = 25;
+            this.label13.Text = "Time to Receive";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label14.Location = new System.Drawing.Point(503, 90);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(294, 30);
+            this.label14.TabIndex = 26;
+            this.label14.Text = "Receive Energy";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label15.Location = new System.Drawing.Point(503, 120);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(294, 30);
+            this.label15.TabIndex = 27;
+            this.label15.Text = "Idle Energy";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tb_timeToTransmit
+            // 
+            this.tb_timeToTransmit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tb_timeToTransmit.Location = new System.Drawing.Point(803, 3);
+            this.tb_timeToTransmit.Name = "tb_timeToTransmit";
+            this.tb_timeToTransmit.Size = new System.Drawing.Size(194, 23);
+            this.tb_timeToTransmit.TabIndex = 28;
+            this.tb_timeToTransmit.Text = "0.001";
+            // 
+            // tb_transmitEnergy
+            // 
+            this.tb_transmitEnergy.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tb_transmitEnergy.Location = new System.Drawing.Point(803, 33);
+            this.tb_transmitEnergy.Name = "tb_transmitEnergy";
+            this.tb_transmitEnergy.Size = new System.Drawing.Size(194, 23);
+            this.tb_transmitEnergy.TabIndex = 29;
+            this.tb_transmitEnergy.Text = "1";
+            // 
+            // tb_timeToReceive
+            // 
+            this.tb_timeToReceive.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tb_timeToReceive.Location = new System.Drawing.Point(803, 63);
+            this.tb_timeToReceive.Name = "tb_timeToReceive";
+            this.tb_timeToReceive.Size = new System.Drawing.Size(194, 23);
+            this.tb_timeToReceive.TabIndex = 30;
+            this.tb_timeToReceive.Text = "0.001";
+            // 
+            // tb_receiveEnergy
+            // 
+            this.tb_receiveEnergy.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tb_receiveEnergy.Location = new System.Drawing.Point(803, 93);
+            this.tb_receiveEnergy.Name = "tb_receiveEnergy";
+            this.tb_receiveEnergy.Size = new System.Drawing.Size(194, 23);
+            this.tb_receiveEnergy.TabIndex = 31;
+            this.tb_receiveEnergy.Text = "1";
+            // 
+            // tb_idleEnergy
+            // 
+            this.tb_idleEnergy.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tb_idleEnergy.Location = new System.Drawing.Point(803, 123);
+            this.tb_idleEnergy.Name = "tb_idleEnergy";
+            this.tb_idleEnergy.Size = new System.Drawing.Size(194, 23);
+            this.tb_idleEnergy.TabIndex = 32;
+            this.tb_idleEnergy.Text = "0.5";
+            // 
             // Presenter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1661, 718);
+            this.ClientSize = new System.Drawing.Size(1805, 718);
             this.Controls.Add(this.mainPanel);
             this.Controls.Add(this.menuBar);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -659,7 +778,6 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem performanceAnalyserToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveTopologyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportTopologyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importTopologyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportLogsToolStripMenuItem;
         private System.Windows.Forms.Panel mainPanel;
@@ -688,6 +806,16 @@
         internal System.Windows.Forms.ProgressBar progressBar;
         internal System.Windows.Forms.Button btn_cancel;
         internal System.Windows.Forms.TextBox tb_sessionName;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label15;
+        public System.Windows.Forms.TextBox tb_timeToTransmit;
+        public System.Windows.Forms.TextBox tb_transmitEnergy;
+        public System.Windows.Forms.TextBox tb_timeToReceive;
+        public System.Windows.Forms.TextBox tb_receiveEnergy;
+        public System.Windows.Forms.TextBox tb_idleEnergy;
     }
 }
 

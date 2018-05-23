@@ -1,4 +1,6 @@
-﻿namespace ConsoleForStatisticsEnvironment.GraphGenerator
+﻿using SupportedAlgorithmAndGraphTypes;
+
+namespace ConsoleForStatisticsEnvironment.GraphGenerator
 {
     internal class TopologyGeneratorFactory
     {

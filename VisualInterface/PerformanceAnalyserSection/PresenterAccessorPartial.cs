@@ -19,6 +19,12 @@ namespace VisualInterface.PerformanceAnalyserSection
         private Label lbl_currentTopologyType;
         private Button btn_runPerformanceAnalysis;
 
+        private TextBox tb_timeToTransmit;
+        private TextBox tb_transmitEnergy;
+        private TextBox tb_timeToReceive;
+        private TextBox tb_receiveEnergy;
+        private TextBox tb_idleEnergy;
+
         private void InitializeFormAccessors()
         {
             progressBar = presenter.progressBar;
@@ -33,6 +39,12 @@ namespace VisualInterface.PerformanceAnalyserSection
             lbl_currentTopologyIndex = presenter.lbl_currentTopologyIndex;
             lbl_currentTopologyType = presenter.lbl_currentTopologyType;
             btn_runPerformanceAnalysis = presenter.btn_runPerformanceAnalysis;
+
+            tb_timeToTransmit = presenter.tb_timeToTransmit;
+            tb_timeToReceive = presenter.tb_timeToReceive;
+            tb_transmitEnergy = presenter.tb_transmitEnergy;
+            tb_receiveEnergy = presenter.tb_receiveEnergy;
+            tb_idleEnergy = presenter.tb_idleEnergy;
         }
     }
 }
