@@ -57,6 +57,7 @@
     <Compile Include="DrawingPanelHelper.cs" />
     <Compile Include="GhostEdge.cs" />
     <Compile Include="GraphGenerator\AbstractGraphGenerator.cs" />
+    <Compile Include="GraphGenerator\ImportedGraphGenerator.cs" />
     <Compile Include="GraphGenerator\TripletTreeGraphGenerator.cs" />
     <Compile Include="GraphGenerator\CompleteGraphGenerator.cs" />
     <Compile Include="GraphGenerator\BipartiteGraphGenerator.cs" />

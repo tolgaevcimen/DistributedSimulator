@@ -137,24 +137,24 @@
             this.menuPanel.Name = "menuPanel";
             this.menuPanel.RowCount = 8;
             this.menuPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.menuPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.menuPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.menuPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.menuPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.menuPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.menuPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.menuPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.menuPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.menuPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.menuPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.menuPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.menuPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.menuPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.menuPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.menuPanel.Size = new System.Drawing.Size(292, 673);
             this.menuPanel.TabIndex = 1;
             // 
             // tbNodeCount
             // 
-            this.tbNodeCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbNodeCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.tbNodeCount.Location = new System.Drawing.Point(226, 455);
-            this.tbNodeCount.Margin = new System.Windows.Forms.Padding(0, 7, 4, 11);
+            this.tbNodeCount.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tbNodeCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbNodeCount.Location = new System.Drawing.Point(226, 504);
+            this.tbNodeCount.Margin = new System.Windows.Forms.Padding(0, 6, 4, 11);
             this.tbNodeCount.Name = "tbNodeCount";
-            this.tbNodeCount.Size = new System.Drawing.Size(62, 31);
+            this.tbNodeCount.Size = new System.Drawing.Size(62, 24);
             this.tbNodeCount.TabIndex = 12;
             this.tbNodeCount.Text = "10";
             // 
@@ -168,17 +168,17 @@
             this.tb_console.Multiline = true;
             this.tb_console.Name = "tb_console";
             this.tb_console.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tb_console.Size = new System.Drawing.Size(284, 350);
+            this.tb_console.Size = new System.Drawing.Size(284, 420);
             this.tb_console.TabIndex = 3;
             // 
             // btn_proof
             // 
             this.menuPanel.SetColumnSpan(this.btn_proof, 2);
             this.btn_proof.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btn_proof.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btn_proof.Location = new System.Drawing.Point(3, 586);
+            this.btn_proof.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_proof.Location = new System.Drawing.Point(3, 606);
             this.btn_proof.Name = "btn_proof";
-            this.btn_proof.Size = new System.Drawing.Size(286, 39);
+            this.btn_proof.Size = new System.Drawing.Size(286, 29);
             this.btn_proof.TabIndex = 6;
             this.btn_proof.Text = "Check Correctness";
             this.btn_proof.UseVisualStyleBackColor = true;
@@ -187,12 +187,12 @@
             // cb_choose_alg
             // 
             this.menuPanel.SetColumnSpan(this.cb_choose_alg, 2);
-            this.cb_choose_alg.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cb_choose_alg.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.cb_choose_alg.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cb_choose_alg.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cb_choose_alg.FormattingEnabled = true;
-            this.cb_choose_alg.Location = new System.Drawing.Point(3, 361);
+            this.cb_choose_alg.Location = new System.Drawing.Point(3, 431);
             this.cb_choose_alg.Name = "cb_choose_alg";
-            this.cb_choose_alg.Size = new System.Drawing.Size(286, 39);
+            this.cb_choose_alg.Size = new System.Drawing.Size(286, 26);
             this.cb_choose_alg.TabIndex = 10;
             this.cb_choose_alg.SelectedIndexChanged += new System.EventHandler(this.cb_choose_alg_SelectedIndexChanged);
             // 
@@ -200,10 +200,10 @@
             // 
             this.menuPanel.SetColumnSpan(this.btn_run_update_bfs, 2);
             this.btn_run_update_bfs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btn_run_update_bfs.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btn_run_update_bfs.Location = new System.Drawing.Point(3, 406);
+            this.btn_run_update_bfs.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_run_update_bfs.Location = new System.Drawing.Point(3, 466);
             this.btn_run_update_bfs.Name = "btn_run_update_bfs";
-            this.btn_run_update_bfs.Size = new System.Drawing.Size(286, 39);
+            this.btn_run_update_bfs.Size = new System.Drawing.Size(286, 29);
             this.btn_run_update_bfs.TabIndex = 9;
             this.btn_run_update_bfs.Text = "Run";
             this.btn_run_update_bfs.UseVisualStyleBackColor = true;
@@ -213,11 +213,11 @@
             // 
             this.menuPanel.SetColumnSpan(this.btn_clear, 2);
             this.btn_clear.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btn_clear.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btn_clear.Location = new System.Drawing.Point(4, 542);
+            this.btn_clear.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_clear.Location = new System.Drawing.Point(4, 572);
             this.btn_clear.Margin = new System.Windows.Forms.Padding(4);
             this.btn_clear.Name = "btn_clear";
-            this.btn_clear.Size = new System.Drawing.Size(284, 37);
+            this.btn_clear.Size = new System.Drawing.Size(284, 27);
             this.btn_clear.TabIndex = 0;
             this.btn_clear.Text = "Clear";
             this.btn_clear.UseVisualStyleBackColor = true;
@@ -227,11 +227,11 @@
             // 
             this.menuPanel.SetColumnSpan(this.btn_random_nodes, 2);
             this.btn_random_nodes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btn_random_nodes.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btn_random_nodes.Location = new System.Drawing.Point(4, 497);
+            this.btn_random_nodes.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_random_nodes.Location = new System.Drawing.Point(4, 537);
             this.btn_random_nodes.Margin = new System.Windows.Forms.Padding(4);
             this.btn_random_nodes.Name = "btn_random_nodes";
-            this.btn_random_nodes.Size = new System.Drawing.Size(284, 37);
+            this.btn_random_nodes.Size = new System.Drawing.Size(284, 27);
             this.btn_random_nodes.TabIndex = 4;
             this.btn_random_nodes.Text = "Generate Nodes";
             this.btn_random_nodes.UseVisualStyleBackColor = true;
@@ -239,21 +239,23 @@
             // 
             // cb_graph_type
             // 
-            this.cb_graph_type.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cb_graph_type.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.cb_graph_type.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cb_graph_type.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cb_graph_type.FormattingEnabled = true;
-            this.cb_graph_type.Location = new System.Drawing.Point(3, 451);
+            this.cb_graph_type.Location = new System.Drawing.Point(3, 503);
+            this.cb_graph_type.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
             this.cb_graph_type.Name = "cb_graph_type";
-            this.cb_graph_type.Size = new System.Drawing.Size(220, 39);
+            this.cb_graph_type.Size = new System.Drawing.Size(220, 26);
             this.cb_graph_type.TabIndex = 11;
             // 
             // cb_selfStab
             // 
             this.cb_selfStab.AutoSize = true;
             this.cb_selfStab.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cb_selfStab.Location = new System.Drawing.Point(3, 631);
+            this.cb_selfStab.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cb_selfStab.Location = new System.Drawing.Point(3, 641);
             this.cb_selfStab.Name = "cb_selfStab";
-            this.cb_selfStab.Size = new System.Drawing.Size(220, 39);
+            this.cb_selfStab.Size = new System.Drawing.Size(220, 29);
             this.cb_selfStab.TabIndex = 13;
             this.cb_selfStab.Text = "Self Stab Mode";
             this.cb_selfStab.UseVisualStyleBackColor = true;
@@ -266,7 +268,7 @@
             this.visualSimulatorToolStripMenuItem});
             this.menuBar.Location = new System.Drawing.Point(0, 0);
             this.menuBar.Name = "menuBar";
-            this.menuBar.Size = new System.Drawing.Size(1805, 24);
+            this.menuBar.Size = new System.Drawing.Size(1705, 24);
             this.menuBar.TabIndex = 2;
             this.menuBar.Text = "menuStrip1";
             // 
@@ -322,17 +324,17 @@
             this.mainPanel.Location = new System.Drawing.Point(0, 24);
             this.mainPanel.Margin = new System.Windows.Forms.Padding(0);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(1805, 694);
+            this.mainPanel.Size = new System.Drawing.Size(1705, 694);
             this.mainPanel.TabIndex = 3;
             // 
             // performanceAnalyserPanel
             // 
-            this.performanceAnalyserPanel.ColumnCount = 5;
-            this.performanceAnalyserPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
-            this.performanceAnalyserPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.performanceAnalyserPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
-            this.performanceAnalyserPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.performanceAnalyserPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.performanceAnalyserPanel.ColumnCount = 4;
+            this.performanceAnalyserPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 274F));
+            this.performanceAnalyserPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 226F));
+            this.performanceAnalyserPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 146F));
+            this.performanceAnalyserPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 354F));
+            this.performanceAnalyserPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.performanceAnalyserPanel.Controls.Add(this.btn_runPerformanceAnalysis, 1, 7);
             this.performanceAnalyserPanel.Controls.Add(this.label1, 0, 1);
             this.performanceAnalyserPanel.Controls.Add(this.label2, 0, 2);
@@ -387,16 +389,16 @@
             this.performanceAnalyserPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
             this.performanceAnalyserPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.performanceAnalyserPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.performanceAnalyserPanel.Size = new System.Drawing.Size(1157, 585);
+            this.performanceAnalyserPanel.Size = new System.Drawing.Size(800, 600);
             this.performanceAnalyserPanel.TabIndex = 2;
             this.performanceAnalyserPanel.Visible = false;
             // 
             // btn_runPerformanceAnalysis
             // 
             this.btn_runPerformanceAnalysis.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btn_runPerformanceAnalysis.Location = new System.Drawing.Point(303, 323);
+            this.btn_runPerformanceAnalysis.Location = new System.Drawing.Point(277, 323);
             this.btn_runPerformanceAnalysis.Name = "btn_runPerformanceAnalysis";
-            this.btn_runPerformanceAnalysis.Size = new System.Drawing.Size(194, 24);
+            this.btn_runPerformanceAnalysis.Size = new System.Drawing.Size(220, 24);
             this.btn_runPerformanceAnalysis.TabIndex = 5;
             this.btn_runPerformanceAnalysis.Text = "Start";
             this.btn_runPerformanceAnalysis.UseVisualStyleBackColor = true;
@@ -407,9 +409,9 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Location = new System.Drawing.Point(3, 30);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(294, 30);
+            this.label1.Size = new System.Drawing.Size(268, 30);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Topology Count for Number of Node";
+            this.label1.Text = "Iteration Count for each Node Count Fold";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label2
@@ -418,9 +420,9 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Location = new System.Drawing.Point(3, 60);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(294, 30);
+            this.label2.Size = new System.Drawing.Size(268, 30);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Number to Increase Node Count";
+            this.label2.Text = "Fold Count";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label3
@@ -429,9 +431,9 @@
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Location = new System.Drawing.Point(3, 90);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(294, 30);
+            this.label3.Size = new System.Drawing.Size(268, 30);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Node Count Fold";
+            this.label3.Text = "Folding Amount";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label4
@@ -441,7 +443,7 @@
             this.label4.Location = new System.Drawing.Point(3, 120);
             this.label4.Name = "label4";
             this.performanceAnalyserPanel.SetRowSpan(this.label4, 2);
-            this.label4.Size = new System.Drawing.Size(294, 100);
+            this.label4.Size = new System.Drawing.Size(268, 100);
             this.label4.TabIndex = 3;
             this.label4.Text = "Graph Types to Compare";
             // 
@@ -451,7 +453,7 @@
             this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label5.Location = new System.Drawing.Point(3, 220);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(294, 100);
+            this.label5.Size = new System.Drawing.Size(268, 100);
             this.label5.TabIndex = 4;
             this.label5.Text = "Algorithm Types to Compare";
             // 
@@ -460,9 +462,9 @@
             this.tb_topologyCount.AccessibleName = "Topology Count for Number of Node";
             this.tb_topologyCount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tb_topologyCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tb_topologyCount.Location = new System.Drawing.Point(303, 33);
+            this.tb_topologyCount.Location = new System.Drawing.Point(277, 33);
             this.tb_topologyCount.Name = "tb_topologyCount";
-            this.tb_topologyCount.Size = new System.Drawing.Size(194, 23);
+            this.tb_topologyCount.Size = new System.Drawing.Size(220, 23);
             this.tb_topologyCount.TabIndex = 6;
             this.tb_topologyCount.Text = "5";
             // 
@@ -471,9 +473,9 @@
             this.tb_numberToIncreaseNodeCount.AccessibleName = "Number to Increase Node Count";
             this.tb_numberToIncreaseNodeCount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tb_numberToIncreaseNodeCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tb_numberToIncreaseNodeCount.Location = new System.Drawing.Point(303, 63);
+            this.tb_numberToIncreaseNodeCount.Location = new System.Drawing.Point(277, 63);
             this.tb_numberToIncreaseNodeCount.Name = "tb_numberToIncreaseNodeCount";
-            this.tb_numberToIncreaseNodeCount.Size = new System.Drawing.Size(194, 23);
+            this.tb_numberToIncreaseNodeCount.Size = new System.Drawing.Size(220, 23);
             this.tb_numberToIncreaseNodeCount.TabIndex = 7;
             this.tb_numberToIncreaseNodeCount.Text = "5";
             // 
@@ -482,9 +484,9 @@
             this.tb_nodeCountFold.AccessibleName = "Node Count Fold";
             this.tb_nodeCountFold.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tb_nodeCountFold.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tb_nodeCountFold.Location = new System.Drawing.Point(303, 93);
+            this.tb_nodeCountFold.Location = new System.Drawing.Point(277, 93);
             this.tb_nodeCountFold.Name = "tb_nodeCountFold";
-            this.tb_nodeCountFold.Size = new System.Drawing.Size(194, 23);
+            this.tb_nodeCountFold.Size = new System.Drawing.Size(220, 23);
             this.tb_nodeCountFold.TabIndex = 8;
             this.tb_nodeCountFold.Text = "10";
             // 
@@ -492,19 +494,19 @@
             // 
             this.clb_graphTypes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.clb_graphTypes.FormattingEnabled = true;
-            this.clb_graphTypes.Location = new System.Drawing.Point(303, 123);
+            this.clb_graphTypes.Location = new System.Drawing.Point(277, 123);
             this.clb_graphTypes.Name = "clb_graphTypes";
             this.performanceAnalyserPanel.SetRowSpan(this.clb_graphTypes, 2);
-            this.clb_graphTypes.Size = new System.Drawing.Size(194, 94);
+            this.clb_graphTypes.Size = new System.Drawing.Size(220, 94);
             this.clb_graphTypes.TabIndex = 9;
             // 
             // clb_algorithmTypes
             // 
             this.clb_algorithmTypes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.clb_algorithmTypes.FormattingEnabled = true;
-            this.clb_algorithmTypes.Location = new System.Drawing.Point(303, 223);
+            this.clb_algorithmTypes.Location = new System.Drawing.Point(277, 223);
             this.clb_algorithmTypes.Name = "clb_algorithmTypes";
-            this.clb_algorithmTypes.Size = new System.Drawing.Size(194, 94);
+            this.clb_algorithmTypes.Size = new System.Drawing.Size(220, 94);
             this.clb_algorithmTypes.TabIndex = 10;
             // 
             // label6
@@ -513,7 +515,7 @@
             this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label6.Location = new System.Drawing.Point(3, 380);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(294, 30);
+            this.label6.Size = new System.Drawing.Size(268, 30);
             this.label6.TabIndex = 11;
             this.label6.Text = "Current Algorithm";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -524,7 +526,7 @@
             this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label7.Location = new System.Drawing.Point(3, 410);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(294, 30);
+            this.label7.Size = new System.Drawing.Size(268, 30);
             this.label7.TabIndex = 12;
             this.label7.Text = "Current Topology Type";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -535,7 +537,7 @@
             this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label8.Location = new System.Drawing.Point(3, 440);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(294, 30);
+            this.label8.Size = new System.Drawing.Size(268, 30);
             this.label8.TabIndex = 13;
             this.label8.Text = "Current Node Count";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -546,7 +548,7 @@
             this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label9.Location = new System.Drawing.Point(3, 470);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(294, 30);
+            this.label9.Size = new System.Drawing.Size(268, 30);
             this.label9.TabIndex = 14;
             this.label9.Text = "Current Topology Index";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -556,9 +558,9 @@
             this.lbl_currentAlgorithm.AccessibleName = "";
             this.lbl_currentAlgorithm.AutoSize = true;
             this.lbl_currentAlgorithm.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbl_currentAlgorithm.Location = new System.Drawing.Point(303, 380);
+            this.lbl_currentAlgorithm.Location = new System.Drawing.Point(277, 380);
             this.lbl_currentAlgorithm.Name = "lbl_currentAlgorithm";
-            this.lbl_currentAlgorithm.Size = new System.Drawing.Size(194, 30);
+            this.lbl_currentAlgorithm.Size = new System.Drawing.Size(220, 30);
             this.lbl_currentAlgorithm.TabIndex = 15;
             this.lbl_currentAlgorithm.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -567,9 +569,9 @@
             this.lbl_currentTopologyType.AccessibleName = "";
             this.lbl_currentTopologyType.AutoSize = true;
             this.lbl_currentTopologyType.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbl_currentTopologyType.Location = new System.Drawing.Point(303, 410);
+            this.lbl_currentTopologyType.Location = new System.Drawing.Point(277, 410);
             this.lbl_currentTopologyType.Name = "lbl_currentTopologyType";
-            this.lbl_currentTopologyType.Size = new System.Drawing.Size(194, 30);
+            this.lbl_currentTopologyType.Size = new System.Drawing.Size(220, 30);
             this.lbl_currentTopologyType.TabIndex = 16;
             this.lbl_currentTopologyType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -578,9 +580,9 @@
             this.lbl_currentNodeCount.AccessibleName = "";
             this.lbl_currentNodeCount.AutoSize = true;
             this.lbl_currentNodeCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbl_currentNodeCount.Location = new System.Drawing.Point(303, 440);
+            this.lbl_currentNodeCount.Location = new System.Drawing.Point(277, 440);
             this.lbl_currentNodeCount.Name = "lbl_currentNodeCount";
-            this.lbl_currentNodeCount.Size = new System.Drawing.Size(194, 30);
+            this.lbl_currentNodeCount.Size = new System.Drawing.Size(220, 30);
             this.lbl_currentNodeCount.TabIndex = 17;
             this.lbl_currentNodeCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -589,27 +591,26 @@
             this.lbl_currentTopologyIndex.AccessibleName = "";
             this.lbl_currentTopologyIndex.AutoSize = true;
             this.lbl_currentTopologyIndex.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbl_currentTopologyIndex.Location = new System.Drawing.Point(303, 470);
+            this.lbl_currentTopologyIndex.Location = new System.Drawing.Point(277, 470);
             this.lbl_currentTopologyIndex.Name = "lbl_currentTopologyIndex";
-            this.lbl_currentTopologyIndex.Size = new System.Drawing.Size(194, 30);
+            this.lbl_currentTopologyIndex.Size = new System.Drawing.Size(220, 30);
             this.lbl_currentTopologyIndex.TabIndex = 18;
             this.lbl_currentTopologyIndex.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // progressBar
             // 
             this.performanceAnalyserPanel.SetColumnSpan(this.progressBar, 4);
-            this.progressBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.progressBar.Location = new System.Drawing.Point(3, 503);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(994, 48);
+            this.progressBar.Size = new System.Drawing.Size(791, 48);
             this.progressBar.TabIndex = 19;
             // 
             // btn_cancel
             // 
             this.btn_cancel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btn_cancel.Location = new System.Drawing.Point(303, 353);
+            this.btn_cancel.Location = new System.Drawing.Point(277, 353);
             this.btn_cancel.Name = "btn_cancel";
-            this.btn_cancel.Size = new System.Drawing.Size(194, 24);
+            this.btn_cancel.Size = new System.Drawing.Size(220, 24);
             this.btn_cancel.TabIndex = 20;
             this.btn_cancel.Text = "Cancel";
             this.btn_cancel.UseVisualStyleBackColor = true;
@@ -620,7 +621,7 @@
             this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label10.Location = new System.Drawing.Point(3, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(294, 30);
+            this.label10.Size = new System.Drawing.Size(268, 30);
             this.label10.TabIndex = 21;
             this.label10.Text = "Session Name";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -629,9 +630,9 @@
             // 
             this.tb_sessionName.AccessibleName = "Session Name";
             this.tb_sessionName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tb_sessionName.Location = new System.Drawing.Point(303, 3);
+            this.tb_sessionName.Location = new System.Drawing.Point(277, 3);
             this.tb_sessionName.Name = "tb_sessionName";
-            this.tb_sessionName.Size = new System.Drawing.Size(194, 23);
+            this.tb_sessionName.Size = new System.Drawing.Size(220, 23);
             this.tb_sessionName.TabIndex = 22;
             // 
             // label11
@@ -640,7 +641,7 @@
             this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label11.Location = new System.Drawing.Point(503, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(294, 30);
+            this.label11.Size = new System.Drawing.Size(140, 30);
             this.label11.TabIndex = 23;
             this.label11.Text = "Time to Transmit";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -651,7 +652,7 @@
             this.label12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label12.Location = new System.Drawing.Point(503, 30);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(294, 30);
+            this.label12.Size = new System.Drawing.Size(140, 30);
             this.label12.TabIndex = 24;
             this.label12.Text = "Transmit Energy";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -662,7 +663,7 @@
             this.label13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label13.Location = new System.Drawing.Point(503, 60);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(294, 30);
+            this.label13.Size = new System.Drawing.Size(140, 30);
             this.label13.TabIndex = 25;
             this.label13.Text = "Time to Receive";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -673,7 +674,7 @@
             this.label14.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label14.Location = new System.Drawing.Point(503, 90);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(294, 30);
+            this.label14.Size = new System.Drawing.Size(140, 30);
             this.label14.TabIndex = 26;
             this.label14.Text = "Receive Energy";
             this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -684,53 +685,48 @@
             this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label15.Location = new System.Drawing.Point(503, 120);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(294, 30);
+            this.label15.Size = new System.Drawing.Size(140, 30);
             this.label15.TabIndex = 27;
             this.label15.Text = "Idle Energy";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tb_timeToTransmit
             // 
-            this.tb_timeToTransmit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tb_timeToTransmit.Location = new System.Drawing.Point(803, 3);
+            this.tb_timeToTransmit.Location = new System.Drawing.Point(649, 3);
             this.tb_timeToTransmit.Name = "tb_timeToTransmit";
-            this.tb_timeToTransmit.Size = new System.Drawing.Size(194, 23);
+            this.tb_timeToTransmit.Size = new System.Drawing.Size(145, 23);
             this.tb_timeToTransmit.TabIndex = 28;
             this.tb_timeToTransmit.Text = "0.001";
             // 
             // tb_transmitEnergy
             // 
-            this.tb_transmitEnergy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tb_transmitEnergy.Location = new System.Drawing.Point(803, 33);
+            this.tb_transmitEnergy.Location = new System.Drawing.Point(649, 33);
             this.tb_transmitEnergy.Name = "tb_transmitEnergy";
-            this.tb_transmitEnergy.Size = new System.Drawing.Size(194, 23);
+            this.tb_transmitEnergy.Size = new System.Drawing.Size(145, 23);
             this.tb_transmitEnergy.TabIndex = 29;
             this.tb_transmitEnergy.Text = "1";
             // 
             // tb_timeToReceive
             // 
-            this.tb_timeToReceive.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tb_timeToReceive.Location = new System.Drawing.Point(803, 63);
+            this.tb_timeToReceive.Location = new System.Drawing.Point(649, 63);
             this.tb_timeToReceive.Name = "tb_timeToReceive";
-            this.tb_timeToReceive.Size = new System.Drawing.Size(194, 23);
+            this.tb_timeToReceive.Size = new System.Drawing.Size(145, 23);
             this.tb_timeToReceive.TabIndex = 30;
             this.tb_timeToReceive.Text = "0.001";
             // 
             // tb_receiveEnergy
             // 
-            this.tb_receiveEnergy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tb_receiveEnergy.Location = new System.Drawing.Point(803, 93);
+            this.tb_receiveEnergy.Location = new System.Drawing.Point(649, 93);
             this.tb_receiveEnergy.Name = "tb_receiveEnergy";
-            this.tb_receiveEnergy.Size = new System.Drawing.Size(194, 23);
+            this.tb_receiveEnergy.Size = new System.Drawing.Size(145, 23);
             this.tb_receiveEnergy.TabIndex = 31;
             this.tb_receiveEnergy.Text = "1";
             // 
             // tb_idleEnergy
             // 
-            this.tb_idleEnergy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tb_idleEnergy.Location = new System.Drawing.Point(803, 123);
+            this.tb_idleEnergy.Location = new System.Drawing.Point(649, 123);
             this.tb_idleEnergy.Name = "tb_idleEnergy";
-            this.tb_idleEnergy.Size = new System.Drawing.Size(194, 23);
+            this.tb_idleEnergy.Size = new System.Drawing.Size(145, 23);
             this.tb_idleEnergy.TabIndex = 32;
             this.tb_idleEnergy.Text = "0.5";
             // 
@@ -738,12 +734,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1805, 718);
+            this.ClientSize = new System.Drawing.Size(1705, 718);
             this.Controls.Add(this.mainPanel);
             this.Controls.Add(this.menuBar);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.MainMenuStrip = this.menuBar;
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MinimumSize = new System.Drawing.Size(813, 617);
             this.Name = "Presenter";
             this.Text = "Self Stabilizing Distributed Simulator";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

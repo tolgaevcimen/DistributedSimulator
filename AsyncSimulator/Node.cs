@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,7 +26,9 @@ namespace AsyncSimulator
         public Dictionary<int, _Node> Neighbours { get; set; }
 
         [JsonProperty]
-        private List<int> _Neighbours { get { return GetCopyOfNeigbours().Select(n => n.Id).ToList(); } set { Neighbours = value.ToDictionary(v => v, k => null as _Node); } }
+        public List<int> _Neighbours { get; set; }
+        [JsonProperty]
+        public PointF _Position { get; set; }
 
         /// <summary>
         /// A thread safe queue for received messages.
@@ -43,8 +46,7 @@ namespace AsyncSimulator
         int PreviousReceiveQueueLength { get; set; }
 
         int BackoffPeriod = 10;
-
-        //public int MessageCount { get; set; }
+        
         public int SentMessageCount { get; set; }
         public int ReceivedMessageCount { get; set; }
 
@@ -114,6 +116,8 @@ namespace AsyncSimulator
         
         public abstract NodeState GetState();
 
+        //public abstract void SetState(NodeState nodeState);
+
         /// <summary>
         /// This method will be implemented in sub classes for algorithm details.
         /// </summary>
@@ -182,6 +186,8 @@ namespace AsyncSimulator
 
         #endregion
 
+        #region Neighborhood management
+
         public void AddNeighbour(_Node node)
         {
             lock (NeighbourhoodLock)
@@ -221,6 +227,8 @@ namespace AsyncSimulator
                 return Neighbours.ContainsKey(nodeId);
             }
         }
+
+        #endregion
 
         public virtual bool IsValid()
         {

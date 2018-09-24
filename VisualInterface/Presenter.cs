@@ -239,7 +239,11 @@ namespace VisualInterface
 
                 if (algorithmType == AlgorithmType.ChiuMDS_rand)
                 {
-                    var nodeHolder = DeserializeTopology<ChiuNode>(json);
+                    var deserializationContext = DeserializeTopology<ChiuNode>(json);
+
+                    var importedGraphGenerator = new ImportedGraphGenerator<ChiuNode>(this, drawing_panel, deserializationContext);
+                    importedGraphGenerator.Generate(0, NodeHolder, EdgeHolder, algorithmType);
+
                     return;
                 }
 
@@ -250,6 +254,9 @@ namespace VisualInterface
         public string SerializeTopology()
         {
             var nodes = NodeHolder.GetCopyList();
+
+            nodes.ForEach(_n => _n._Neighbours = _n.GetCopyOfNeigbours().Select(n => n.Id).ToList());
+            nodes.ForEach(_n => _n._Position = _n.Visualizer.Location);
 
             return JsonConvert.SerializeObject(new SerializationContext() { AlgorithmType = SelectedAlgorithm, Nodes = nodes });
         }
