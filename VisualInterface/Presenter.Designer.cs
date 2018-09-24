@@ -307,14 +307,14 @@
             this.performanceAnalyserToolStripMenuItem.Name = "performanceAnalyserToolStripMenuItem";
             this.performanceAnalyserToolStripMenuItem.Size = new System.Drawing.Size(135, 20);
             this.performanceAnalyserToolStripMenuItem.Text = "Performance Analyser";
-            this.performanceAnalyserToolStripMenuItem.Click += new System.EventHandler(this.TogglePanels);
+            this.performanceAnalyserToolStripMenuItem.Click += new System.EventHandler(this.ShowPerformanceAnalyser);
             // 
             // visualSimulatorToolStripMenuItem
             // 
             this.visualSimulatorToolStripMenuItem.Name = "visualSimulatorToolStripMenuItem";
             this.visualSimulatorToolStripMenuItem.Size = new System.Drawing.Size(104, 20);
             this.visualSimulatorToolStripMenuItem.Text = "Visual Simulator";
-            this.visualSimulatorToolStripMenuItem.Click += new System.EventHandler(this.TogglePanels);
+            this.visualSimulatorToolStripMenuItem.Click += new System.EventHandler(this.ShowVisualSimulator);
             // 
             // mainPanel
             // 

@@ -166,12 +166,24 @@ namespace VisualInterface
             cb_choose_alg.Enabled = false;
         }
 
-        private void TogglePanels(object sender, EventArgs e)
+        private void ShowPerformanceAnalyser(object sender, EventArgs e)
         {
             performanceAnalyserPanel.Dock = DockStyle.Fill; // remove this
             visualSimulatorPanel.Dock = DockStyle.Fill; // remove this
-            performanceAnalyserPanel.Visible = !performanceAnalyserPanel.Visible;
-            visualSimulatorPanel.Visible = !visualSimulatorPanel.Visible;
+
+            visualSimulatorPanel.Visible = false;
+            performanceAnalyserPanel.Visible = true;
+        }
+
+        private void ShowVisualSimulator(object sender, EventArgs e)
+        {
+            performanceAnalyserPanel.Dock = DockStyle.Fill; // remove this
+            visualSimulatorPanel.Dock = DockStyle.Fill; // remove this
+
+            performanceAnalyserPanel.Visible = false;
+            visualSimulatorPanel.Visible = true;
+
+            NodeHolder.RedrawAllNodes();
         }
 
         private void saveTopologyToolStripMenuItem_Click(object sender, EventArgs e)
