@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using AsyncSimulator;
 using NodeGenerator;
-using SupportedAlgorithmAndGraphTypes;
 using static VisualInterface.Presenter;
 
 namespace VisualInterface.GraphGenerator

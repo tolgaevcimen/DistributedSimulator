@@ -1,8 +1,4 @@
-﻿using AsyncSimulator;
-using System;
-using System.Threading;
-
-namespace FloodSTNode
+﻿namespace FloodSTNode
 {
     //public class _FloodSTNode : _Node
     //{
@@ -41,7 +37,7 @@ namespace FloodSTNode
     //        }
 
     //        Visualizer.VisualizeMessage(receivedMessage);
-            
+
     //        Visualizer.Log("receiver {0} done", this.Id);
     //    }
 

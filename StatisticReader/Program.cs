@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using PerformanceAnalyserLibrary;
-using SupportedAlgorithmAndGraphTypes;
 using System;
 using System.Collections.Generic;
 using System.IO;

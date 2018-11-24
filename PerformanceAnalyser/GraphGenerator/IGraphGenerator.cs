@@ -1,6 +1,4 @@
-﻿using AsyncSimulator;
-
-namespace PerformanceAnalyserLibrary.GraphGenerator
+﻿namespace PerformanceAnalyserLibrary.GraphGenerator
 {
     internal interface ITopologyGenerator
     {

@@ -1,5 +1,4 @@
 ﻿using AsyncSimulator;
-using PerformanceAnalyserLibrary.GraphGenerator;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

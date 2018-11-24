@@ -1,8 +1,4 @@
-﻿using AsyncSimulator;
-using System;
-using System.Threading;
-
-namespace FloodingNode
+﻿namespace FloodingNode
 {
     //public class _FloodingNode : _Node
     //{

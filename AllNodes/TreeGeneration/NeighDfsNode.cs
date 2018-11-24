@@ -1,10 +1,4 @@
-﻿using AsyncSimulator;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-
-namespace NeighDfsNode
+﻿namespace NeighDfsNode
 {
     //public class _NeighDfsNode : _Node
     //{
@@ -60,7 +54,7 @@ namespace NeighDfsNode
     //        {
     //            var randomNodeId = unvisitedNodes.ElementAt(Randomizer.Next(0, unvisitedNodes.Count()));
     //            var randomNode = Neighbours.First(n => n.Key == randomNodeId);
-                
+
     //            var vislist = VisitedNodes.ToList();
     //            vislist.Add(Id);
 
