@@ -12,7 +12,7 @@ namespace PerformanceAnalyserLibrary
 {
     public class AlgorithmRunner : IDisposable
     {
-        public AlgorithmType AlgorithmType { get; set; }
+        public string AlgorithmType { get; set; }
         public GraphType GraphType { get; set; }
         public int NodeCount { get; set; }
 
@@ -44,7 +44,7 @@ namespace PerformanceAnalyserLibrary
             });
         }
 
-        public AlgorithmRunner(List<Topology> topologies, AlgorithmType algorithmType, GraphType graphType, int nodeCount, string folderName)
+        public AlgorithmRunner(List<Topology> topologies, string algorithmType, GraphType graphType, int nodeCount, string folderName)
         {
             Topologies = topologies;
             AlgorithmType = algorithmType;
@@ -89,8 +89,6 @@ namespace PerformanceAnalyserLibrary
         private void NodeHolder_Terminated(object sender, EventArgs e)
         {
             Duration = DateTime.Now.Subtract(StartTime);
-            //Console.Clear();
-            //Console.WriteLine(GetFileNameForCurrentRun());
             HandleReport();
             if (PrepareNextRun())
             {

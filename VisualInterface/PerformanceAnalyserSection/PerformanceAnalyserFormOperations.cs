@@ -3,6 +3,8 @@ using StatisticReaderLibrary;
 using SupportedAlgorithmAndGraphTypes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -80,13 +82,12 @@ namespace VisualInterface.PerformanceAnalyserSection
 
             progressBar.SetPropertyThreadSafe(() => progressBar.Value, stepDoneArgs.CurrentStepNumber());
             lbl_currentTopologyType.SetPropertyThreadSafe(() => lbl_currentTopologyType.Text, stepDoneArgs.GraphType.ToString());
-            lbl_currentAlgorithm.SetPropertyThreadSafe(() => lbl_currentAlgorithm.Text, stepDoneArgs.AlgorithmType.ToString());
+            lbl_currentAlgorithm.SetPropertyThreadSafe(() => lbl_currentAlgorithm.Text, stepDoneArgs.AlgorithmType);
             lbl_currentNodeCount.SetPropertyThreadSafe(() => lbl_currentNodeCount.Text, string.Format("{0} ({1}/{2})", (stepDoneArgs.NodeCount * nodeCountFold).ToString(), stepDoneArgs.NodeCountIndex, stepDoneArgs.NumberToIncreaseNodeCount));
             lbl_currentTopologyIndex.SetPropertyThreadSafe(() => lbl_currentTopologyIndex.Text, stepDoneArgs.TopologyIndex.ToString());
 
             if (progressBar.Value == progressBar.Maximum)
             {
-                MessageBox.Show("Session finished");
                 progressBar.SetPropertyThreadSafe(() => progressBar.Value, 0);
                 OnPerformanceAnalyserFinished();
             }
@@ -110,7 +111,7 @@ namespace VisualInterface.PerformanceAnalyserSection
         private SimulationProperties GatherSimulationProperties()
         {
             var graphTypes = new List<GraphType>();
-            var algorithmTypes = new List<AlgorithmType>();
+            var algorithmTypes = new List<string>();
 
             foreach (string graphType in presenter.clb_graphTypes.CheckedItems)
             {
@@ -119,7 +120,7 @@ namespace VisualInterface.PerformanceAnalyserSection
 
             foreach (string algorithmType in presenter.clb_algorithmTypes.CheckedItems)
             {
-                algorithmTypes.Add((AlgorithmType)Enum.Parse(typeof(AlgorithmType), algorithmType));
+                algorithmTypes.Add(algorithmType);
             }
 
             var topologyCount = int.Parse(presenter.tb_topologyCount.Text);
@@ -144,11 +145,17 @@ namespace VisualInterface.PerformanceAnalyserSection
         {
             var simulationProperties = GatherSimulationProperties();
             var systemProperties = GatherSystemProperties();
-            var statisticReader = new StatisticReader(simulationProperties, systemProperties, tb_sessionName.Text, string.Format("{0}\\{0}.txt", tb_sessionName.Text));
+            var fileName = string.Format("{0}\\{0}.txt", tb_sessionName.Text);
+            var statisticReader = new StatisticReader(simulationProperties, systemProperties, tb_sessionName.Text, fileName);
 
             statisticReader.Process();
 
-            MessageBox.Show("results are compiled");
+            var openFileResponse = MessageBox.Show("Results are compiled. Do you want to open the results file?", "Compilation Result", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if (openFileResponse == DialogResult.Yes)
+            {
+                Process.Start(Path.GetDirectoryName(fileName));
+                Process.Start(fileName);
+            }
         }
     }
 }

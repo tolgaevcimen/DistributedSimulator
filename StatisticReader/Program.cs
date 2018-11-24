@@ -10,9 +10,6 @@ namespace StatisticReaderLibrary
 {
     public class StatisticReader
     {
-        //string JsonsPath = @"C:\Users\htolg\Documents\Visual Studio 2017\Projects\AsyncSimulator\AsyncSimulator\ConsoleForStatisticsEnvironment\bin\Release\random_graphs_random_states_25x150x10-10";
-
-        //string OutputFileName = "random_graphs_random_states_25x150x10-10.txt";
         private readonly SimulationProperties simulationProperties;
         private readonly SystemProperties systemProperties;
         private readonly string inputFolderPath;
@@ -99,7 +96,7 @@ namespace StatisticReaderLibrary
 
         double CalculateEnergy(RunReport report)
         {
-            if (report.AlgorithmType == AlgorithmType.GoddardMDS_rand)
+            if (report.AlgorithmType.StartsWith("GoddardMDS"))
             {
                 var transmitTime = report.TotalSentCount * systemProperties.TimeToTransmit;
                 var receiveTime = report.TotalReceiveCount * systemProperties.TimeToReceive;

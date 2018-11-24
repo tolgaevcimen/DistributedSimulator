@@ -6,9 +6,9 @@ using System.Linq;
 
 namespace ChiuDominatingSet
 {
-    public class xChiuNode : _Node
+    public class ChiuMDS : _Node
     {
-        public xChiuNode() : base(0, null)
+        public ChiuMDS() : base(0, null)
         {
 
         }
@@ -40,22 +40,17 @@ namespace ChiuDominatingSet
             }
         }
 
-        IEnumerable<xChiuNode> GetNeighbours()
+        IEnumerable<ChiuMDS> GetNeighbours()
         {
-            return GetCopyOfNeigbours().Select(n => (xChiuNode)n);
+            return GetCopyOfNeigbours().Select(n => (ChiuMDS)n);
         }
 
-        public xChiuNode(int id, NodeHolder nodeHolder, InitialState initialState = InitialState.AllWait, Random randomizer = null) : base(id, nodeHolder)
+        internal ChiuMDS(int id, NodeHolder nodeHolder, InitialState initialState, int predefinedState) : base(id, nodeHolder)
         {
-            State = GetState(initialState, randomizer);
+            State = GenerateState(initialState, predefinedState);
         }
-
-        public xChiuNode(int id, NodeHolder nodeHolder, int predefinedState) : base(id, nodeHolder)
-        {
-            State = predefinedState == 0 ? ChiuState.WAIT : predefinedState == 1 ? ChiuState.OUT1 : ChiuState.IN;
-        }
-
-        public xChiuNode(int id, ChiuState state) : base(id, null)
+        
+        private ChiuMDS(int id, ChiuState state) : base(id, null)
         {
             State = state;
         }
@@ -119,7 +114,7 @@ namespace ChiuDominatingSet
         
         protected override void UpdateNeighbourInformation(_Node neighbour)
         {
-            UpdateNeighbour(new xChiuNode(neighbour.Id, ((xChiuNode)neighbour).State));
+            UpdateNeighbour(new ChiuMDS(neighbour.Id, ((ChiuMDS)neighbour).State));
         }
         
         public override bool Selected()
@@ -127,7 +122,7 @@ namespace ChiuDominatingSet
             return base.Selected() || State == ChiuState.IN;
         }
         
-        ChiuState GetState(InitialState _is, Random randomizer)
+        ChiuState GenerateState(InitialState _is, int predefinedState)
         {
             switch (_is)
             {
@@ -136,14 +131,7 @@ namespace ChiuDominatingSet
                 case InitialState.AllIn:
                     return ChiuState.IN;
                 case InitialState.Random:
-                    {
-                        var states = Enum.GetNames(typeof(ChiuState));
-
-                        var randIndex = randomizer.Next(0, states.Length);
-                        var state = (ChiuState)Enum.Parse(typeof(ChiuState), states[randIndex]);
-                        
-                        return state;
-                    }
+                    return predefinedState == 0 ? ChiuState.WAIT : predefinedState == 1 ? ChiuState.OUT1 : ChiuState.IN;
                 default: return ChiuState.WAIT;
             }
         }

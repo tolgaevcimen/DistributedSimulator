@@ -12,7 +12,7 @@ namespace VisualInterface.GraphGenerator
         {
         }
 
-        public override void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, AlgorithmType SelectedAlgorithm)
+        public override void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, string SelectedAlgorithm)
         {
             var arg = new PaintEventArgs(Drawing_panel.CreateGraphics(), new Rectangle());
 

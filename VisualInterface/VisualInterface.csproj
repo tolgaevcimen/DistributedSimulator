@@ -110,21 +110,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AllNodes\AllNodes.csproj">
+      <Project>{6906289e-8c0a-4984-9f2a-f5dd9975289b}</Project>
+      <Name>AllNodes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AsyncSimulator\AsyncSimulator.csproj">
       <Project>{440fa7c3-094a-4913-8cf5-14b440c0b86e}</Project>
       <Name>AsyncSimulator</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ChiuNode\ChiuNode.csproj">
-      <Project>{6b034cef-a5dd-4025-aef8-49093e72c4ec}</Project>
-      <Name>ChiuNode</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GoddardMDSNode\GoddardMDSNode.csproj">
-      <Project>{7033cf9e-d993-4f95-8749-1c8da60a7e97}</Project>
-      <Name>GoddardMDSNode</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NodeGenerator\NodeGenerator.csproj">
-      <Project>{f3a2b616-aef6-4647-b7aa-7a5b25209e10}</Project>
-      <Name>NodeGenerator</Name>
     </ProjectReference>
     <ProjectReference Include="..\PerformanceAnalyser\PerformanceAnalyser.csproj">
       <Project>{f3157062-9ed1-40f4-bd57-00575cbde3ce}</Project>
@@ -137,10 +129,6 @@
     <ProjectReference Include="..\SupportedAlgorithmAndGraphTypes\SupportedAlgorithmAndGraphTypes.csproj">
       <Project>{b7836723-6676-4991-8bf0-59e15d3203f6}</Project>
       <Name>SupportedAlgorithmAndGraphTypes</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TurauNode\TurauNode.csproj">
-      <Project>{A841B497-1268-48F1-A8A7-87FE4629A659}</Project>
-      <Name>TurauNode</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

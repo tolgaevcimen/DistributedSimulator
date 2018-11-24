@@ -22,7 +22,7 @@ namespace StatisticReaderLibrary
         static void Main(string[] args)
         {
             var graphTypes = new List<GraphType> { GraphType.Random3, GraphType.Random6, GraphType.Random9 };
-            var algorithTypes = new List<AlgorithmType> { AlgorithmType.ChiuMDS_rand, AlgorithmType.GoddardMDS_rand, AlgorithmType.TurauMDS_rand };
+            var algorithTypes = new List<string> { "ChiuMDS_rand", "GoddardMDS_rand", "TurauMDS_rand" };
 
             var statisticReader = new StatisticReader(new SimulationProperties(NumberToIncreaseNodeCount, NodeCountFold, EachNodeCountRunCount, algorithTypes, graphTypes),
                 new SystemProperties(TimeToTransmit, TransmitEnergy, TimeToReceive, ReceiveEnergy, IdleEnergy), JsonsPath, OutputFileName);

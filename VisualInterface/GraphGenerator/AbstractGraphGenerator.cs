@@ -15,6 +15,6 @@ namespace VisualInterface.GraphGenerator
             Drawing_panel = drawing_panel;
         }
 
-        public abstract void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, AlgorithmType SelectedAlgorithm);
+        public abstract void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, string SelectedAlgorithm);
     }
 }

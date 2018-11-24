@@ -10,7 +10,7 @@ namespace ConsoleForStatisticsEnvironment
 {
     public class RunReport
     {
-        public AlgorithmType AlgorithmType { get; set; }
+        public string AlgorithmType { get; set; }
         public GraphType GraphType { get; set; }
         public int NodeCount { get; set; }
 
@@ -38,7 +38,7 @@ namespace ConsoleForStatisticsEnvironment
         public Dictionary<int, int> EachNodesCongestionCount { get; set; }
         public int TotalCongestionCount { get; set; }
 
-        public RunReport(AlgorithmType algorithmType, GraphType graphType, int nodeCount)
+        public RunReport(string algorithmType, GraphType graphType, int nodeCount)
         {
             AlgorithmType = algorithmType;
             GraphType = graphType;

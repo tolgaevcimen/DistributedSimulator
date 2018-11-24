@@ -8,10 +8,10 @@ namespace PerformanceAnalyserLibrary
         public int NumberToIncreaseNodeCount { get; }
         public int NodeCountFold { get; }
         public int EachNodeCountRunCount { get; }
-        public List<AlgorithmType> AlgorithmTypes { get; }
+        public List<string> AlgorithmTypes { get; }
         public List<GraphType> GraphTypes { get; }
 
-        public SimulationProperties(int numberToIncreaseNodeCount, int nodeCountFold, int eachNodeCountRunCount, List<AlgorithmType> algorithmTypes, List<GraphType> graphTypes)
+        public SimulationProperties(int numberToIncreaseNodeCount, int nodeCountFold, int eachNodeCountRunCount, List<string> algorithmTypes, List<GraphType> graphTypes)
         {
             NumberToIncreaseNodeCount = numberToIncreaseNodeCount;
             NodeCountFold = nodeCountFold;

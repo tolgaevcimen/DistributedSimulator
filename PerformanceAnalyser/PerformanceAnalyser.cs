@@ -13,10 +13,10 @@ namespace PerformanceAnalyserLibrary
         private readonly int NumberToIncreaseNodeCount;
         private readonly int NodeCountFold;
         private readonly List<GraphType> GraphTypes;
-        private readonly List<AlgorithmType> AlgorithmTypes;
+        private readonly List<string> AlgorithmTypes;
         private int IndexToIncreaseNodeCount;
         private GraphType CurrentGraphType;
-        private AlgorithmType CurrentAlgorithmType;
+        private string CurrentAlgorithmType;
         private int NodeCount;
 
         public int TotalStepCount { get; set; }
@@ -138,7 +138,7 @@ namespace PerformanceAnalyserLibrary
             StepDone?.Invoke(this, LastStepDoneArgs);
         }
 
-        private string GetFileNameForCurrentRun(GraphType GraphType, AlgorithmType AlgorithmType, int NodeCount, int IndexToRunForEachNodeCount, string FolderName)
+        private string GetFileNameForCurrentRun(GraphType GraphType, string AlgorithmType, int NodeCount, int IndexToRunForEachNodeCount, string FolderName)
         {
             return string.Format("{4}\\{0}.{1}.{2}.{3}.json", GraphType, AlgorithmType, NodeCount, IndexToRunForEachNodeCount, FolderName);
         }

@@ -7,9 +7,9 @@ namespace PerformanceAnalyserLibrary.GraphGenerator
     public class TopologyGivenGraphGenerator
     {
         public Topology Topology { get; set; }
-        public AlgorithmType AlgorithmType { get; set; }
+        public string AlgorithmType { get; set; }
 
-        public TopologyGivenGraphGenerator(Topology topology, AlgorithmType algorithmType)
+        public TopologyGivenGraphGenerator(Topology topology, string algorithmType)
         {
             Topology = topology;
             AlgorithmType = algorithmType;

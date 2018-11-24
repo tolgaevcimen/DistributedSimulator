@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B7836723-6676-4991-8BF0-59E15D3203F6}</ProjectGuid>
+    <ProjectGuid>{6906289E-8C0A-4984-9F2A-F5DD9975289B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SupportedAlgorithmAndGraphTypes</RootNamespace>
-    <AssemblyName>SupportedAlgorithmAndGraphTypes</AssemblyName>
+    <RootNamespace>AllNodes</RootNamespace>
+    <AssemblyName>AllNodes</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,8 +43,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GraphType.cs" />
+    <Compile Include="Flooding\FloodingNode.cs" />
+    <Compile Include="Flooding\FloodingSTNode.cs" />
+    <Compile Include="NodeFactory.cs" />
+    <Compile Include="NodeTypeGatherer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelfStabilizing\DominatingSet\Chiu\ChiuMDS.cs" />
+    <Compile Include="SelfStabilizing\DominatingSet\Chiu\ChiuState.cs" />
+    <Compile Include="SelfStabilizing\DominatingSet\Goddard\GoddardMDS.cs" />
+    <Compile Include="SelfStabilizing\DominatingSet\Turau\TurauMDS.cs" />
+    <Compile Include="SelfStabilizing\DominatingSet\Turau\TurauState.cs" />
+    <Compile Include="TreeGeneration\NeighDfsNode.cs" />
+    <Compile Include="TreeGeneration\UpdateBfsNode.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AsyncSimulator\AsyncSimulator.csproj">
+      <Project>{440FA7C3-094A-4913-8CF5-14B440C0B86E}</Project>
+      <Name>AsyncSimulator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SupportedAlgorithmAndGraphTypes\SupportedAlgorithmAndGraphTypes.csproj">
+      <Project>{B7836723-6676-4991-8BF0-59E15D3203F6}</Project>
+      <Name>SupportedAlgorithmAndGraphTypes</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

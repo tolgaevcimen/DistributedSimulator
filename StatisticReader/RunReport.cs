@@ -6,7 +6,7 @@ namespace StatisticReaderLibrary
 {
     class RunReport
     {
-        public AlgorithmType AlgorithmType { get; set; }
+        public string AlgorithmType { get; set; }
         public GraphType GraphType { get; set; }
         public int NodeCount { get; set; }
 
