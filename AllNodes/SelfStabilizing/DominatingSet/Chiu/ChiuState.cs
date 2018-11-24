@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AllNodes
+namespace ChiuDominatingSet
 {
-    public class Class1
+    public enum ChiuState
     {
+        WAIT,
+        OUT1,
+        OUT2,
+        IN
     }
 }

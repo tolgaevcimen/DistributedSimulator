@@ -57,10 +57,6 @@
       <Project>{440FA7C3-094A-4913-8CF5-14B440C0B86E}</Project>
       <Name>AsyncSimulator</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ConsoleForStatisticsEnvironment\ConsoleForStatisticsEnvironment.csproj">
-      <Project>{6614D817-3DFD-4B6D-AD6B-318ADB327F01}</Project>
-      <Name>ConsoleForStatisticsEnvironment</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PerformanceAnalyser\PerformanceAnalyser.csproj">
       <Project>{F3157062-9ED1-40F4-BD57-00575CBDE3CE}</Project>
       <Name>PerformanceAnalyser</Name>

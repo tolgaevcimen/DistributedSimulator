@@ -5,27 +5,22 @@ using System.Linq;
 
 namespace GoddardMDSNode
 {
-    public class xGoddardNode : _Node
+    public class GoddardMDS : _Node
     {
         int In_X { get; set; }
         int OutputState_C { get; set; }
 
-        IEnumerable<xGoddardNode> GetNeighbours()
+        IEnumerable<GoddardMDS> GetNeighbours()
         {
-            return GetCopyOfNeigbours().Where(v => v != null).Select(n => (xGoddardNode)n);
+            return GetCopyOfNeigbours().Where(v => v != null).Select(n => (GoddardMDS)n);
         }
 
-        public xGoddardNode(int id, NodeHolder nodeHolder, InitialState initialState = InitialState.AllWait, Random randomizer = null) : base(id, nodeHolder)
+        internal GoddardMDS(int id, NodeHolder nodeHolder, InitialState initialState, int predefinedState) : base(id, nodeHolder)
         {
-            In_X = GetState(initialState, randomizer);
+            In_X = GetState(initialState, predefinedState);
         }
-
-        public xGoddardNode(int id, NodeHolder nodeHolder, int predefinedState) : base(id, nodeHolder)
-        {
-            In_X = predefinedState;
-        }
-
-        public xGoddardNode(int id, int x, int c) : base(id, null)
+        
+        private GoddardMDS(int id, int x, int c) : base(id, null)
         {
             this.In_X = x;
             this.OutputState_C = c;
@@ -96,8 +91,8 @@ namespace GoddardMDSNode
         
         protected override void UpdateNeighbourInformation(_Node neighbour)
         {
-            var goddardNode = (xGoddardNode)neighbour;
-            UpdateNeighbour(new xGoddardNode(neighbour.Id, goddardNode.In_X, goddardNode.OutputState_C));
+            var goddardNode = (GoddardMDS)neighbour;
+            UpdateNeighbour(new GoddardMDS(neighbour.Id, goddardNode.In_X, goddardNode.OutputState_C));
         }
         
         public override bool IsValid()
@@ -121,7 +116,7 @@ namespace GoddardMDSNode
             }
         }
 
-        int GetState(InitialState _is, Random randomizer)
+        int GetState(InitialState _is, int predefinedState)
         {
             switch (_is)
             {
@@ -130,11 +125,7 @@ namespace GoddardMDSNode
                 case InitialState.AllIn:
                     return 1;
                 case InitialState.Random:
-                    {
-                        var randIndex = randomizer.Next(0, 2);
-
-                        return randIndex;
-                    }
+                    return predefinedState;
                 default: return 0;
             }
         }

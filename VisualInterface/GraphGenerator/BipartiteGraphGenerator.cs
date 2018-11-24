@@ -13,9 +13,8 @@ namespace VisualInterface.GraphGenerator
         {
         }
 
-        public override void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, AlgorithmType SelectedAlgorithm)
+        public override void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, string SelectedAlgorithm)
         {
-            var randomizer = new Random();
             var arg = new PaintEventArgs(Drawing_panel.CreateGraphics(), new Rectangle());
 
             var horizontalInterval = (Drawing_panel.Width - 80) / 3;

@@ -1,4 +1,5 @@
-﻿using AsyncSimulator;
+﻿using AllNodes;
+using AsyncSimulator;
 using ChiuDominatingSet;
 using Newtonsoft.Json;
 using SupportedAlgorithmAndGraphTypes;
@@ -31,7 +32,7 @@ namespace VisualInterface
         {
             InitializeComponent();
 
-            cb_choose_alg.Items.AddRange(Enum.GetNames(typeof(AlgorithmType)));
+            cb_choose_alg.Items.AddRange(Algorithms.ToArray());
             cb_choose_alg.SelectedIndex = 0;
             SelectedAlgorithm = Algorithms[cb_choose_alg.SelectedIndex];
 
@@ -42,8 +43,8 @@ namespace VisualInterface
             EdgeHolder = new EdgeHolder();
             NodeHolder = new NodeHolder();
             NodeHolder.Terminated += TerminationDetected;
-
-            clb_algorithmTypes.Items.AddRange(Enum.GetNames(typeof(AlgorithmType)));
+            
+            clb_algorithmTypes.Items.AddRange(Algorithms.ToArray());
             clb_graphTypes.Items.AddRange(Enum.GetNames(typeof(GraphType)));
 
             visualSimulatorPanel.Dock = DockStyle.Fill; // remove this
@@ -125,12 +126,12 @@ namespace VisualInterface
         /// <summary>
         /// Holds the list of algorithms. When new ones are added here, please add them to the factory implementation too.
         /// </summary>
-        private List<AlgorithmType> Algorithms = Enum.GetNames(typeof(AlgorithmType)).Select(atn => (AlgorithmType)Enum.Parse(typeof(AlgorithmType), atn)).ToList();
+        private List<string> Algorithms = NodeTypeGatherer.AlgorithmTypes();
 
         /// <summary>
         /// Holds the selected algorithms name.
         /// </summary>
-        private AlgorithmType SelectedAlgorithm { get; set; }
+        private string SelectedAlgorithm { get; set; }
 
         /// <summary>
         /// Event for setting the current algorithm. 
@@ -249,15 +250,15 @@ namespace VisualInterface
 
                 var algorithmType = DeserializeAlgorithmType(json).AlgorithmType;
 
-                if (algorithmType == AlgorithmType.ChiuMDS_rand)
-                {
-                    var deserializationContext = DeserializeTopology<ChiuNode>(json);
+                //if (algorithmType == AlgorithmType.ChiuMDS_rand)
+                //{
+                //    var deserializationContext = DeserializeTopology<ChiuNode>(json);
 
-                    var importedGraphGenerator = new ImportedGraphGenerator<ChiuNode>(this, drawing_panel, deserializationContext);
-                    importedGraphGenerator.Generate(0, NodeHolder, EdgeHolder, algorithmType);
+                //    var importedGraphGenerator = new ImportedGraphGenerator<ChiuNode>(this, drawing_panel, deserializationContext);
+                //    importedGraphGenerator.Generate(0, NodeHolder, EdgeHolder, algorithmType);
 
-                    return;
-                }
+                //    return;
+                //}
 
             }
         }
@@ -290,18 +291,18 @@ namespace VisualInterface
 
         public class SerializationContext
         {
-            public AlgorithmType AlgorithmType { get; set; }
+            public string AlgorithmType { get; set; }
             public List<_Node> Nodes { get; set; }
         }
 
         public class DeserializationContext
         {
-            public AlgorithmType AlgorithmType { get; set; }
+            public string AlgorithmType { get; set; }
         }
 
         public class DeserializationContext<T> where T : _Node
         {
-            public AlgorithmType AlgorithmType { get; set; }
+            public string AlgorithmType { get; set; }
             public List<T> Nodes { get; set; }
         }
 

@@ -13,9 +13,8 @@ namespace VisualInterface.GraphGenerator
         {
         }
 
-        public override void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, AlgorithmType SelectedAlgorithm)
+        public override void Generate(int nodeCount, NodeHolder nodeHolder, EdgeHolder edgeHolder, string SelectedAlgorithm)
         {
-            var randomizer = new Random();
             var arg = new PaintEventArgs(Drawing_panel.CreateGraphics(), new Rectangle());
 
             var radius = (Math.Min(Drawing_panel.Height, Drawing_panel.Width) - 80) / 2;

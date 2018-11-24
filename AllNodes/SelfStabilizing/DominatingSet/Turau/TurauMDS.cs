@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TurauDominatingSet
 {
-    public class xTurauNode : _Node
+    public class TurauMDS : _Node
     {
         public TurauState State { get; set; }
 
@@ -48,24 +48,18 @@ namespace TurauDominatingSet
                 return !GetNeighbours().Any(n => n.State == TurauState.WAIT && n.Id < Id);
             }
         }
-
-
-        IEnumerable<xTurauNode> GetNeighbours()
+        
+        IEnumerable<TurauMDS> GetNeighbours()
         {
-            return GetCopyOfNeigbours().Where(v => v != null).Select(n => (xTurauNode)n);
+            return GetCopyOfNeigbours().Where(v => v != null).Select(n => (TurauMDS)n);
+        }
+        
+        internal TurauMDS(int id, NodeHolder nodeHolder, InitialState initialState, int predefinedState) : base(id, nodeHolder)
+        {
+            State = GenerateState(initialState, predefinedState);
         }
 
-        public xTurauNode(int id, NodeHolder nodeHolder, InitialState initialState = InitialState.AllWait, Random randomizer = null) : base(id, nodeHolder)
-        {
-            State = GenerateState(initialState, randomizer);
-        }
-
-        public xTurauNode(int id, NodeHolder nodeHolder, int predefinedState) : base(id, nodeHolder)
-        {
-            State = predefinedState == 0 ? TurauState.WAIT : TurauState.IN;
-        }
-
-        public xTurauNode(int id, TurauState state) : base(id, null)
+        private TurauMDS(int id, TurauState state) : base(id, null)
         {
             State = state;
         }
@@ -132,7 +126,7 @@ namespace TurauDominatingSet
         
         protected override void UpdateNeighbourInformation(_Node neighbour)
         {
-            UpdateNeighbour(new xTurauNode(neighbour.Id, ((xTurauNode)neighbour).State));
+            UpdateNeighbour(new TurauMDS(neighbour.Id, ((TurauMDS)neighbour).State));
         }
         
         public override bool Selected()
@@ -176,7 +170,7 @@ namespace TurauDominatingSet
             }
         }
 
-        TurauState GenerateState(InitialState _is, Random randomizer)
+        TurauState GenerateState(InitialState _is, int predefinedState)
         {
             switch (_is)
             {
@@ -185,14 +179,7 @@ namespace TurauDominatingSet
                 case InitialState.AllIn:
                     return TurauState.IN;
                 case InitialState.Random:
-                    {
-                        var states = Enum.GetNames(typeof(TurauState));
-
-                        var randIndex = randomizer.Next(0, states.Length);
-                        var state = (TurauState)Enum.Parse(typeof(TurauState), states[randIndex]);
-
-                        return state;
-                    }
+                    return predefinedState == 0 ? TurauState.WAIT : TurauState.IN;
                 default: return TurauState.WAIT;
             }
         }

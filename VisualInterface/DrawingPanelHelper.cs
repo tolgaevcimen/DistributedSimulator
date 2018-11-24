@@ -21,7 +21,7 @@ namespace VisualInterface
         /// <summary>
         /// Holds the selected algorithms name.
         /// </summary>
-        AlgorithmType SelectedAlgorithm { get; set; }
+        string SelectedAlgorithm { get; set; }
         /// <summary>
         /// Holds the edge that just has been started to be drawn.
         /// </summary>
@@ -35,7 +35,7 @@ namespace VisualInterface
             }
         }
 
-        public DrawingPanelHelper(Presenter presenterForm, Panel drawingPanel, AlgorithmType selectedAlgorithm)
+        public DrawingPanelHelper(Presenter presenterForm, Panel drawingPanel, string selectedAlgorithm)
         {
             PresenterForm = presenterForm;
             DrawingPanel = drawingPanel;

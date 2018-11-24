@@ -16,7 +16,7 @@ namespace PerformanceAnalyserLibrary
 
         public int NodeCount { get; set; }
         public GraphType GraphType { get; set; }
-        public AlgorithmType AlgorithmType { get; set; }
+        public string AlgorithmType { get; set; }
 
         public int CurrentStepNumber()
         {
