@@ -12,8 +12,7 @@ namespace NodeGenerator
     {
         public static _Node Create(string algorithm, int id, IVisualizer nodeVisualizer, bool selfStab, NodeHolder nodeHolder, int predefinedState = 0)
         {
-            var flags = BindingFlags.NonPublic | BindingFlags.Instance;
-            var node = (_Node)Activator.CreateInstance(GetAlgorithmType(algorithm), flags, null, new object[] { id, nodeHolder, GetInitialState(algorithm), predefinedState }, null);
+            var node = (_Node)Activator.CreateInstance(GetAlgorithmType(algorithm), id, nodeHolder, GetInitialState(algorithm), predefinedState);
             
             node.Visualizer = nodeVisualizer;
 
@@ -23,7 +22,7 @@ namespace NodeGenerator
             return node;
         }
 
-        private static Type GetAlgorithmType(string algorithm)
+        public static Type GetAlgorithmType(string algorithm)
         {
             var typeProps = algorithm.Split('_');
             var algorithmName = typeProps[0];
@@ -31,22 +30,22 @@ namespace NodeGenerator
             return Assembly.GetExecutingAssembly().GetTypes().FirstOrDefault(t => t.Name == algorithmName);
         }
 
-        private static InitialState GetInitialState(string algorithm)
+        public static InitialState GetInitialState(string algorithm)
         {
             var typeProps = algorithm.Split('_');
-            var state = typeProps[1];
+            var state = typeProps[1].ToLower();
 
             if (state == "rand")
             {
                 return InitialState.Random;
             }
 
-            if (state == "AllIn")
+            if (state == "allin")
             {
                 return InitialState.AllIn;
             }
 
-            if (state == "AllWait")
+            if (state == "allwait")
             {
                 return InitialState.AllWait;
             }

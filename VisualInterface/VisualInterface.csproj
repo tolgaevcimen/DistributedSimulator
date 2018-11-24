@@ -68,6 +68,7 @@
     <Compile Include="GraphGenerator\CircleGraphGenerator.cs" />
     <Compile Include="GraphGenerator\LineGraphGenerator.cs" />
     <Compile Include="GraphGenerator\RandomGraphGenerator.cs" />
+    <Compile Include="GraphPersistancy\GraphPersister.cs" />
     <Compile Include="PerformanceAnalyserSection\PerformanceAnalyserFormOperations.cs" />
     <Compile Include="PerformanceAnalyserSection\PresenterAccessorPartial.cs" />
     <Compile Include="Presenter.cs">

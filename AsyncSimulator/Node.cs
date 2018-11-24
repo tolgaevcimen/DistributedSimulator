@@ -28,6 +28,8 @@ namespace AsyncSimulator
         public List<int> _Neighbours { get; set; }
         [JsonProperty]
         public PointF _Position { get; set; }
+        [JsonProperty]
+        public int _PredefinedState { get; set; }
 
         /// <summary>
         /// A thread safe queue for received messages.

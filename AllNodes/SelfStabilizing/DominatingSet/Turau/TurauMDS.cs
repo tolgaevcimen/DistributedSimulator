@@ -52,7 +52,7 @@ namespace TurauDominatingSet
             return GetCopyOfNeigbours().Where(v => v != null).Select(n => (TurauMDS)n);
         }
         
-        internal TurauMDS(int id, NodeHolder nodeHolder, InitialState initialState, int predefinedState) : base(id, nodeHolder)
+        public TurauMDS(int id, NodeHolder nodeHolder, InitialState initialState, int predefinedState) : base(id, nodeHolder)
         {
             State = GenerateState(initialState, predefinedState);
         }

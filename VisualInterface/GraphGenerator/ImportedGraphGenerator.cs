@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using AsyncSimulator;
 using NodeGenerator;
-using static VisualInterface.Presenter;
+using static VisualInterface.GraphPersistancy.GraphPersister;
 
 namespace VisualInterface.GraphGenerator
 {
@@ -24,7 +24,7 @@ namespace VisualInterface.GraphGenerator
             {
                 var _node = DeserializationContext.Nodes[i];
                 
-                var node = NodeFactory.Create(SelectedAlgorithm, _node.Id, new WinformsNodeVisualiser(arg, _node._Position.X, _node._Position.Y, nodeHolder.NodeCount, ParentForm), ParentForm.cb_selfStab.Checked, nodeHolder);
+                var node = NodeFactory.Create(SelectedAlgorithm, _node.Id, new WinformsNodeVisualiser(arg, _node._Position.X, _node._Position.Y, nodeHolder.NodeCount, ParentForm), ParentForm.cb_selfStab.Checked, nodeHolder, _node._PredefinedState);
 
                 nodeHolder.AddNode(node);
             };

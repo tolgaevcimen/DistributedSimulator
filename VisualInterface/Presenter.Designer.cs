@@ -287,14 +287,12 @@
             this.saveTopologyToolStripMenuItem.Name = "saveTopologyToolStripMenuItem";
             this.saveTopologyToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.saveTopologyToolStripMenuItem.Text = "Save Topology";
-            this.saveTopologyToolStripMenuItem.Click += new System.EventHandler(this.saveTopologyToolStripMenuItem_Click);
             // 
             // importTopologyToolStripMenuItem
             // 
             this.importTopologyToolStripMenuItem.Name = "importTopologyToolStripMenuItem";
             this.importTopologyToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.importTopologyToolStripMenuItem.Text = "Import Topology";
-            this.importTopologyToolStripMenuItem.Click += new System.EventHandler(this.importTopologyToolStripMenuItem_Click);
             // 
             // exportLogsToolStripMenuItem
             // 
@@ -759,7 +757,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel drawing_panel;
+        public System.Windows.Forms.Panel drawing_panel;
         private System.Windows.Forms.TableLayoutPanel visualSimulatorPanel;
         private System.Windows.Forms.TableLayoutPanel menuPanel;
         private System.Windows.Forms.Button btn_clear;
